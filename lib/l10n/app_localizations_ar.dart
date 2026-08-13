@@ -9,7 +9,10 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
-  String get find_Your_Next => 'اعثر على فيلمك المفضل القادم هنا';
+  String get find_Your_Next => 'اعثر على فيلمك ';
+
+  @override
+  String get favorite_Movie_Here => 'المفضل القادم هنا';
 
   @override
   String get get_access_to_a_huge =>
