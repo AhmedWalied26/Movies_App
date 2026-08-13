@@ -152,6 +152,16 @@ class AppStyles {
     fontWeight: FontWeight.w400,
     color: AppColors.whiteColor,
   );
+  static TextStyle regular16White = GoogleFonts.inter(
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    color: AppColors.whiteColor,
+  );
+  static TextStyle regular16DarkPrimary = GoogleFonts.inter(
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    color: AppColors.darkPrimaryColor,
+  );
   static TextStyle regular14Grey = GoogleFonts.roboto(
     fontSize: 14,
     fontWeight: FontWeight.w400,
