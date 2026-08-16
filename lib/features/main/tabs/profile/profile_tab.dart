@@ -77,5 +77,6 @@ class ProfileTab extends StatelessWidget {
         ),
       ),
     );
+    return Container();
   }
 }
