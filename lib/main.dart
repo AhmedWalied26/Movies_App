@@ -37,6 +37,7 @@ class MoviesApp extends StatelessWidget {
       locale: Locale(languageProvider.appLanguage),
       debugShowCheckedModeBanner: false,
       routes: {
+        AppRoutes.updateProfileScreen: (context) => UpdateProfileScreen(),
         AppRoutes.mainScreen: (context) => MainScreen(),
         AppRoutes.exploreScreen: (context) => const ExploreScreen(),
         AppRoutes.loginScreen: (context) => const LoginScreen(),
@@ -46,7 +47,6 @@ class MoviesApp extends StatelessWidget {
         AppRoutes.onboardingScreen: (context) => OnBoardingScreens(),
         AppRoutes.browseScreen: (context) => BrowseTab(),
         AppRoutes.profileScreen: (context) => ProfileTab(),
-        AppRoutes.updateProfileScreen: (context) => UpdateProfileScreen(),
       },
 
       initialRoute: AppRoutes.mainScreen,
