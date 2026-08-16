@@ -1,0 +1,107 @@
+import 'package:flutter/material.dart';
+import 'package:introduction_screen/introduction_screen.dart';
+import 'package:movies_app/features/onboarding/custom_Container.dart';
+import 'package:movies_app/l10n/app_localizations.dart';
+import 'package:movies_app/utils/app_assets.dart';
+import 'package:movies_app/utils/app_routes.dart';
+import 'package:movies_app/utils/size_utils.dart';
+
+class OnBoardingScreens extends StatefulWidget {
+  const OnBoardingScreens({super.key});
+
+  @override
+  State<OnBoardingScreens> createState() => _OnBoardingScreensState();
+}
+
+class _OnBoardingScreensState extends State<OnBoardingScreens> {
+  @override
+  Widget build(BuildContext context) {
+    final PageController pageController = PageController();
+    var width = context.width;
+    var height = context.height;
+    return PageView(
+      controller: pageController,
+      children: [
+        CustomContainer(Img: AppAssets.onBoardingImage2,
+          text1: AppLocalizations.of(context)!.discover_Movies ,
+          text2: AppLocalizations.of(context)!.explore_a_vast_collection,
+          nameButton1: AppLocalizations.of(context)!.next,
+          OnPressedButton1: (){
+            pageController.nextPage(
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeInOut,
+            );
+          },
+        ),
+        CustomContainer(Img: AppAssets.onBoardingImage3,
+          text1: AppLocalizations.of(context)!.explore_All_Genres,
+          text2: AppLocalizations.of(context)!.discover_movies_from_every_genre,
+            nameButton1: AppLocalizations.of(context)!.next,
+            OnPressedButton1: () {
+              pageController.nextPage(
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeInOut,
+              );
+            },
+          nameButton2: AppLocalizations.of(context)!.back,
+          OnPressedButton2: (){
+            pageController.previousPage(
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeInOut,
+            );
+          },
+        ),
+        CustomContainer(Img: AppAssets.onBoardingImage4,
+          text1: AppLocalizations.of(context)!.create_Watchlists,
+          text2: AppLocalizations.of(context)!.save_movies_to_your_watchlist,
+          nameButton1: AppLocalizations.of(context)!.next,
+          OnPressedButton1: () {
+            pageController.nextPage(
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeInOut,
+            );
+          },
+          nameButton2: AppLocalizations.of(context)!.back,
+          OnPressedButton2: (){
+            pageController.previousPage(
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeInOut,
+            );
+          },
+        ),
+        CustomContainer(Img: AppAssets.onBoardingImage5,
+          text1: AppLocalizations.of(context)!.rate_Review,
+          text2: AppLocalizations.of(context)!.share_your_thoughts,
+          nameButton1: AppLocalizations.of(context)!.next,
+          OnPressedButton1: () {
+            pageController.nextPage(
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeInOut,
+            );
+          },
+          nameButton2: AppLocalizations.of(context)!.back,
+          OnPressedButton2: (){
+            pageController.previousPage(
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeInOut,
+            );
+          },
+        ),
+        CustomContainer(Img: AppAssets.onBoardingImage6,
+          text1: AppLocalizations.of(context)!.start_Watching_Now,
+          nameButton1: AppLocalizations.of(context)!.finish,
+          OnPressedButton1: () {
+            Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
+          },
+          nameButton2: AppLocalizations.of(context)!.back,
+          OnPressedButton2: (){
+            pageController.previousPage(
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeInOut,
+            );
+          },
+        )
+      ],
+    );
+  }
+}

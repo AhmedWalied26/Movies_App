@@ -9,7 +9,10 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get find_Your_Next => 'Find Your Next \n Favorite Movie Here';
+  String get find_Your_Next => 'Find Your Next';
+
+  @override
+  String get favorite_Movie_Here => 'Favorite Movie Here';
 
   @override
   String get get_access_to_a_huge =>

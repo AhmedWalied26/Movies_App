@@ -5,6 +5,8 @@ import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/Providers/Language_Provider.dart';
 import 'package:movies_app/features/onboarding/explore_screen.dart';
+import 'package:movies_app/features/onboarding/on_Boarding_Screens.dart';
+import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_theme.dart';
 import 'package:provider/provider.dart';
@@ -40,8 +42,10 @@ class MoviesApp extends StatelessWidget {
             const ForgetPasswordScreen(),
         // AppRoutes.movieDetailsScreen: (context) => const MovieDetailsScreen(),
         // AppRoutes.updateProfileScreen: (context) => const UpdateProfileScreen(),
+     
+        AppRoutes.onboardingScreen: (context) => OnBoardingScreens(),
       },
-      initialRoute: AppRoutes.loginScreen,
+      initialRoute: AppRoutes.exploreScreen,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: .dark,
