@@ -128,7 +128,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get exit => 'Exit';
 
   @override
-  String get watch_List => 'Watch List  ';
+  String get watch_List => 'Watch List';
 
   @override
   String get history => 'History';
@@ -144,4 +144,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get update_Data => 'Update Data';
+
+  @override
+  String get horror => 'Horror';
+
+  @override
+  String get comedy => 'Comedy';
+
+  @override
+  String get drama => 'Drama';
+
+  @override
+  String get sci_fi => 'Sci-Fi';
+
+  @override
+  String get fantasy => 'Fantasy';
+
+  @override
+  String get romance => 'Romance';
+
+  @override
+  String get crime => 'Crime';
+
+  @override
+  String get adventure => 'Adventure';
+
+  @override
+  String get wish_list => 'wish List';
+
+  @override
+  String get favorite_Movie_Here => 'Favorite Movie Here';
 }

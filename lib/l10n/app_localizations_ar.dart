@@ -9,7 +9,7 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
-  String get find_Your_Next => 'اعثر على فيلمك المفضل القادم هنا';
+  String get find_Your_Next => 'اعثر على فيلمك ';
 
   @override
   String get get_access_to_a_huge =>
@@ -107,7 +107,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get verify_Email => 'تأكيد البريد الإلكتروني';
 
   @override
-  String get action => 'الإجراء';
+  String get action => 'أكشن';
 
   @override
   String get see_More => 'عرض المزيد';
@@ -144,4 +144,34 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get update_Data => 'تحديث البيانات';
+
+  @override
+  String get horror => 'رعب';
+
+  @override
+  String get comedy => 'كوميديا';
+
+  @override
+  String get drama => 'دراما';
+
+  @override
+  String get sci_fi => 'خيال علمي';
+
+  @override
+  String get fantasy => 'فانتازيا';
+
+  @override
+  String get romance => 'رومانسي';
+
+  @override
+  String get crime => 'جريمة';
+
+  @override
+  String get adventure => 'مغامرة';
+
+  @override
+  String get wish_list => 'قائمة الرغبات';
+
+  @override
+  String get favorite_Movie_Here => 'المفضل القادم هنا';
 }

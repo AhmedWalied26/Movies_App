@@ -329,7 +329,7 @@ abstract class AppLocalizations {
   /// No description provided for @watch_List.
   ///
   /// In en, this message translates to:
-  /// **'Watch List  '**
+  /// **'Watch List'**
   String get watch_List;
 
   /// No description provided for @history.
@@ -361,6 +361,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Update Data'**
   String get update_Data;
+
+  /// No description provided for @horror.
+  ///
+  /// In en, this message translates to:
+  /// **'Horror'**
+  String get horror;
+
+  /// No description provided for @comedy.
+  ///
+  /// In en, this message translates to:
+  /// **'Comedy'**
+  String get comedy;
+
+  /// No description provided for @drama.
+  ///
+  /// In en, this message translates to:
+  /// **'Drama'**
+  String get drama;
+
+  /// No description provided for @sci_fi.
+  ///
+  /// In en, this message translates to:
+  /// **'Sci-Fi'**
+  String get sci_fi;
+
+  /// No description provided for @fantasy.
+  ///
+  /// In en, this message translates to:
+  /// **'Fantasy'**
+  String get fantasy;
+
+  /// No description provided for @romance.
+  ///
+  /// In en, this message translates to:
+  /// **'Romance'**
+  String get romance;
+
+  /// No description provided for @crime.
+  ///
+  /// In en, this message translates to:
+  /// **'Crime'**
+  String get crime;
+
+  /// No description provided for @adventure.
+  ///
+  /// In en, this message translates to:
+  /// **'Adventure'**
+  String get adventure;
+
+  /// No description provided for @wish_list.
+  ///
+  /// In en, this message translates to:
+  /// **'wish List'**
+  String get wish_list;
+
+  /// No description provided for @favorite_Movie_Here.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite Movie Here'**
+  String get favorite_Movie_Here;
 }
 
 class _AppLocalizationsDelegate
