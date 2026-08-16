@@ -83,6 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: AppStyles.regular12White.copyWith(
                                 fontSize: 6,
                                 color: AppColors.primaryColor,
+                                //
                               ),
                             ),
                           ),
