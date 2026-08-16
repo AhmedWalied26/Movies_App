@@ -126,7 +126,7 @@ class AppTheme {
 
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15),
-        borderSide: const BorderSide(color: AppColors.darkPrimaryColor),
+        borderSide: const BorderSide(color: AppColors.primaryColor),
       ),
 
       errorBorder: OutlineInputBorder(

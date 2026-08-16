@@ -170,7 +170,7 @@ class AppStyles {
   static TextStyle regular16DarkPrimary = GoogleFonts.inter(
     fontSize: 16,
     fontWeight: FontWeight.w400,
-    color: AppColors.darkPrimaryColor,
+    color: AppColors.primaryColor,
   );
   static TextStyle regular14Grey = GoogleFonts.roboto(
     fontSize: 14,

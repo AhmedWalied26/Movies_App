@@ -33,7 +33,7 @@ class CustomTextField extends StatelessWidget {
       onTapOutside: (event) {
         FocusManager.instance.primaryFocus?.unfocus();
       },
-      cursorColor: AppColors.darkPrimaryColor,
+      cursorColor: AppColors.primaryColor,
       keyboardType: type,
       maxLines: maxLines,
       obscureText: isObsecure,

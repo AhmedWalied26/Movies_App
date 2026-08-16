@@ -41,10 +41,7 @@ class CustomBottomNavbar extends StatelessWidget {
               BottomNavigationBarItem(
                 activeIcon: SvgPicture.asset(
                   AppAssets.homeIcon,
-                  colorFilter: ColorFilter.mode(
-                    AppColors.darkPrimaryColor,
-                    .srcIn,
-                  ),
+                  colorFilter: ColorFilter.mode(AppColors.primaryColor, .srcIn),
                 ),
                 icon: SvgPicture.asset(AppAssets.homeIcon),
                 label: '',
@@ -52,10 +49,7 @@ class CustomBottomNavbar extends StatelessWidget {
               BottomNavigationBarItem(
                 activeIcon: SvgPicture.asset(
                   AppAssets.searchIcon,
-                  colorFilter: ColorFilter.mode(
-                    AppColors.darkPrimaryColor,
-                    .srcIn,
-                  ),
+                  colorFilter: ColorFilter.mode(AppColors.primaryColor, .srcIn),
                 ),
                 icon: SvgPicture.asset(AppAssets.searchIcon),
                 label: '',
@@ -63,10 +57,7 @@ class CustomBottomNavbar extends StatelessWidget {
               BottomNavigationBarItem(
                 activeIcon: SvgPicture.asset(
                   AppAssets.exploreIcon,
-                  colorFilter: ColorFilter.mode(
-                    AppColors.darkPrimaryColor,
-                    .srcIn,
-                  ),
+                  colorFilter: ColorFilter.mode(AppColors.primaryColor, .srcIn),
                 ),
                 icon: SvgPicture.asset(AppAssets.exploreIcon),
                 label: '',
@@ -74,10 +65,7 @@ class CustomBottomNavbar extends StatelessWidget {
               BottomNavigationBarItem(
                 activeIcon: SvgPicture.asset(
                   AppAssets.profileIcon,
-                  colorFilter: ColorFilter.mode(
-                    AppColors.darkPrimaryColor,
-                    .srcIn,
-                  ),
+                  colorFilter: ColorFilter.mode(AppColors.primaryColor, .srcIn),
                 ),
                 icon: SvgPicture.asset(AppAssets.profileIcon),
                 label: '',
