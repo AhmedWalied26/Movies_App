@@ -22,6 +22,7 @@ class AppAssets {
   static const String emptyListImage = 'assets/images/empty_list_image.png';
   static const String forgetPasswordImage =
       'assets/images/forget_password_image.png';
+  static const String popCornImage = 'assets/svg/popcorn.svg';
 
   static const String appIcon = 'assets/svg/app_icon.svg';
   static const String arIcon = 'assets/svg/ar_icon.svg';
@@ -43,4 +44,11 @@ class AppAssets {
   static const String videoIcon = 'assets/svg/video_icon.svg';
   static const String visibleOffIcon = 'assets/svg/visible_off_icon.svg';
   static const String watchListIcon = 'assets/svg/watch_list_icon.svg';
+
+  static const String blackWidowMovie = 'assets/images/blackwidow.png';
+  static const String jokerMovie = 'assets/images/joker.png';
+  static const String ironManMovie = 'assets/images/ironman.png';
+  static const String civilWarMovie = 'assets/images/civilwar.png';
+  static const String avengersMovie = 'assets/images/avengers.png';
+  static const String doctorStrangeMovie = 'assets/images/doctor_strange.png';
 }

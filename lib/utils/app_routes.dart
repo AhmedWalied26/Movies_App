@@ -6,4 +6,6 @@ class AppRoutes {
   static const String forgotPasswordScreen = 'forgot-password_screen';
   static const String movieDetailsScreen = 'movie_details_screen';
   static const String updateProfileScreen = 'update_profile_screen';
+  static const String browseScreen = 'browse_tab';
+  static const String profileScreen = 'profile_tab';
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/Providers/Language_Provider.dart';
+import 'package:movies_app/features/main/tabs/browse/browse_tab.dart';
+import 'package:movies_app/features/main/tabs/profile/profile_tab.dart';
 import 'package:movies_app/features/onboarding/explore_screen.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_routes.dart';
@@ -7,11 +9,14 @@ import 'package:movies_app/utils/app_theme.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (context) => LanguageProvider(),),
-    ],
-      child: const MoviesApp()));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => LanguageProvider()),
+      ],
+      child: const MoviesApp(),
+    ),
+  );
 }
 
 class MoviesApp extends StatelessWidget {
@@ -25,8 +30,12 @@ class MoviesApp extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       locale: Locale(languageProvider.appLanguage),
       debugShowCheckedModeBanner: false,
-      routes: {AppRoutes.exploreScreen: (context) => ExploreScreen()},
-      initialRoute: AppRoutes.exploreScreen,
+      routes: {
+        AppRoutes.exploreScreen: (context) => ExploreScreen(),
+        AppRoutes.browseScreen: (context) => BrowseTab(),
+        AppRoutes.profileScreen: (context) => ProfileTab(),
+      },
+      initialRoute: AppRoutes.profileScreen,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: .dark,
