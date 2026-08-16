@@ -19,6 +19,7 @@ class AppAssets {
   static const String availableNowImage =
       'assets/images/available_now_image.png';
   static const String watchNowImage = 'assets/images/watch_now_image.png';
+  static const String movieImage = 'assets/images/movie_card_image.png';
   static const String emptyListImage = 'assets/images/empty_list_image.png';
   static const String forgetPasswordImage ='assets/images/forget_password_image.png';
 

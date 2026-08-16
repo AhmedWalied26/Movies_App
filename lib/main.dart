@@ -4,6 +4,8 @@ import 'package:movies_app/features/auth/register/regsister_screen.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/Providers/Language_Provider.dart';
+import 'package:movies_app/features/main/main_screen.dart';
+import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/features/onboarding/explore_screen.dart';
 import 'package:movies_app/features/onboarding/on_boarding_screens.dart';
 import 'package:movies_app/utils/app_routes.dart';
@@ -32,6 +34,7 @@ class MoviesApp extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       locale: Locale(languageProvider.appLanguage),
       debugShowCheckedModeBanner: false,
+      routes: {AppRoutes.mainScreen: (context) => MainScreen()},
       routes: {
         AppRoutes.exploreScreen: (context) => const ExploreScreen(),
         AppRoutes.loginScreen: (context) => const LoginScreen(),
