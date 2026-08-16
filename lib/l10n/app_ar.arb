@@ -31,7 +31,6 @@
   "create_Account": "إنشاء حساب",
   "already_Have_Account": "لديك حساب بالفعل",
   "verify_Email": "تأكيد البريد الإلكتروني",
-  "action": "الإجراء",
   "see_More": "عرض المزيد",
   "doctor_Strange": "دكتور سترينج في عالم الأكوان المتعددة المجنون",
   "watch": "مشاهدة",
@@ -43,5 +42,15 @@
   "pick_Avatar": "اختر صورة شخصية",
   "reset_Password": "إعادة تعيين كلمة المرور",
   "delete_Account": "حذف الحساب",
-  "update_Data": "تحديث البيانات"
+  "update_Data": "تحديث البيانات",
+  "action": "أكشن",
+  "horror": "رعب",
+  "comedy": "كوميديا",
+  "drama": "دراما",
+  "sci_fi": "خيال علمي",
+  "fantasy": "فانتازيا",
+  "romance": "رومانسي",
+  "crime": "جريمة",
+  "adventure": "مغامرة",
+   "wish_list":"قائمة الرغبات"
 }
