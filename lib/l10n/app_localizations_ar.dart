@@ -171,4 +171,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get wish_list => 'قائمة الرغبات';
+
+  @override
+  String get favorite_Movie_Here => 'المفضل القادم هنا';
 }

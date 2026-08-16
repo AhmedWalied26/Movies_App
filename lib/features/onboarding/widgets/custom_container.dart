@@ -70,6 +70,7 @@ class CustomContainer extends StatelessWidget {
                 SizedBox(height: height * 0.014),
                 if (nameButton2 != null)
                   CustomElevatedButton(
+                    side: BorderSide(),
                     style: AppStyles.semi20Primary,
                     bgColor: AppColors.blackColor,
                     onPressedButton2: onPressedButton2!,

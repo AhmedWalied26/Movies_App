@@ -8,6 +8,8 @@ import 'package:movies_app/features/main/tabs/browse/browse_tab.dart';
 import 'package:movies_app/features/main/tabs/profile/profile_tab.dart';
 import 'package:movies_app/features/main/main_screen.dart';
 import 'package:movies_app/features/onboarding/explore_screen.dart';
+import 'package:movies_app/l10n/app_localizations.dart';
+import 'package:movies_app/update_Profile/update_Profile_screen.dart';
 import 'package:movies_app/features/onboarding/on_boarding_screens.dart';
 import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_theme.dart';
@@ -35,11 +37,8 @@ class MoviesApp extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       locale: Locale(languageProvider.appLanguage),
       debugShowCheckedModeBanner: false,
+      routes: {AppRoutes.updateProfileScreen: (context) => UpdateProfileScreen()},
       routes: {
-        AppRoutes.exploreScreen: (context) => ExploreScreen(),
-        AppRoutes.browseScreen: (context) => BrowseTab(),
-        AppRoutes.profileScreen: (context) => ProfileTab(),
-      },
         AppRoutes.mainScreen: (context) => MainScreen(),
         AppRoutes.exploreScreen: (context) => const ExploreScreen(),
         AppRoutes.loginScreen: (context) => const LoginScreen(),
@@ -47,11 +46,15 @@ class MoviesApp extends StatelessWidget {
         AppRoutes.forgotPasswordScreen: (context) =>
             const ForgetPasswordScreen(),
         AppRoutes.onboardingScreen: (context) => OnBoardingScreens(),
+        AppRoutes.browseScreen: (context) => BrowseTab(),
+        AppRoutes.profileScreen: (context) => ProfileTab(),
       },
+
       initialRoute: AppRoutes.mainScreen,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: .dark,
+
     );
   }
 }

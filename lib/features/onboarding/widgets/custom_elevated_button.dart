@@ -7,6 +7,8 @@ class CustomElevatedButton extends StatelessWidget {
   final Color? bgColor;
   final TextStyle style;
   final Widget? child;
+  final BorderSide? side;
+  final bool isExitButton;
   const CustomElevatedButton({
     super.key,
     required this.onPressedButton2,
@@ -14,6 +16,8 @@ class CustomElevatedButton extends StatelessWidget {
     this.bgColor = AppColors.primaryColor,
     required this.style,
     this.child,
+    this.side,
+    this.isExitButton = false,
   });
 
   @override
@@ -23,10 +27,13 @@ class CustomElevatedButton extends StatelessWidget {
         padding: .symmetric(vertical: 15),
         backgroundColor: bgColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        side: BorderSide(color: AppColors.primaryColor, width: 2),
+        side: side == null
+            ? null
+            : BorderSide(color: AppColors.primaryColor, width: 2),
       ),
       onPressed: onPressedButton2,
       child: Row(
+        textDirection: isExitButton ? .rtl : .ltr,
         spacing: child == null ? 0 : 12,
         mainAxisAlignment: .center,
         children: [

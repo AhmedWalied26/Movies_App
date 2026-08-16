@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
-import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/app_colors.dart';
+import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
+import 'package:movies_app/widgets/movie_card_item.dart';
 
 class TabBarWidget extends StatelessWidget {
   const TabBarWidget({super.key});
@@ -23,73 +24,53 @@ class TabBarWidget extends StatelessWidget {
       loc.adventure,
     ];
 
-    final movieImages = [
-      AppAssets.blackWidowMovie,
-      AppAssets.jokerMovie,
-      AppAssets.ironManMovie,
-      AppAssets.civilWarMovie,
-      AppAssets.avengersMovie,
-      AppAssets.doctorStrangeMovie,
-    ];
-
     return DefaultTabController(
       length: tabs.length,
       child: SafeArea(
+        bottom: false,
         child: Scaffold(
-          backgroundColor: Colors.black,
-          body: Column(
-            children: [
-              TabBar(
-                dividerColor: Colors.transparent,
-                tabAlignment: TabAlignment.start,
-                isScrollable: true,
-                labelColor: AppColors.blackColor,
-                unselectedLabelColor: AppColors.primaryColor,
-                indicatorSize: TabBarIndicatorSize.tab,
-                indicator: BoxDecoration(
-                  color: AppColors.primaryColor,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                labelStyle: const TextStyle(fontWeight: FontWeight.bold),
-                unselectedLabelStyle: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-                tabs: tabs.map((label) {
-                  return Tab(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: AppColors.primaryColor,
-                          width: SizeConfig.width(context) * 0.005,
-                        ),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Text(label),
-                    ),
-                  );
-                }).toList(),
-              ),
-              Expanded(
-                child: GridView.builder(
-                  padding: const EdgeInsets.all(8),
-                  itemCount: movieImages.length,
-                  itemBuilder: (context, index) {
-                    return Stack(
-                      children: [
-                        SizedBox(
-                          width: double.infinity,
-                          height: double.infinity,
-                          child: Image(
-                            image: AssetImage(movieImages[index]),
-                            fit: BoxFit.contain,
+          backgroundColor: AppColors.blackColor,
+          body: SingleChildScrollView(
+            padding: .only(bottom: context.height * 0.1),
+            child: Column(
+              children: [
+                TabBar(
+                  labelPadding: .symmetric(horizontal: 6),
+                  dividerColor: Colors.transparent,
+                  tabAlignment: TabAlignment.start,
+                  isScrollable: true,
+                  indicatorSize: TabBarIndicatorSize.label,
+                  indicatorColor: AppColors.transparentColor,
+                  indicator: BoxDecoration(
+                    color: AppColors.primaryColor,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  labelStyle: AppStyles.bold20DarkBlack,
+                  unselectedLabelStyle: AppStyles.bold20Primary,
+                  tabs: tabs.map((label) {
+                    return Tab(
+                      child: Container(
+                        padding: .symmetric(vertical: 8, horizontal: 16),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: AppColors.primaryColor,
+                            width: 1,
                           ),
+                          borderRadius: BorderRadius.circular(16),
                         ),
-                      ],
+                        child: Text(label),
+                      ),
                     );
+                  }).toList(),
+                ),
+                SizedBox(height: 25),
+                GridView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  padding: .symmetric(horizontal: 8),
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return MovieCardItem();
                   },
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -98,8 +79,8 @@ class TabBarWidget extends StatelessWidget {
                     childAspectRatio: 0.7,
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

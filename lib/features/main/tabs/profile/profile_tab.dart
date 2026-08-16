@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/features/main/tabs/profile/widgets/custom_column.dart';
-import 'package:movies_app/features/main/tabs/profile/widgets/custom_container.dart';
+import 'package:movies_app/features/onboarding/widgets/custom_elevated_button.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/app_colors.dart';
@@ -15,12 +15,14 @@ class ProfileTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     return Scaffold(
-      backgroundColor: AppColors.darkGreyColor,
-      body: SafeArea(
-        child: DefaultTabController(
-          length: 2,
+      backgroundColor: AppColors.darkBlackColor,
+      body: DefaultTabController(
+        length: 2,
+        child: Container(
+          color: AppColors.greyColor,
           child: Column(
             children: [
+              SizedBox(height: 50),
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Row(
@@ -33,8 +35,8 @@ class ProfileTab extends StatelessWidget {
                           borderRadius: BorderRadius.circular(40),
                           child: Image.asset(
                             AppAssets.profileImage8,
-                            width: 80,
-                            height: 80,
+                            width: 118,
+                            height: 118,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -46,12 +48,39 @@ class ProfileTab extends StatelessWidget {
                   ],
                 ),
               ),
-              CustomContainer(label_1: loc.edit_Profile, label_2: loc.exit),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  spacing: 10,
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: CustomElevatedButton(
+                        onPressedButton2: () {},
+                        title: loc.edit_Profile,
+                        style: AppStyles.regular20Black,
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: CustomElevatedButton(
+                        isExitButton: true,
+                        bgColor: AppColors.redColor,
+                        onPressedButton2: () {},
+                        title: loc.exit,
+                        style: AppStyles.regular20White,
+                        child: SvgPicture.asset(AppAssets.exitIcon),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               SizedBox(height: SizeConfig.height(context) * 0.02),
               TabBar(
                 dividerColor: Colors.transparent,
                 unselectedLabelColor: AppColors.primaryColor,
                 indicatorColor: AppColors.primaryColor,
+                indicatorSize: .tab,
                 tabs: [
                   Tab(
                     icon: const Icon(Icons.list, size: 40),
@@ -64,12 +93,23 @@ class ProfileTab extends StatelessWidget {
                 ],
               ),
               Expanded(
-                child: Container(
-                  width: double.infinity,
-                  color: AppColors.blackColor,
-                  child: Center(
-                    child: SvgPicture.asset(AppAssets.popCornImage),
-                  ),
+                child: TabBarView(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      color: AppColors.darkBlackColor,
+                      child: Center(
+                        child: Image.asset(AppAssets.emptyListImage),
+                      ),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      color: AppColors.darkBlackColor,
+                      child: Center(
+                        child: Image.asset(AppAssets.emptyListImage),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
