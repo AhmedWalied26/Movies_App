@@ -12,9 +12,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get find_Your_Next => 'اعثر على فيلمك ';
 
   @override
-  String get favorite_Movie_Here => 'المفضل القادم هنا';
-
-  @override
   String get get_access_to_a_huge =>
       'احصل على إمكانية الوصول إلى مكتبة ضخمة من الأفلام\nتناسب جميع الأذواق. بالتأكيد ستجد ما يعجبك.';
 
@@ -174,4 +171,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get wish_list => 'قائمة الرغبات';
+
+  @override
+  String get favorite_Movie_Here => 'المفضل القادم هنا';
 }

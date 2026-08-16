@@ -101,14 +101,8 @@ abstract class AppLocalizations {
   /// No description provided for @find_Your_Next.
   ///
   /// In en, this message translates to:
-  /// **'Find Your Next'**
+  /// **'Find Your Next \n Favorite Movie Here'**
   String get find_Your_Next;
-
-  /// No description provided for @favorite_Movie_Here.
-  ///
-  /// In en, this message translates to:
-  /// **'Favorite Movie Here'**
-  String get favorite_Movie_Here;
 
   /// No description provided for @get_access_to_a_huge.
   ///
@@ -421,6 +415,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'wish List'**
   String get wish_list;
+
+  /// No description provided for @favorite_Movie_Here.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite Movie Here'**
+  String get favorite_Movie_Here;
 }
 
 class _AppLocalizationsDelegate
