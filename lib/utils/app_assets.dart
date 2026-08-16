@@ -20,9 +20,12 @@ class AppAssets {
       'assets/images/available_now_image.png';
   static const String watchNowImage = 'assets/images/watch_now_image.png';
   static const String emptyListImage = 'assets/images/empty_list_image.png';
-  static const String forgetPasswordImage =
-      'assets/images/forget_password_image.png';
+  static const String forgetPasswordImage ='assets/images/forget_password_image.png';
 
+        static const String mainLogo = 'assets/images/main_logo.png';
+
+
+  static const String mainIcon = 'assets/svg/main_icon.svg';
   static const String appIcon = 'assets/svg/app_icon.svg';
   static const String arIcon = 'assets/svg/ar_icon.svg';
   static const String enIcon = 'assets/svg/en_icon.svg';
