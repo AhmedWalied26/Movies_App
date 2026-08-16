@@ -12,7 +12,7 @@ class UpdateProfileAvatar extends StatelessWidget {
     required this.onAvatarSelected,
   });
 
-  static const List<String> avatars = [
+  static List<String> avatars = [
     AppAssets.profileImage1,
     AppAssets.profileImage2,
     AppAssets.profileImage3,
@@ -27,15 +27,15 @@ class UpdateProfileAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:  EdgeInsets.all(12),
+      padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: AppColors.darkGreyColor,
         borderRadius: BorderRadius.circular(24),
       ),
       child: GridView.builder(
         shrinkWrap: true,
-        physics:  NeverScrollableScrollPhysics(),
-        gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+        physics: NeverScrollableScrollPhysics(),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
@@ -52,15 +52,14 @@ class UpdateProfileAvatar extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: isSelected ? AppColors.primaryColor : Colors.transparent,
+                  color: isSelected
+                      ? AppColors.primaryColor
+                      : Colors.transparent,
                   width: 3,
                 ),
               ),
               child: ClipOval(
-                child: Image.asset(
-                  avatars[index],
-                  fit: BoxFit.cover,
-                ),
+                child: Image.asset(avatars[index], fit: BoxFit.cover),
               ),
             ),
           );

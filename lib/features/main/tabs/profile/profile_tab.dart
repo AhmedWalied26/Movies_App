@@ -5,6 +5,7 @@ import 'package:movies_app/features/onboarding/widgets/custom_elevated_button.da
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/app_colors.dart';
+import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
 
@@ -56,7 +57,12 @@ class ProfileTab extends StatelessWidget {
                     Expanded(
                       flex: 3,
                       child: CustomElevatedButton(
-                        onPressedButton2: () {},
+                        onPressedButton2: () {
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.updateProfileScreen,
+                          );
+                        },
                         title: loc.edit_Profile,
                         style: AppStyles.regular20Black,
                       ),
