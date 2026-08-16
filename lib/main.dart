@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/Providers/Language_Provider.dart';
 import 'package:movies_app/features/onboarding/explore_screen.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
+import 'package:movies_app/update_Profile/update_Profile_screen.dart';
 import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_theme.dart';
 import 'package:provider/provider.dart';
@@ -25,11 +26,12 @@ class MoviesApp extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       locale: Locale(languageProvider.appLanguage),
       debugShowCheckedModeBanner: false,
-      routes: {AppRoutes.exploreScreen: (context) => ExploreScreen()},
-      initialRoute: AppRoutes.exploreScreen,
+      routes: {AppRoutes.updateProfileScreen: (context) => UpdateProfileScreen()},
+      initialRoute: AppRoutes.updateProfileScreen,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: .dark,
+
     );
   }
 }
