@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/features/auth/login/widgets/flags.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:movies_app/features/auth/login/widgets/text_field.dart';
-import 'package:movies_app/features/auth/login/widgets/word_button.dart';
 import 'package:movies_app/features/auth/register/widgets/customized_avatar.dart';
+import 'package:movies_app/features/onboarding/widgets/custom_elevated_button.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/app_colors.dart';
@@ -56,7 +56,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Column(
               children: [
                 const SizedBox(height: 5),
-
                 Row(
                   children: [
                     GestureDetector(
@@ -164,11 +163,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                 const SizedBox(height: 12),
 
-                WordButton(
-                  text: l10n.create_Account,
-                  onPressed: () {
-                    // TODO: Register
-                  },
+                CustomElevatedButton(
+                  onPressedButton2: () {},
+                  title: l10n.create_Account,
+                  style: AppStyles.semi20Black,
                 ),
 
                 const SizedBox(height: 9),
@@ -177,36 +175,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      '${l10n.already_Have_Account} ? ',
-                      style: AppStyles.regular12White.copyWith(fontSize: 6),
+                      '${l10n.already_Have_Account} ?',
+                      style: AppStyles.regular14White,
                     ),
-
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushReplacementNamed(
-                          context,
-                          AppRoutes.loginScreen,
-                        );
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, AppRoutes.loginScreen);
                       },
-                      child: Text(
-                        l10n.login,
-                        style: AppStyles.regular12White.copyWith(
-                          color: AppColors.primaryColor,
-                          fontSize: 6,
-                        ),
-                      ),
+                      child: Text(l10n.login, style: AppStyles.bold14Primary),
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 9),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Flag(countryCode: 'US'),
-                    const SizedBox(width: 4),
-                    Flag(countryCode: 'EG'),
+                    SvgPicture.asset(AppAssets.enIcon),
+                    const SizedBox(width: 2),
+                    SvgPicture.asset(AppAssets.arIcon),
                   ],
                 ),
 

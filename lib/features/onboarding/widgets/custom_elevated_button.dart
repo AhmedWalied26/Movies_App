@@ -6,12 +6,14 @@ class CustomElevatedButton extends StatelessWidget {
   final VoidCallback onPressedButton2;
   final Color? bgColor;
   final TextStyle style;
+  final Widget? child;
   const CustomElevatedButton({
     super.key,
     required this.onPressedButton2,
     required this.title,
     this.bgColor = AppColors.primaryColor,
     required this.style,
+    this.child,
   });
 
   @override
@@ -24,7 +26,14 @@ class CustomElevatedButton extends StatelessWidget {
         side: BorderSide(color: AppColors.primaryColor, width: 2),
       ),
       onPressed: onPressedButton2,
-      child: Text(title, style: style),
+      child: Row(
+        spacing: child == null ? 0 : 12,
+        mainAxisAlignment: .center,
+        children: [
+          child ?? SizedBox(),
+          Text(title, style: style),
+        ],
+      ),
     );
   }
 }

@@ -4,7 +4,6 @@ import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_styles.dart';
 
-
 class CustomizedTextField extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
@@ -27,8 +26,6 @@ class _CustomizedTextFieldState extends State<CustomizedTextField> {
   bool isPasswordVisible = false;
   @override
   Widget build(BuildContext context) {
-    // final width = MediaQuery.of(context).size.width;
-    // final height = MediaQuery.of(context).size.height;
     return SizedBox(
       height: 26,
       child: TextField(

@@ -25,7 +25,6 @@ class CustomContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var width = context.width;
     var height = context.height;
     return Stack(
       children: [

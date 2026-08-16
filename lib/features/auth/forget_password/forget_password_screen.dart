@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/features/auth/login/widgets/text_field.dart';
-import 'package:movies_app/features/auth/login/widgets/word_button.dart';
+import 'package:movies_app/features/onboarding/widgets/custom_elevated_button.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_styles.dart';
-
 
 class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({super.key});
@@ -39,7 +38,6 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
             child: Column(
               children: [
                 const SizedBox(height: 5),
-
                 Row(
                   children: [
                     GestureDetector(
@@ -86,7 +84,11 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
 
                 const SizedBox(height: 30),
 
-                WordButton(text: l10n.verify_Email, onPressed: () {}),
+                CustomElevatedButton(
+                  onPressedButton2: () {},
+                  title: l10n.verify_Email,
+                  style: AppStyles.semi20Black,
+                ),
               ],
             ),
           ),

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:movies_app/features/auth/login/widgets/flags.dart';
 import 'package:movies_app/features/auth/login/widgets/text_field.dart';
-import 'package:movies_app/features/auth/login/widgets/word_button.dart';
+import 'package:movies_app/features/onboarding/widgets/custom_elevated_button.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/app_colors.dart';
@@ -74,127 +73,80 @@ class _LoginScreenState extends State<LoginScreen> {
                             onTap: () {
                               Navigator.pushReplacementNamed(
                                 context,
-
                                 AppRoutes.forgotPasswordScreen,
                               );
                             },
                             child: Text(
                               '${l10n.forget_Password} ?',
-                              style: AppStyles.regular12White.copyWith(
-                                fontSize: 6,
-                                color: AppColors.primaryColor,
-                                //
-                              ),
+                              style: AppStyles.regular14Primary,
                             ),
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 15),
-
-                      WordButton(
-                        text: l10n.login,
-                        onPressed: () {
-                          // Login
-                        },
+                      CustomElevatedButton(
+                        onPressedButton2: () {},
+                        title: l10n.login,
+                        style: AppStyles.semi20Black,
                       ),
-
                       const SizedBox(height: 12),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            '${l10n.dont_Have_Account} ? ',
-                            style: AppStyles.regular12White.copyWith(
-                              fontSize: 6,
-                            ),
+                            '${l10n.dont_Have_Account} ?',
+                            style: AppStyles.regular14White,
                           ),
-
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushReplacementNamed(
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushNamed(
                                 context,
                                 AppRoutes.registerScreen,
                               );
                             },
                             child: Text(
                               l10n.create_One,
-                              style: AppStyles.bold14Primary.copyWith(
-                                fontSize: 6,
-                                color: AppColors.primaryColor,
-                              ),
+                              style: AppStyles.bold14Primary,
                             ),
                           ),
                         ],
                       ),
-
                       const SizedBox(height: 13),
-
                       Row(
                         children: [
                           const Expanded(
                             child: Divider(
                               color: AppColors.primaryColor,
                               thickness: 0.5,
+                              indent: 100,
+                              endIndent: 10,
                             ),
                           ),
-
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Text(
-                              l10n.oR,
-                              style: AppStyles.bold14Primary.copyWith(
-                                fontSize: 7,
-                                color: AppColors.primaryColor,
-                              ),
-                            ),
-                          ),
-
+                          Text(l10n.oR, style: AppStyles.bold14Primary),
                           const Expanded(
                             child: Divider(
                               color: AppColors.primaryColor,
                               thickness: 0.5,
+                              indent: 10,
+                              endIndent: 100,
                             ),
                           ),
                         ],
                       ),
-
                       const SizedBox(height: 13),
-
-                      WordButton(
-                        onPressed: () {
-                          // Google Login
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                              AppAssets.googleIcon,
-                              width: 15,
-                              height: 15,
-                            ),
-
-                            const SizedBox(width: 5),
-
-                            Text(
-                              l10n.login_With_Google,
-                              style: AppStyles.regular14Black.copyWith(
-                                fontSize: 7,
-                              ),
-                            ),
-                          ],
-                        ),
+                      CustomElevatedButton(
+                        onPressedButton2: () {},
+                        title: l10n.login_With_Google,
+                        style: AppStyles.regular16Black,
+                        child: SvgPicture.asset(AppAssets.googleIcon),
                       ),
-
                       const SizedBox(height: 14),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Flag(countryCode: 'US'),
+                          SvgPicture.asset(AppAssets.enIcon),
                           const SizedBox(width: 2),
-                          Flag(countryCode: 'EG'),
+                          SvgPicture.asset(AppAssets.arIcon),
                         ],
                       ),
                     ],

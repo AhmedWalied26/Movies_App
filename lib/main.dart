@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/Providers/Language_Provider.dart';
 import 'package:movies_app/features/onboarding/explore_screen.dart';
 import 'package:movies_app/features/onboarding/on_boarding_screens.dart';
-import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_theme.dart';
 import 'package:provider/provider.dart';
@@ -35,14 +34,10 @@ class MoviesApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         AppRoutes.exploreScreen: (context) => const ExploreScreen(),
-        // AppRoutes.onboardingScreen: (context) => const OnboardingScreen(),
         AppRoutes.loginScreen: (context) => const LoginScreen(),
         AppRoutes.registerScreen: (context) => const RegisterScreen(),
         AppRoutes.forgotPasswordScreen: (context) =>
             const ForgetPasswordScreen(),
-        // AppRoutes.movieDetailsScreen: (context) => const MovieDetailsScreen(),
-        // AppRoutes.updateProfileScreen: (context) => const UpdateProfileScreen(),
-     
         AppRoutes.onboardingScreen: (context) => OnBoardingScreens(),
       },
       initialRoute: AppRoutes.exploreScreen,

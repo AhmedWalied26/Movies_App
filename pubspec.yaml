@@ -41,7 +41,6 @@ dependencies:
   flutter_native_splash: ^2.4.7
   flutter_launcher_icons: ^0.14.4
   provider: ^6.1.5+1
-  country_flags: ^4.1.2
   avatar_plus: ^0.0.5
 
 dev_dependencies:
