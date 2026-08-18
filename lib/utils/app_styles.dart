@@ -29,6 +29,11 @@ class AppStyles {
     fontWeight: FontWeight.bold,
     color: AppColors.primaryColor,
   );
+  static TextStyle bold16Primary = GoogleFonts.inter(
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    color: AppColors.primaryColor,
+  );
 
   static TextStyle bold18Black = GoogleFonts.roboto(
     fontSize: 18,

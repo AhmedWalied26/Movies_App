@@ -43,7 +43,7 @@ class MoviesApp extends StatelessWidget {
         AppRoutes.loginScreen: (context) => const LoginScreen(),
         AppRoutes.registerScreen: (context) => const RegisterScreen(),
         AppRoutes.forgotPasswordScreen: (context) =>
-            const ForgetPasswordScreen(),
+        const ForgetPasswordScreen(),
         AppRoutes.onboardingScreen: (context) => OnBoardingScreens(),
         AppRoutes.browseScreen: (context) => BrowseTab(),
         AppRoutes.profileScreen: (context) => ProfileTab(),
