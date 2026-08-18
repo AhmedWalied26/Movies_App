@@ -64,7 +64,7 @@ class ProfileTab extends StatelessWidget {
                           );
                         },
                         title: loc.edit_Profile,
-                        style: AppStyles.regular20Black,
+                        style: AppStyles.regular20White,
                       ),
                     ),
                     Expanded(
@@ -123,5 +123,6 @@ class ProfileTab extends StatelessWidget {
         ),
       ),
     );
+    return Container();
   }
 }

@@ -43,22 +43,22 @@ class AppTheme {
       suffixIconColor: AppColors.lightSecondaryTextColor,
 
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(15),
         borderSide: BorderSide.none,
       ),
 
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(15),
         borderSide: BorderSide.none,
       ),
 
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(15),
         borderSide: const BorderSide(color: AppColors.primaryColor, width: 1.5),
       ),
 
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(15),
         borderSide: const BorderSide(color: AppColors.redColor),
       ),
     ),
@@ -108,29 +108,29 @@ class AppTheme {
       filled: true,
       fillColor: AppColors.darkGreyColor,
 
-      hintStyle: AppStyles.regular12Grey,
-      labelStyle: AppStyles.regular13White,
+      hintStyle: AppStyles.regular16White,
+      labelStyle: AppStyles.regular16White,
 
       prefixIconColor: AppColors.whiteColor,
       suffixIconColor: AppColors.whiteColor,
 
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(15),
         borderSide: BorderSide.none,
       ),
 
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(15),
         borderSide: BorderSide.none,
       ),
 
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-        borderSide: const BorderSide(color: AppColors.primaryColor, width: 1.5),
+        borderRadius: BorderRadius.circular(15),
+        borderSide: const BorderSide(color: AppColors.primaryColor),
       ),
 
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(15),
         borderSide: const BorderSide(color: AppColors.redColor),
       ),
     ),
