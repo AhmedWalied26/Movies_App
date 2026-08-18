@@ -49,7 +49,7 @@ class MoviesApp extends StatelessWidget {
         AppRoutes.profileScreen: (context) => ProfileTab(),
       },
 
-      initialRoute: AppRoutes.mainScreen,
+      initialRoute: AppRoutes.exploreScreen,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: .dark,
