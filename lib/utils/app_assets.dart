@@ -19,11 +19,14 @@ class AppAssets {
   static const String availableNowImage =
       'assets/images/available_now_image.png';
   static const String watchNowImage = 'assets/images/watch_now_image.png';
+  static const String movieImage = 'assets/images/movie_card_image.png';
   static const String emptyListImage = 'assets/images/empty_list_image.png';
   static const String forgetPasswordImage =
       'assets/images/forget_password_image.png';
-  static const String popCornImage = 'assets/svg/popcorn.svg';
 
+  static const String mainLogo = 'assets/images/main_logo.png';
+
+  static const String mainIcon = 'assets/svg/main_icon.svg';
   static const String appIcon = 'assets/svg/app_icon.svg';
   static const String arIcon = 'assets/svg/ar_icon.svg';
   static const String enIcon = 'assets/svg/en_icon.svg';
@@ -44,6 +47,7 @@ class AppAssets {
   static const String videoIcon = 'assets/svg/video_icon.svg';
   static const String visibleOffIcon = 'assets/svg/visible_off_icon.svg';
   static const String watchListIcon = 'assets/svg/watch_list_icon.svg';
+  static const String profileNameIcon = 'assets/svg/profile_name_icon.svg';
 
   static const String blackWidowMovie = 'assets/images/blackwidow.png';
   static const String jokerMovie = 'assets/images/joker.png';
