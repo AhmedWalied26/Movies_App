@@ -24,6 +24,7 @@ class ProfileTab extends StatelessWidget {
           color: AppColors.greyColor,
           child: Column(
             children: [
+              SizedBox(height: SizeConfig.height(context)*0.05),
               SizedBox(height: 50),
               Padding(
                 padding: const EdgeInsets.all(16),
@@ -65,6 +66,7 @@ class ProfileTab extends StatelessWidget {
                           );
                         },
                         title: loc.edit_Profile,
+                        style: AppStyles.regular20White,
                         style: AppStyles.regular20Black,
                       ),
                     ),
