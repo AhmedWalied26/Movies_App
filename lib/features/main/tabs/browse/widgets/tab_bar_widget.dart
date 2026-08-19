@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/features/main/widgets/movie_card_item.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_styles.dart';
@@ -63,6 +64,7 @@ class TabBarWidget extends StatelessWidget {
                     );
                   }).toList(),
                 ),
+                SizedBox(height: SizeConfig.height(context)*0.025),
                 SizedBox(height: 25),
                 GridView.builder(
                   shrinkWrap: true,
