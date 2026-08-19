@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/features/auth/login/custom_elevated_button.dart';
 import 'package:movies_app/features/auth/login/widgets/flags.dart';
+import 'package:movies_app/features/auth/login/widgets/language_switcher.dart';
 import 'package:movies_app/features/auth/login/widgets/text_field.dart';
 import 'package:movies_app/features/auth/login/widgets/word_button.dart';
 import 'package:movies_app/features/auth/register/widgets/customized_avatar.dart';
@@ -8,6 +10,11 @@ import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_styles.dart';
+import 'package:movies_app/features/auth/login/widgets/size_utils.dart';
+import 'package:movies_app/l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:movies_app/Providers/Language_Provider.dart';
+
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -43,84 +50,65 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
+    var height = context.height;
+    var width = context.width;
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.blackColor,
+        elevation: 0,
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: AppColors.primaryColor,
+            size: 16,
+          ),
+        ),
+        title: Text(l10n.register, style: AppStyles.regular16Primary),
+      ),
+
       backgroundColor: AppColors.blackColor,
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: size.width * .032),
+            padding: EdgeInsets.symmetric(horizontal: width * 0.016),
             child: Column(
               children: [
-                const SizedBox(height: 5),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: List.generate(avatarImages.length, (index) {
+                      final bool isSelected = index == selectedAvatarIndex;
 
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushReplacementNamed(
-                          context,
-                          AppRoutes.loginScreen,
-                        );
-                      },
-                      child: const Icon(
-                        Icons.arrow_back_ios_new,
-                        color: AppColors.primaryColor,
-                        size: 11,
-                      ),
-                    ),
-
-                    const Spacer(),
-
-                    Text(
-                      l10n.register,
-                      style: AppStyles.regular12White.copyWith(
-                        color: AppColors.primaryColor,
-                        fontSize: 8,
-                      ),
-                    ),
-
-                    const Spacer(),
-
-                    const SizedBox(width: 11),
-                  ],
+                      return Padding(
+                        padding: EdgeInsets.only(left: index == 0 ? 0 : 24),
+                        child: CustomizedAvatar(
+                          imagePath: avatarImages[index],
+                          size: isSelected ? 140 : 80,
+                          isSelected: isSelected,
+                          onTap: () {
+                            setState(() {
+                              selectedAvatarIndex = index;
+                            });
+                          },
+                        ),
+                      );
+                    }),
+                  ),
                 ),
+                SizedBox(height: height * 0.010),
 
-                const SizedBox(height: 15),
+                Text(l10n.avatar, style: AppStyles.regular16White),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: List.generate(avatarImages.length, (index) {
-                    final bool isSelected = index == selectedAvatarIndex;
-
-                    return Padding(
-                      padding: EdgeInsets.only(left: index == 0 ? 0 : 10),
-                      child: CustomizedAvatar(
-                        imagePath: avatarImages[index],
-                        size: isSelected ? 68 : 43,
-                        isSelected: isSelected,
-                        onTap: () {
-                          setState(() {
-                            selectedAvatarIndex = index;
-                          });
-                        },
-                      ),
-                    );
-                  }),
-                ),
-
-                const SizedBox(height: 5),
-
-                Text(
-                  l10n.avatar,
-                  style: AppStyles.regular12White.copyWith(fontSize: 7),
-                ),
-
-                const SizedBox(height: 12),
+                SizedBox(height: height * 0.010),
 
                 CustomizedTextField(
                   controller: nameController,
@@ -128,7 +116,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   prefixIcon: AppAssets.nameIcon,
                 ),
 
-                const SizedBox(height: 11),
+                SizedBox(height: height * 0.024),
 
                 CustomizedTextField(
                   controller: emailController,
@@ -136,7 +124,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   prefixIcon: AppAssets.emailIcon,
                 ),
 
-                const SizedBox(height: 11),
+                SizedBox(height: height * 0.024),
 
                 CustomizedTextField(
                   controller: passwordController,
@@ -145,7 +133,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   isPassword: true,
                 ),
 
-                const SizedBox(height: 11),
+                SizedBox(height: height * 0.024),
 
                 CustomizedTextField(
                   controller: confirmPasswordController,
@@ -154,7 +142,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   isPassword: true,
                 ),
 
-                const SizedBox(height: 11),
+                SizedBox(height: height * 0.024),
 
                 CustomizedTextField(
                   controller: phoneController,
@@ -162,15 +150,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   prefixIcon: AppAssets.phoneIcon,
                 ),
 
-                const SizedBox(height: 12),
+                SizedBox(height: height * 0.024),
 
-                WordButton(
-                  text: l10n.create_Account,
-                  onPressed: () {
-                    // TODO: Register
-                  },
+                CustomElevatedButton(
+                  onPressedButton2: () {},
+                  title: l10n.create_Account,
+                  style: AppStyles.regular20Black,
                 ),
-
                 const SizedBox(height: 9),
 
                 Row(
@@ -178,7 +164,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   children: [
                     Text(
                       '${l10n.already_Have_Account} ? ',
-                      style: AppStyles.regular12White.copyWith(fontSize: 6),
+                      style: AppStyles.regular14White,
                     ),
 
                     GestureDetector(
@@ -190,9 +176,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       },
                       child: Text(
                         l10n.login,
-                        style: AppStyles.regular12White.copyWith(
+                        style: AppStyles.bold14Primary.copyWith(
                           color: AppColors.primaryColor,
-                          fontSize: 6,
                         ),
                       ),
                     ),
@@ -200,17 +185,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
 
                 const SizedBox(height: 9),
+Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    Consumer<LanguageProvider>(
+      builder: (context, languageProvider, child) {
+        return LanguageSwitcher(
+          selectedLocale: Locale(languageProvider.appLanguage),
+          onLanguageChanged: (locale) {
+            languageProvider.ChangeLanguage(
+              locale.languageCode,
+            );
+          },
+        );
+      },
+    ),
+  ],
+),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Flag(countryCode: 'US'),
-                    const SizedBox(width: 4),
-                    Flag(countryCode: 'EG'),
-                  ],
-                ),
-
-                const SizedBox(height: 8),
+                SizedBox(height: height * 0.019),
               ],
             ),
           ),

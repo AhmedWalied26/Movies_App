@@ -1,94 +1,76 @@
-// import 'package:flutter/material.dart';
-// import 'package:movies/features/auth/login/widgets/flags.dart';
-// import 'package:movies/utils/app_colors.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:movies_app/utils/app_assets.dart';
+import 'package:movies_app/utils/app_colors.dart';
 
-// class LanguageSwitcher extends StatelessWidget {
-//   final Locale selectedLocale;
-//   final ValueChanged<Locale> onLanguageChanged;
+class LanguageSwitcher extends StatelessWidget {
+  final Locale selectedLocale;
+  final ValueChanged<Locale> onLanguageChanged;
 
-//   const LanguageSwitcher({
-//     super.key,
-//     required this.selectedLocale,
-//     required this.onLanguageChanged,
-//   });
+  const LanguageSwitcher({
+    super.key,
+    required this.selectedLocale,
+    required this.onLanguageChanged,
+  });
 
-//   bool get isEnglish => selectedLocale.languageCode == 'en';
+  bool get isEnglish => selectedLocale.languageCode == 'en';
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       width: 47,
-//       height: 21,
-//       padding: const EdgeInsets.all(1.5),
-//       decoration: BoxDecoration(
-//         border: Border.all(
-//           color: AppColors.primaryColor,
-//           width: 1.2,
-//         ),
-//         borderRadius: BorderRadius.circular(20),
-//       ),
-//       child: Stack(
-//         children: [
-//           AnimatedAlign(
-//             duration: const Duration(milliseconds: 200),
-//             curve: Curves.easeInOut,
-//             alignment:
-//                 isEnglish ? Alignment.centerLeft : Alignment.centerRight,
-//             child: Container(
-//               width: 18,
-//               height: 18,
-//               decoration: const BoxDecoration(
-//                 color: AppColors.primaryColor,
-//                 shape: BoxShape.circle,
-//               ),
-//               padding: const EdgeInsets.all(2),
-//               child: Flag(
-//                 countryCode: isEnglish ? 'US' : 'EG',
-//                 size: 14,
-//               ),
-//             ),
-//           ),
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 47,
+      height: 21,
+      padding: const EdgeInsets.all(1.5),
+      decoration: BoxDecoration(
+        border: Border.all(color: AppColors.primaryColor, width: 1.2),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        textDirection: TextDirection.ltr,
 
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: [
-//               GestureDetector(
-//                 behavior: HitTestBehavior.opaque,
-//                 onTap: () {
-//                   onLanguageChanged(const Locale('en'));
-//                 },
-//                 child: SizedBox(
-//                   width: 20,
-//                   height: 18,
-//                   child: Center(
-//                     child: Flag(
-//                       countryCode: 'US',
-//                       size: 14,
-//                     ),
-//                   ),
-//                 ),
-//               ),
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => onLanguageChanged(const Locale('en')),
+            child: Container(
+              width: 20,
+              height: 30,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: isEnglish
+                      ? AppColors.primaryColor
+                      : Colors.transparent,
+                  width: 1.5,
+                ),
+              ),
+              child: SvgPicture.asset(AppAssets.enIcon, width: 30, height: 30),
+            ),
+          ),
 
-//               GestureDetector(
-//                 behavior: HitTestBehavior.opaque,
-//                 onTap: () {
-//                   onLanguageChanged(const Locale('ar'));
-//                 },
-//                 child: SizedBox(
-//                   width: 20,
-//                   height: 18,
-//                   child: Center(
-//                     child: Flag(
-//                       countryCode: 'EG',
-//                       size: 14,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => onLanguageChanged(const Locale('ar')),
+            child: Container(
+              width: 20,
+              height: 18,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: !isEnglish
+                      ? AppColors.primaryColor
+                      : Colors.transparent,
+                  width: 1.5,
+                ),
+              ),
+              child: SvgPicture.asset(AppAssets.arIcon, width: 14, height: 14),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

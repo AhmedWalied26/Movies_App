@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/features/auth/login/custom_elevated_button.dart';
 import 'package:movies_app/features/auth/login/widgets/text_field.dart';
-import 'package:movies_app/features/auth/login/widgets/word_button.dart';
+import 'package:movies_app/features/auth/login/widgets/size_utils.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_styles.dart';
-
 
 class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({super.key});
@@ -26,57 +26,43 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
+    var height = context.height;
+    var width = context.width;
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
+    return
+  
+    Scaffold(
       backgroundColor: AppColors.blackColor,
+      appBar: AppBar(
+        backgroundColor: AppColors.blackColor,
+        elevation: 0,
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: AppColors.primaryColor,
+            size: 16,
+          ),
+        ),
+        title: Text(l10n.forget_Password, style: AppStyles.regular16Primary),
+      ),
+     
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: size.width * .032),
+            padding: EdgeInsets.symmetric(horizontal: width * 0.016),
             child: Column(
               children: [
-                const SizedBox(height: 5),
-
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushReplacementNamed(
-                          context,
-                          AppRoutes.loginScreen,
-                        );
-                      },
-                      child: const Icon(
-                        Icons.arrow_back_ios_new,
-                        color: AppColors.primaryColor,
-                        size: 11,
-                      ),
-                    ),
-
-                    const Spacer(),
-
-                    Text(
-                      l10n.forget_Password,
-                      style: AppStyles.regular12White.copyWith(
-                        color: AppColors.primaryColor,
-                        fontSize: 8,
-                      ),
-                    ),
-
-                    const Spacer(),
-
-                    const SizedBox(width: 11),
-                  ],
-                ),
-
                 const SizedBox(height: 15),
 
                 Image.asset(AppAssets.forgetPasswordImage),
 
-                const SizedBox(height: 11),
+                SizedBox(height: height * 0.024),
 
                 CustomizedTextField(
                   controller: emailController,
@@ -84,9 +70,13 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   prefixIcon: AppAssets.emailIcon,
                 ),
 
-                const SizedBox(height: 30),
+                SizedBox(height: height * 0.024),
 
-                WordButton(text: l10n.verify_Email, onPressed: () {}),
+                CustomElevatedButton(
+                  onPressedButton2: () {},
+                  title: l10n.verify_Email,
+                  style: AppStyles.regular20Black,
+                ),
               ],
             ),
           ),

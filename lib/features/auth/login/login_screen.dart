@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:movies_app/features/auth/login/widgets/flags.dart';
+import 'package:movies_app/Providers/Language_Provider.dart';
+import 'package:movies_app/features/auth/login/custom_elevated_button.dart';
+import 'package:movies_app/features/auth/login/widgets/google_button.dart';
+import 'package:movies_app/features/auth/login/widgets/language_switcher.dart';
+import 'package:movies_app/features/auth/login/widgets/size_utils.dart';
 import 'package:movies_app/features/auth/login/widgets/text_field.dart';
-import 'package:movies_app/features/auth/login/widgets/word_button.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_styles.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -32,7 +35,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-
+    var height = context.height;
+    var width = context.width;
     return Scaffold(
       backgroundColor: AppColors.blackColor,
       body: SafeArea(
@@ -40,16 +44,14 @@ class _LoginScreenState extends State<LoginScreen> {
           builder: (context, constraints) {
             return SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 19),
+                padding: EdgeInsets.symmetric(horizontal: width * 0.019),
                 child: ConstrainedBox(
                   constraints: BoxConstraints(minHeight: constraints.maxHeight),
                   child: Column(
                     children: [
                       const SizedBox(height: 24),
-
-                      Image.asset(AppAssets.mainLogo, width: 100, height: 100),
-
-                      const SizedBox(height: 27),
+                      Image.asset(AppAssets.mainLogo, width: 121, height: 118),
+                      SizedBox(height: height * 0.069),
 
                       CustomizedTextField(
                         controller: emailController,
@@ -57,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         prefixIcon: AppAssets.emailIcon,
                       ),
 
-                      const SizedBox(height: 10),
+                      SizedBox(height: height * 0.022),
 
                       CustomizedTextField(
                         controller: passwordController,
@@ -65,11 +67,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         prefixIcon: AppAssets.passwordIcon,
                         isPassword: true,
                       ),
+                      SizedBox(height: height * 0.017),
 
                       Align(
                         alignment: Alignment.centerRight,
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 5, right: 2),
+                          padding: EdgeInsets.only(
+                            top: height * 0.0017,
+                          ),
                           child: GestureDetector(
                             onTap: () {
                               Navigator.pushReplacementNamed(
@@ -80,11 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             child: Text(
                               '${l10n.forget_Password} ?',
-                              style: AppStyles.regular12White.copyWith(
-                                fontSize: 6,
-                                color: AppColors.primaryColor,
-                                //
-                              ),
+                              style: AppStyles.regular14Primary,
                             ),
                           ),
                         ),
@@ -92,13 +93,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       const SizedBox(height: 15),
 
-                      WordButton(
-                        text: l10n.login,
-                        onPressed: () {
-                          // Login
+                     
+                      CustomElevatedButton(
+                        onPressedButton2: () {
+                      
                         },
+                        title: l10n.login,
+                        style: AppStyles.regular20Black,
                       ),
-
                       const SizedBox(height: 12),
 
                       Row(
@@ -106,9 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           Text(
                             '${l10n.dont_Have_Account} ? ',
-                            style: AppStyles.regular12White.copyWith(
-                              fontSize: 6,
-                            ),
+                            style: AppStyles.regular14White,
                           ),
 
                           GestureDetector(
@@ -121,7 +121,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Text(
                               l10n.create_One,
                               style: AppStyles.bold14Primary.copyWith(
-                                fontSize: 6,
                                 color: AppColors.primaryColor,
                               ),
                             ),
@@ -129,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
 
-                      const SizedBox(height: 13),
+                      SizedBox(height: height * 0.027),
 
                       Row(
                         children: [
@@ -144,10 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Text(
                               l10n.oR,
-                              style: AppStyles.bold14Primary.copyWith(
-                                fontSize: 7,
-                                color: AppColors.primaryColor,
-                              ),
+                              style: AppStyles.regular16Primary,
                             ),
                           ),
 
@@ -160,43 +156,28 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
 
-                      const SizedBox(height: 13),
+                      SizedBox(height: height * 0.027),
 
-                      WordButton(
-                        onPressed: () {
-                          // Google Login
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                              AppAssets.googleIcon,
-                              width: 15,
-                              height: 15,
-                            ),
-
-                            const SizedBox(width: 5),
-
-                            Text(
-                              l10n.login_With_Google,
-                              style: AppStyles.regular14Black.copyWith(
-                                fontSize: 7,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      const SizedBox(height: 14),
+                      GoogleButton(),
+                      SizedBox(height: height * 0.033),
 
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Flag(countryCode: 'US'),
-                          const SizedBox(width: 2),
-                          Flag(countryCode: 'EG'),
-                        ],
-                      ),
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    Consumer<LanguageProvider>(
+      builder: (context, languageProvider, child) {
+        return LanguageSwitcher(
+          selectedLocale: Locale(languageProvider.appLanguage),
+          onLanguageChanged: (locale) {
+            languageProvider.ChangeLanguage(
+              locale.languageCode,
+            );
+          },
+        );
+      },
+    ),
+  ],
+),
                     ],
                   ),
                 ),
