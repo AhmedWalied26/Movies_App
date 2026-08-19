@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/features/onboarding/widgets/custom_container.dart';
-import 'package:movies_app/l10n/app_localizations_ar.dart';
+import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/app_routes.dart';
 

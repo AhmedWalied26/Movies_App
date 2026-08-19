@@ -1,177 +1,174 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-import 'package:movies_app/l10n/app_localizations_ar.dart';
+import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
 
-/// The translations for Arabic (`ar`).
-class AppLocalizationsAr extends AppLocalizations {
-  AppLocalizationsAr([String locale = 'ar']) : super(locale);
+/// The translations for English (`en`).
+class AppLocalizationsEn extends AppLocalizations {
+  AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get find_Your_Next => 'اعثر على فيلمك ';
+  String get find_Your_Next => 'Find Your Next \n Favorite Movie Here';
 
   @override
   String get get_access_to_a_huge =>
-      'احصل على إمكانية الوصول إلى مكتبة ضخمة من الأفلام\nتناسب جميع الأذواق. بالتأكيد ستجد ما يعجبك.';
+      'Get access to a huge library of movies \n to suit all tastes. You will surely like it.';
 
   @override
-  String get explore_Now => 'استكشف الآن';
+  String get explore_Now => 'Explore Now';
 
   @override
-  String get discover_Movies => 'اكتشف الأفلام';
+  String get discover_Movies => 'Discover Movies';
 
   @override
   String get explore_a_vast_collection =>
-      'استكشف مجموعة ضخمة من الأفلام بجميع\nالجودات والأنواع. اعثر على فيلمك المفضل\nالقادم بسهولة.';
+      'Explore a vast collection of movies in all \n qualities and genres. Find your next \n favorite film with ease.';
 
   @override
-  String get next => 'التالي';
+  String get next => 'Next';
 
   @override
-  String get explore_All_Genres => 'استكشف جميع الأنواع';
+  String get explore_All_Genres => 'Explore All Genres';
 
   @override
   String get discover_movies_from_every_genre =>
-      'اكتشف أفلامًا من جميع الأنواع، وبجميع\nالجودات المتاحة. اكتشف شيئًا جديدًا\nوممتعًا لمشاهدته كل يوم.';
+      'Discover movies from every genre, in all \n available qualities. Find something new \n and exciting to watch every day.';
 
   @override
-  String get back => 'رجوع';
+  String get back => 'Back';
 
   @override
-  String get create_Watchlists => 'أنشئ قوائم المشاهدة';
+  String get create_Watchlists => 'Create Watchlists';
 
   @override
   String get save_movies_to_your_watchlist =>
-      'احفظ الأفلام في قائمة المشاهدة الخاصة بك\nلتتبع ما تريد مشاهدته لاحقًا.\nاستمتع بالأفلام بجودات وأنواع مختلفة.';
+      'Save movies to your watchlist to keep \n track of what you want to watch next. \n Enjoy films in various qualities and \n genres.';
 
   @override
-  String get rate_Review => 'قيّم، راجع، وتعلّم';
+  String get rate_Review => 'Rate, Review, and Learn';
 
   @override
   String get share_your_thoughts =>
-      'شارك أفكارك حول الأفلام التي شاهدتها.\nتعمق في تفاصيل الأفلام وساعد الآخرين\nعلى اكتشاف أفلام رائعة من خلال مراجعاتك.';
+      'Share your thoughts on the movies \n you\'ve watched. Dive deep into film \n details and help others discover great \n movies with your reviews.';
 
   @override
-  String get start_Watching_Now => 'ابدأ المشاهدة الآن';
+  String get start_Watching_Now => 'Start Watching Now';
 
   @override
-  String get finish => 'إنهاء';
+  String get finish => 'Finish';
 
   @override
-  String get email => 'البريد الإلكتروني';
+  String get email => 'Email';
 
   @override
-  String get password => 'كلمة المرور';
+  String get password => 'Password';
 
   @override
-  String get forget_Password => 'نسيت كلمة المرور';
+  String get forget_Password => 'Forget Password';
 
   @override
-  String get login => 'تسجيل الدخول';
+  String get login => 'Login';
 
   @override
-  String get dont_Have_Account => 'ليس لديك حساب';
+  String get dont_Have_Account => 'Don’t Have Account';
 
   @override
-  String get create_One => 'إنشاء حساب';
+  String get create_One => 'Create One';
 
   @override
-  String get oR => 'أو';
+  String get oR => 'OR';
 
   @override
-  String get login_With_Google => 'تسجيل الدخول باستخدام Google';
+  String get login_With_Google => 'Login With Google';
 
   @override
-  String get register => 'إنشاء حساب';
+  String get register => 'Register';
 
   @override
-  String get avatar => 'الصورة الشخصية';
+  String get avatar => 'Avatar';
 
   @override
-  String get name => 'الاسم';
+  String get name => 'Name';
 
   @override
-  String get confirm_Password => 'تأكيد كلمة المرور';
+  String get confirm_Password => 'Confirm Password';
 
   @override
-  String get phone_Number => 'رقم الهاتف';
+  String get phone_Number => 'Phone Number';
 
   @override
-  String get create_Account => 'إنشاء حساب';
+  String get create_Account => 'Create Account';
 
   @override
-  String get already_Have_Account => 'لديك حساب بالفعل';
+  String get already_Have_Account => 'Already Have Account';
 
   @override
-  String get verify_Email => 'تأكيد البريد الإلكتروني';
+  String get verify_Email => 'Verify Email';
 
   @override
-  String get action => 'أكشن';
+  String get action => 'Action';
 
   @override
-  String get see_More => 'عرض المزيد';
+  String get see_More => 'See More';
 
   @override
-  String get doctor_Strange => 'دكتور سترينج في عالم الأكوان المتعددة المجنون';
+  String get doctor_Strange => 'Doctor Strange in the Multiverse of Madness';
 
   @override
-  String get watch => 'مشاهدة';
+  String get watch => 'Watch';
 
   @override
-  String get search => 'بحث';
+  String get search => 'Search';
 
   @override
-  String get edit_Profile => 'تعديل الملف الشخصي';
+  String get edit_Profile => 'Edit Profile';
 
   @override
-  String get exit => 'خروج';
+  String get exit => 'Exit';
 
   @override
-  String get watch_List => 'قائمة المشاهدة';
+  String get watch_List => 'Watch List';
 
   @override
-  String get history => 'السجل';
+  String get history => 'History';
 
   @override
-  String get pick_Avatar => 'اختر صورة شخصية';
+  String get pick_Avatar => 'Pick Avatar';
 
   @override
-  String get reset_Password => 'إعادة تعيين كلمة المرور';
+  String get reset_Password => 'Reset Password';
 
   @override
-  String get delete_Account => 'حذف الحساب';
+  String get delete_Account => 'Delete Account';
 
   @override
-  String get update_Data => 'تحديث البيانات';
+  String get update_Data => 'Update Data';
 
   @override
-  String get horror => 'رعب';
+  String get horror => 'Horror';
 
   @override
-  String get comedy => 'كوميديا';
+  String get comedy => 'Comedy';
 
   @override
-  String get drama => 'دراما';
+  String get drama => 'Drama';
 
   @override
-  String get sci_fi => 'خيال علمي';
+  String get sci_fi => 'Sci-Fi';
 
   @override
-  String get fantasy => 'فانتازيا';
+  String get fantasy => 'Fantasy';
 
   @override
-  String get romance => 'رومانسي';
+  String get romance => 'Romance';
 
   @override
-  String get crime => 'جريمة';
+  String get crime => 'Crime';
 
   @override
-  String get adventure => 'مغامرة';
+  String get adventure => 'Adventure';
 
   @override
-  String get wish_list => 'قائمة الرغبات';
-
-  @override
-  String get favorite_Movie_Here => 'المفضل القادم هنا';
+  String get wish_list => 'wish List';
 }
