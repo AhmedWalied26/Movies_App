@@ -4,13 +4,13 @@ import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
-import 'package:movies_app/widgets/movie_card_item.dart';
 
 class TabBarWidget extends StatelessWidget {
   const TabBarWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var height = context.height;
     final loc = AppLocalizations.of(context)!;
 
     final tabs = [
@@ -35,6 +35,7 @@ class TabBarWidget extends StatelessWidget {
             padding: .only(bottom: context.height * 0.1),
             child: Column(
               children: [
+                SizedBox(height: height * 0.012),
                 TabBar(
                   labelPadding: .symmetric(horizontal: 6),
                   dividerColor: Colors.transparent,
@@ -64,8 +65,7 @@ class TabBarWidget extends StatelessWidget {
                     );
                   }).toList(),
                 ),
-                SizedBox(height: SizeConfig.height(context)*0.025),
-                SizedBox(height: 25),
+                SizedBox(height: SizeConfig.height(context) * 0.025),
                 GridView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
