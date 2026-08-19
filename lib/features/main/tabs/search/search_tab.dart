@@ -18,7 +18,10 @@ class SearchTab extends StatelessWidget {
           children: [
             CustomTextField(
               title: AppLocalizations.of(context)!.search,
-              prefix: SvgPicture.asset(AppAssets.searchIcon),
+              prefix: Padding(
+                padding: EdgeInsetsDirectional.only(start: width * 0.025),
+                child: SvgPicture.asset(AppAssets.searchIcon),
+              ),
             ),
             Expanded(
               child: Center(child: Image.asset(AppAssets.emptyListImage)),

@@ -14,6 +14,7 @@ class ProfileTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var height = context.height;
     final loc = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: AppColors.darkBlackColor,
@@ -83,6 +84,7 @@ class ProfileTab extends StatelessWidget {
               ),
               SizedBox(height: SizeConfig.height(context) * 0.02),
               TabBar(
+                labelPadding: .only(bottom: height * 0.012),
                 dividerColor: Colors.transparent,
                 unselectedLabelColor: AppColors.primaryColor,
                 indicatorColor: AppColors.primaryColor,
@@ -103,14 +105,14 @@ class ProfileTab extends StatelessWidget {
                   children: [
                     Container(
                       width: double.infinity,
-                      color: AppColors.darkBlackColor,
+                      color: AppColors.blackColor,
                       child: Center(
                         child: Image.asset(AppAssets.emptyListImage),
                       ),
                     ),
                     Container(
                       width: double.infinity,
-                      color: AppColors.darkBlackColor,
+                      color: AppColors.blackColor,
                       child: Center(
                         child: Image.asset(AppAssets.emptyListImage),
                       ),

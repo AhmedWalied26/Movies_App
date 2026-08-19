@@ -27,12 +27,6 @@ class CustomizedAvatar extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: AppColors.darkGreyColor,
-          border: isSelected
-              ? Border.all(
-                  color: AppColors.primaryColor,
-                  width: 1,
-                )
-              : null,
         ),
         child: ClipOval(
           child: Image.asset(

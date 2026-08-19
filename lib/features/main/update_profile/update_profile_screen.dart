@@ -56,91 +56,66 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        toolbarHeight: 40,
         leading: IconButton(
           padding: EdgeInsets.zero,
-          icon: Icon(
-            Icons.arrow_back,
-            color: AppColors.primaryColor,
-          ),
+          icon: Icon(Icons.arrow_back, color: AppColors.primaryColor),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
-          l.pick_Avatar,
-          style: AppStyles.bold16Primary,
-        ),
+        title: Text(l.pick_Avatar, style: AppStyles.bold16Primary),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: width * 0.04,
           vertical: height * 0.02,
         ),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: height * 0.00),
-              Center(
-                child: GestureDetector(
-                  onTap: _showAvatarBottomSheet,
-                  child: Image.asset(
-                    selectedAvatar,
-                    width: 130,
-                    height: 130,
-                    fit: BoxFit.cover,
-                  ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: GestureDetector(
+                onTap: _showAvatarBottomSheet,
+                child: Image.asset(
+                  selectedAvatar,
+                  height: height * 0.13,
+                  fit: BoxFit.cover,
                 ),
               ),
-              SizedBox(height: height * 0.02),
+            ),
+            SizedBox(height: height * 0.02),
 
-              SizedBox(
-                height: 50,
-                child: CustomTextField(
-                  title: l.name,
-                  prefix: SvgPicture.asset(AppAssets.profileNameIcon),
-                ),
-              ),
+            CustomTextField(
+              title: l.name,
+              prefix: SvgPicture.asset(AppAssets.profileNameIcon),
+            ),
 
-              SizedBox(height: height * 0.02),
+            SizedBox(height: height * 0.02),
 
-              SizedBox(
-                height: 50,
-                child: CustomTextField(
-                  title: l.phone_Number,
-                  prefix: SvgPicture.asset(AppAssets.phoneIcon),
-                ),
-              ),
+            CustomTextField(
+              title: l.phone_Number,
+              prefix: SvgPicture.asset(AppAssets.phoneIcon),
+            ),
 
-              SizedBox(height: height * 0.01),
-              TextButton(
-                onPressed: () {},
-                child: Text(l.reset_Password, style: AppStyles.bold16White),
-              ),
+            SizedBox(height: height * 0.01),
+            TextButton(
+              onPressed: () {},
+              child: Text(l.reset_Password, style: AppStyles.bold16White),
+            ),
+            Spacer(),
+            CustomElevatedButton(
+              bgColor: AppColors.redColor,
+              onPressedButton2: () {},
+              title: l.delete_Account,
+              style: AppStyles.regular20White,
+            ),
 
-              SizedBox(height: height * 0.25),
-
-              SizedBox(
-                height: 51,
-                child: CustomElevatedButton(
-                  bgColor: AppColors.redColor,
-                  onPressedButton2: () {},
-                  title: l.delete_Account,
-                  style: AppStyles.regular20White,
-                ),
-              ),
-
-              SizedBox(height: height * 0.02),
-
-              SizedBox(
-                height: 51,
-                child: CustomElevatedButton(
-                  onPressedButton2: () {},
-                  title: l.update_Data,
-                  style: AppStyles.regular20Black,
-                ),
-              ),
-            ],
-          ),
+            SizedBox(height: height * 0.019),
+            CustomElevatedButton(
+              onPressedButton2: () {},
+              title: l.update_Data,
+              style: AppStyles.regular20Black,
+            ),
+            SizedBox(height: height * 0.01),
+          ],
         ),
       ),
     );

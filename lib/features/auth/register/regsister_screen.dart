@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:movies_app/features/auth/login/widgets/text_field.dart';
 import 'package:movies_app/features/auth/register/widgets/customized_avatar.dart';
 import 'package:movies_app/features/onboarding/widgets/custom_elevated_button.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
@@ -8,6 +7,8 @@ import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_styles.dart';
+import 'package:movies_app/utils/size_utils.dart';
+import 'package:movies_app/widgets/custom_text_field.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -43,21 +44,120 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
+    var height = context.height;
+    var width = context.width;
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.blackColor,
+        elevation: 0,
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
+          },
+          icon: const Icon(Icons.arrow_back, color: AppColors.primaryColor),
+        ),
+        title: Text(l10n.register, style: AppStyles.regular16Primary),
+      ),
+
       backgroundColor: AppColors.blackColor,
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: size.width * .032),
+            padding: EdgeInsets.symmetric(horizontal: width * 0.024),
             child: Column(
               children: [
-                const SizedBox(height: 5),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: List.generate(avatarImages.length, (index) {
+                      final bool isSelected = index == selectedAvatarIndex;
+
+                      return Padding(
+                        padding: EdgeInsets.only(left: index == 0 ? 0 : 24),
+                        child: CustomizedAvatar(
+                          imagePath: avatarImages[index],
+                          size: isSelected ? 140 : 80,
+                          isSelected: isSelected,
+                          onTap: () {
+                            setState(() {
+                              selectedAvatarIndex = index;
+                            });
+                          },
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+                SizedBox(height: height * 0.010),
+
+                Text(l10n.avatar, style: AppStyles.regular16White),
+
+                SizedBox(height: height * 0.010),
+
+                CustomTextField(
+                  title: l10n.name,
+                  prefix: SvgPicture.asset(AppAssets.nameIcon),
+                ),
+
+                SizedBox(height: height * 0.024),
+
+                CustomTextField(
+                  title: l10n.email,
+                  prefix: SvgPicture.asset(AppAssets.emailIcon),
+                ),
+
+                SizedBox(height: height * 0.024),
+
+                CustomTextField(
+                  title: l10n.password,
+                  prefix: SvgPicture.asset(AppAssets.passwordIcon),
+                  suffix: IconButton(
+                    onPressed: () {},
+                    icon: SvgPicture.asset(AppAssets.visibleOffIcon),
+                  ),
+                ),
+
+                SizedBox(height: height * 0.024),
+
+                CustomTextField(
+                  title: l10n.confirm_Password,
+                  prefix: SvgPicture.asset(AppAssets.passwordIcon),
+                  suffix: IconButton(
+                    onPressed: () {},
+                    icon: SvgPicture.asset(AppAssets.visibleOffIcon),
+                  ),
+                ),
+
+                SizedBox(height: height * 0.024),
+
+                CustomTextField(
+                  title: l10n.phone_Number,
+                  prefix: SvgPicture.asset(AppAssets.phoneIcon),
+                ),
+
+                SizedBox(height: height * 0.024),
+
+                CustomElevatedButton(
+                  onPressedButton2: () {},
+                  title: l10n.create_Account,
+                  style: AppStyles.regular20Black,
+                ),
+                SizedBox(height: height * 0.017),
+
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Text(
+                      '${l10n.already_Have_Account} ? ',
+                      style: AppStyles.regular14White,
+                    ),
+
                     GestureDetector(
                       onTap: () {
                         Navigator.pushReplacementNamed(
@@ -65,138 +165,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           AppRoutes.loginScreen,
                         );
                       },
-                      child: const Icon(
-                        Icons.arrow_back_ios_new,
-                        color: AppColors.primaryColor,
-                        size: 11,
+                      child: Text(
+                        l10n.login,
+                        style: AppStyles.bold14Primary.copyWith(
+                          color: AppColors.primaryColor,
+                        ),
                       ),
-                    ),
-
-                    const Spacer(),
-
-                    Text(
-                      l10n.register,
-                      style: AppStyles.regular12White.copyWith(
-                        color: AppColors.primaryColor,
-                        fontSize: 8,
-                      ),
-                    ),
-
-                    const Spacer(),
-
-                    const SizedBox(width: 11),
-                  ],
-                ),
-
-                const SizedBox(height: 15),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: List.generate(avatarImages.length, (index) {
-                    final bool isSelected = index == selectedAvatarIndex;
-
-                    return Padding(
-                      padding: EdgeInsets.only(left: index == 0 ? 0 : 10),
-                      child: CustomizedAvatar(
-                        imagePath: avatarImages[index],
-                        size: isSelected ? 68 : 43,
-                        isSelected: isSelected,
-                        onTap: () {
-                          setState(() {
-                            selectedAvatarIndex = index;
-                          });
-                        },
-                      ),
-                    );
-                  }),
-                ),
-
-                const SizedBox(height: 5),
-
-                Text(
-                  l10n.avatar,
-                  style: AppStyles.regular12White.copyWith(fontSize: 7),
-                ),
-
-                const SizedBox(height: 12),
-
-                CustomizedTextField(
-                  controller: nameController,
-                  hintText: l10n.name,
-                  prefixIcon: AppAssets.nameIcon,
-                ),
-
-                const SizedBox(height: 11),
-
-                CustomizedTextField(
-                  controller: emailController,
-                  hintText: l10n.email,
-                  prefixIcon: AppAssets.emailIcon,
-                ),
-
-                const SizedBox(height: 11),
-
-                CustomizedTextField(
-                  controller: passwordController,
-                  hintText: l10n.password,
-                  prefixIcon: AppAssets.passwordIcon,
-                  isPassword: true,
-                ),
-
-                const SizedBox(height: 11),
-
-                CustomizedTextField(
-                  controller: confirmPasswordController,
-                  hintText: l10n.confirm_Password,
-                  prefixIcon: AppAssets.passwordIcon,
-                  isPassword: true,
-                ),
-
-                const SizedBox(height: 11),
-
-                CustomizedTextField(
-                  controller: phoneController,
-                  hintText: l10n.phone_Number,
-                  prefixIcon: AppAssets.phoneIcon,
-                ),
-
-                const SizedBox(height: 12),
-
-                CustomElevatedButton(
-                  onPressedButton2: () {},
-                  title: l10n.create_Account,
-                  style: AppStyles.semi20Black,
-                ),
-
-                const SizedBox(height: 9),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '${l10n.already_Have_Account} ?',
-                      style: AppStyles.regular14White,
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, AppRoutes.loginScreen);
-                      },
-                      child: Text(l10n.login, style: AppStyles.bold14Primary),
                     ),
                   ],
                 ),
-                const SizedBox(height: 9),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(AppAssets.enIcon),
-                    const SizedBox(width: 2),
-                    SvgPicture.asset(AppAssets.arIcon),
-                  ],
-                ),
+                SizedBox(height: height * 0.018),
 
-                const SizedBox(height: 8),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: .circular(30),
+                    border: .all(color: AppColors.primaryColor, width: 3),
+                  ),
+                  child: Row(
+                    mainAxisSize: .min,
+                    spacing: width * 0.03,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(AppAssets.enIcon),
+                      SvgPicture.asset(AppAssets.arIcon),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

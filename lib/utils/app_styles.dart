@@ -156,6 +156,11 @@ class AppStyles {
     fontWeight: FontWeight.w400,
     color: AppColors.whiteColor,
   );
+  static TextStyle regular16Primary = GoogleFonts.roboto(
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    color: AppColors.primaryColor,
+  );
 
   static TextStyle regular12White = GoogleFonts.roboto(
     fontSize: 12,

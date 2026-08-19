@@ -43,7 +43,7 @@ class CustomTextField extends StatelessWidget {
         hintText: title,
         prefixIcon: Padding(
           padding: EdgeInsetsDirectional.only(
-            start: width * 0.045,
+            start: width * 0.025,
             end: width * 0.02,
           ),
           child: prefix,

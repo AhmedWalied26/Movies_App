@@ -3,7 +3,6 @@ import 'package:movies_app/features/auth/login/login_screen.dart';
 import 'package:movies_app/features/auth/register/regsister_screen.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_app/Providers/Language_Provider.dart';
 import 'package:movies_app/features/main/tabs/browse/browse_tab.dart';
 import 'package:movies_app/features/main/tabs/profile/profile_tab.dart';
 import 'package:movies_app/features/main/main_screen.dart';
@@ -12,17 +11,9 @@ import 'package:movies_app/features/main/update_profile/update_profile_screen.da
 import 'package:movies_app/features/onboarding/on_boarding_screens.dart';
 import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_theme.dart';
-import 'package:provider/provider.dart';
 
 void main() {
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => LanguageProvider()),
-      ],
-      child: const MoviesApp(),
-    ),
-  );
+  runApp(const MoviesApp());
 }
 
 class MoviesApp extends StatelessWidget {
@@ -30,11 +21,9 @@ class MoviesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var languageProvider = Provider.of<LanguageProvider>(context);
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      locale: Locale(languageProvider.appLanguage),
       debugShowCheckedModeBanner: false,
       routes: {
         AppRoutes.updateProfileScreen: (context) => UpdateProfileScreen(),
@@ -43,7 +32,7 @@ class MoviesApp extends StatelessWidget {
         AppRoutes.loginScreen: (context) => const LoginScreen(),
         AppRoutes.registerScreen: (context) => const RegisterScreen(),
         AppRoutes.forgotPasswordScreen: (context) =>
-        const ForgetPasswordScreen(),
+            const ForgetPasswordScreen(),
         AppRoutes.onboardingScreen: (context) => OnBoardingScreens(),
         AppRoutes.browseScreen: (context) => BrowseTab(),
         AppRoutes.profileScreen: (context) => ProfileTab(),
