@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/features/main/tabs/profile/widgets/custom_column.dart';
-import 'package:movies_app/features/onboarding/widgets/custom_elevated_button.dart';
+import 'package:movies_app/widgets/custom_elevated_button.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/app_colors.dart';
@@ -15,6 +15,7 @@ class ProfileTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var height = context.height;
+    var width = context.width;
     final loc = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: AppColors.darkBlackColor,
@@ -26,7 +27,7 @@ class ProfileTab extends StatelessWidget {
             children: [
               SizedBox(height: SizeConfig.height(context) * 0.05),
               Padding(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(width * 0.035),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -37,8 +38,7 @@ class ProfileTab extends StatelessWidget {
                           borderRadius: BorderRadius.circular(40),
                           child: Image.asset(
                             AppAssets.profileImage8,
-                            width: 118,
-                            height: 118,
+                            height: height * 0.118,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -51,7 +51,7 @@ class ProfileTab extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: EdgeInsets.symmetric(horizontal: width * 0.035),
                 child: Row(
                   spacing: 10,
                   children: [

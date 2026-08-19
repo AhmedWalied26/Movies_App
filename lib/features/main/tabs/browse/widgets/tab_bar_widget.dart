@@ -11,6 +11,7 @@ class TabBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var height = context.height;
+    var width = context.width;
     final loc = AppLocalizations.of(context)!;
 
     final tabs = [
@@ -37,7 +38,7 @@ class TabBarWidget extends StatelessWidget {
               children: [
                 SizedBox(height: height * 0.012),
                 TabBar(
-                  labelPadding: .symmetric(horizontal: 6),
+                  labelPadding: .symmetric(horizontal: width * 0.012),
                   dividerColor: Colors.transparent,
                   tabAlignment: TabAlignment.start,
                   isScrollable: true,
@@ -52,7 +53,10 @@ class TabBarWidget extends StatelessWidget {
                   tabs: tabs.map((label) {
                     return Tab(
                       child: Container(
-                        padding: .symmetric(vertical: 8, horizontal: 16),
+                        padding: .symmetric(
+                          vertical: height * 0.008,
+                          horizontal: width * 0.035,
+                        ),
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: AppColors.primaryColor,
@@ -69,7 +73,7 @@ class TabBarWidget extends StatelessWidget {
                 GridView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  padding: .symmetric(horizontal: 8),
+                  padding: .symmetric(horizontal: width * 0.016),
                   itemCount: 10,
                   itemBuilder: (context, index) {
                     return MovieCardItem();
