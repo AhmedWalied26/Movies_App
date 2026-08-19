@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/features/main/tabs/profile/widgets/custom_column.dart';
-import 'package:movies_app/features/main/tabs/profile/widgets/custom_elevated_button.dart';
+import 'package:movies_app/features/onboarding/widgets/custom_elevated_button.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/app_colors.dart';
@@ -24,6 +24,7 @@ class ProfileTab extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(height: SizeConfig.height(context)*0.05),
+              SizedBox(height: 50),
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Row(
@@ -65,6 +66,7 @@ class ProfileTab extends StatelessWidget {
                         },
                         title: loc.edit_Profile,
                         style: AppStyles.regular20White,
+                        style: AppStyles.regular20Black,
                       ),
                     ),
                     Expanded(
@@ -123,6 +125,5 @@ class ProfileTab extends StatelessWidget {
         ),
       ),
     );
-    return Container();
   }
 }

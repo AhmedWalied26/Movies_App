@@ -171,4 +171,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wish_list => 'wish List';
+
+  @override
+  String get favorite_Movie_Here => 'Favorite Movie Here';
 }

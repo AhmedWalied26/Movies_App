@@ -415,6 +415,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'wish List'**
   String get wish_list;
+
+  /// No description provided for @favorite_Movie_Here.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite Movie Here'**
+  String get favorite_Movie_Here;
 }
 
 class _AppLocalizationsDelegate

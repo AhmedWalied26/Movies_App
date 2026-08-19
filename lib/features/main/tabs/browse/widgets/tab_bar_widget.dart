@@ -4,6 +4,7 @@ import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
+import 'package:movies_app/widgets/movie_card_item.dart';
 
 class TabBarWidget extends StatelessWidget {
   const TabBarWidget({super.key});
@@ -64,6 +65,7 @@ class TabBarWidget extends StatelessWidget {
                   }).toList(),
                 ),
                 SizedBox(height: SizeConfig.height(context)*0.025),
+                SizedBox(height: 25),
                 GridView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
