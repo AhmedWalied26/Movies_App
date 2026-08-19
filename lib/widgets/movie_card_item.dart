@@ -32,7 +32,7 @@ class MovieCardItem extends StatelessWidget {
           spacing: width * 0.01,
           mainAxisSize: .min,
           children: [
-            Text('7.7', style: AppStyles.regular14White),
+            Text('7.7', style: AppStyles.regular16White),
             SvgPicture.asset(
               AppAssets.rateIcon,
               width: width * 0.034,
