@@ -236,6 +236,12 @@ abstract class AppLocalizations {
   /// **'Login With Google'**
   String get login_With_Google;
 
+  /// No description provided for @please_check_your_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Please check your email'**
+  String get please_check_your_email;
+
   /// No description provided for @register.
   ///
   /// In en, this message translates to:
@@ -259,6 +265,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Confirm Password'**
   String get confirm_Password;
+
+  /// No description provided for @password_must_be_at_least_6_characters.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters'**
+  String get password_must_be_at_least_6_characters;
+
+  /// No description provided for @password_is_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is required'**
+  String get password_is_required;
+
+  /// No description provided for @phone_number_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number is required'**
+  String get phone_number_required;
+
+  /// No description provided for @phone_number_invalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number must be at least 11 digits'**
+  String get phone_number_invalid;
 
   /// No description provided for @phone_Number.
   ///

@@ -83,6 +83,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get login_With_Google => 'Login With Google';
 
   @override
+  String get please_check_your_email => 'Please check your email';
+
+  @override
   String get register => 'Register';
 
   @override
@@ -93,6 +96,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get confirm_Password => 'Confirm Password';
+
+  @override
+  String get password_must_be_at_least_6_characters =>
+      'Password must be at least 6 characters';
+
+  @override
+  String get password_is_required => 'Password is required';
+
+  @override
+  String get phone_number_required => 'Phone number is required';
+
+  @override
+  String get phone_number_invalid => 'Phone number must be at least 11 digits';
 
   @override
   String get phone_Number => 'Phone Number';

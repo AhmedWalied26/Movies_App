@@ -43,6 +43,7 @@ dependencies:
   carousel_slider: ^5.1.2
   avatar_plus: ^0.0.5
   flutter_bloc: ^9.1.1
+  firebase_core: ^4.13.0
 
 dev_dependencies:
   flutter_test:

@@ -22,6 +22,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool isPasswordVisible = false;
 
+  var formKey = GlobalKey<FormState>();
+
   @override
   void dispose() {
     emailController.dispose();
@@ -34,6 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final l10n = AppLocalizations.of(context)!;
     var height = context.height;
     var width = context.width;
+
     return Scaffold(
       backgroundColor: AppColors.blackColor,
       body: SafeArea(
@@ -42,8 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
             return SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: width * 0.024),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: Form(
+                  key: formKey,
                   child: Column(
                     children: [
                       SizedBox(height: height * 0.024),
@@ -51,19 +54,54 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: height * 0.069),
 
                       CustomTextField(
+                        type: TextInputType.emailAddress,
                         title: l10n.email,
                         prefix: SvgPicture.asset(AppAssets.emailIcon),
+                        controller: emailController,
+                        validation: (text) {
+                          if (text == null || text.trim().isEmpty) {
+                            return l10n.please_check_your_email;
+                          }
+                          final bool emailValid = RegExp(
+                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                          ).hasMatch(emailController.text);
+                          if (!emailValid) {
+                            return l10n.please_check_your_email;
+                          }
+                          return null;
+                        },
                       ),
 
                       SizedBox(height: height * 0.022),
 
                       CustomTextField(
+                        type: TextInputType.visiblePassword,
                         title: l10n.password,
                         prefix: SvgPicture.asset(AppAssets.passwordIcon),
                         suffix: IconButton(
-                          onPressed: () {},
-                          icon: SvgPicture.asset(AppAssets.visibleOffIcon),
+                          onPressed: () {
+                            setState(() {
+                              isPasswordVisible = !isPasswordVisible;
+                            });
+                          },
+                          icon: Icon(
+                            isPasswordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
                         ),
+                        controller: passwordController,
+                        validation: (text) {
+                          if (text == null || text.trim().isEmpty) {
+                            return l10n.password_is_required;
+                          }
+                          if (text.length < 6) {
+                            return l10n.password_must_be_at_least_6_characters;
+                          }
+
+                          return null;
+                        },
+                        isObsecure: !isPasswordVisible,
                       ),
                       SizedBox(height: height * 0.017),
 
@@ -91,11 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       CustomElevatedButton(
                         onPressedButton2: () {
-                          Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            AppRoutes.mainScreen,
-                            (route) => false,
-                          );
+                          login();
                         },
                         title: l10n.login,
                         style: AppStyles.regular20Black,
@@ -186,5 +220,15 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  void login() {
+    if (formKey.currentState?.validate() == true) {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        AppRoutes.mainScreen,
+        (route) => false,
+      );
+    }
   }
 }

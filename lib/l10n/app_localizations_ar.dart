@@ -83,6 +83,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get login_With_Google => 'تسجيل الدخول باستخدام Google';
 
   @override
+  String get please_check_your_email => 'من فضلك راجع بريدك الإلكتروني';
+
+  @override
   String get register => 'إنشاء حساب';
 
   @override
@@ -93,6 +96,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get confirm_Password => 'تأكيد كلمة المرور';
+
+  @override
+  String get password_must_be_at_least_6_characters =>
+      'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+
+  @override
+  String get password_is_required => 'كلمة المرور مطلوبة';
+
+  @override
+  String get phone_number_required => 'رقم الهاتف مطلوب';
+
+  @override
+  String get phone_number_invalid => 'رقم الهاتف يجب أن يكون 11 رقم على الأقل';
 
   @override
   String get phone_Number => 'رقم الهاتف';
