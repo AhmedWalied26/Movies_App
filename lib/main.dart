@@ -13,6 +13,9 @@ import 'package:movies_app/features/main/update_profile/update_profile_screen.da
 import 'package:movies_app/features/onboarding/on_boarding_screens.dart';
 import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_theme.dart';
+import 'package:movies_app/providers/language_provider.dart';
+
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +23,14 @@ void main() async {
   await Firebase.initializeApp(
   options: DefaultFirebaseOptions.currentPlatform,
 );
-  runApp(const MoviesApp());
+   runApp(
+    ChangeNotifierProvider(
+      create: (context) => LanguageProvider(),
+
+      child: MoviesApp(),
+    ),
+  );
+  
 }
 
 class MoviesApp extends StatelessWidget {
@@ -28,8 +38,11 @@ class MoviesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+var languageProvider = Provider.of<LanguageProvider>(context);
+
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
+      locale: Locale(languageProvider.appLanguage),
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
       routes: {

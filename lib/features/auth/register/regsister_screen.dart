@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:movies_app/features/auth/login/widgets/language_switcher.dart';
 import 'package:movies_app/features/auth/register/widgets/customized_avatar.dart';
+import 'package:movies_app/providers/language_provider.dart';
 import 'package:movies_app/widgets/custom_elevated_button.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_assets.dart';
@@ -9,6 +11,7 @@ import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
 import 'package:movies_app/widgets/custom_text_field.dart';
+import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -141,14 +144,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                   SizedBox(height: height * 0.024),
 
-                  // CustomTextField(
-                  //   title: l10n.password,
-                  //   prefix: SvgPicture.asset(AppAssets.passwordIcon),
-                  //   suffix: IconButton(
-                  //     onPressed: () {},
-                  //     icon: SvgPicture.asset(AppAssets.visibleOffIcon),
-                  //   ),
-                  // ),
                   CustomTextField(
                     type: TextInputType.visiblePassword,
                     title: l10n.password,
@@ -181,14 +176,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                   SizedBox(height: height * 0.024),
 
-                  // CustomTextField(
-                  //   title: l10n.confirm_Password,
-                  //   prefix: SvgPicture.asset(AppAssets.passwordIcon),
-                  //   suffix: IconButton(
-                  //     onPressed: () {},
-                  //     icon: SvgPicture.asset(AppAssets.visibleOffIcon),
-                  //   ),
-                  // ),
                   CustomTextField(
                     type: TextInputType.visiblePassword,
                     title: l10n.confirm_Password,
@@ -279,21 +266,88 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   SizedBox(height: height * 0.018),
 
+                  // Container(
+                  //   decoration: BoxDecoration(
+                  //     borderRadius: .circular(30),
+                  //     border: .all(color: AppColors.primaryColor, width: 3),
+                  //   ),
+                  //   child: Row(
+                  //     mainAxisSize: .min,
+                  //     spacing: width * 0.03,
+                  //     mainAxisAlignment: MainAxisAlignment.center,
+                  //     children: [
+                  //       SvgPicture.asset(AppAssets.enIcon),
+                  //       SvgPicture.asset(AppAssets.arIcon),
+                  //     ],
+                  //   ),
+                  // ),
                   Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: width * 0.03,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
-                      borderRadius: .circular(30),
-                      border: .all(color: AppColors.primaryColor, width: 3),
+                      borderRadius: BorderRadius.circular(30),
+                      border: Border.all(
+                        color: AppColors.primaryColor,
+                        width: 2,
+                      ),
                     ),
                     child: Row(
-                      mainAxisSize: .min,
-                      spacing: width * 0.03,
+                      mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SvgPicture.asset(AppAssets.enIcon),
-                        SvgPicture.asset(AppAssets.arIcon),
+                        // LanguageSwitcher(
+                        //   icon: AppAssets.enIcon,
+                        //   isSelected: selectedLanguage == 'en',
+                        //   onTap: () {
+                        //     setState(() {
+                        //       selectedLanguage = 'en';
+                        //     });
+                        //   },
+                        // ),
+                        // SizedBox(width: width * 0.03),
+                        // LanguageSwitcher(
+                        //   icon: AppAssets.arIcon,
+                        //   isSelected: selectedLanguage == 'ar',
+                        //   onTap: () {
+                        //     setState(() {
+                        //       selectedLanguage = 'ar';
+                        //     });
+                        //   },
+                        // ),
+
+                        Consumer<LanguageProvider>(
+                          builder: (context, languageProvider, child) {
+                            return Row(
+                              textDirection: TextDirection.ltr,
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                LanguageSwitcher(
+                                  icon: AppAssets.enIcon,
+                                  isSelected:
+                                      languageProvider.appLanguage == 'en',
+                                  onTap: () =>
+                                      languageProvider.changeLanguage('en'),
+                                ),
+                                const SizedBox(width: 40),
+                                LanguageSwitcher(
+                                  icon: AppAssets.arIcon,
+                                  isSelected:
+                                      languageProvider.appLanguage == 'ar',
+                                  onTap: () =>
+                                      languageProvider.changeLanguage('ar'),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
                       ],
                     ),
                   ),
+
+                  const SizedBox(height: 40),
                 ],
               ),
             ),
