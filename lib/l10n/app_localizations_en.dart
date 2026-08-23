@@ -108,6 +108,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get phone_number_required => 'Phone number is required';
 
   @override
+  String get name_is_required => 'Name is required';
+
+  @override
+  String get passwords_do_not_match => 'Passwords do not match';
+
+  @override
   String get phone_number_invalid => 'Phone number must be at least 11 digits';
 
   @override
@@ -190,4 +196,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get favorite_Movie_Here => 'Favorite Movie Here';
+
+  @override
+  String get login_successful => 'Login successful!';
+
+  @override
+  String get account_created_successfully => 'Account created successfully!';
+
+  @override
+  String get user_not_found => 'No account found with this email.';
+
+  @override
+  String get wrong_password => 'Incorrect password. Please try again.';
+
+  @override
+  String get invalid_email => 'Please enter a valid email address.';
+
+  @override
+  String get user_disabled => 'This account has been disabled.';
+
+  @override
+  String get weak_password =>
+      'Password is too weak. Use at least 6 characters.';
+
+  @override
+  String get email_already_in_use =>
+      'An account already exists with this email.';
+
+  @override
+  String get invalid_credential => 'Invalid email or password.';
+
+  @override
+  String get too_many_requests => 'Too many attempts. Please try again later.';
+
+  @override
+  String get network_request_failed =>
+      'Network error. Please check your internet connection.';
+
+  @override
+  String get operation_not_allowed => 'This sign-in method is not enabled.';
+
+  @override
+  String get something_went_wrong => 'Something went wrong. Please try again.';
 }

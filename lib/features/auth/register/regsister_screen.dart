@@ -1,8 +1,13 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:movies_app/features/auth/login/widgets/language_switcher.dart';
 import 'package:movies_app/features/auth/register/widgets/customized_avatar.dart';
 import 'package:movies_app/providers/language_provider.dart';
+import 'package:movies_app/services/firebase_service.dart';
+import 'package:movies_app/widgets/app_overlay.dart';
 import 'package:movies_app/widgets/custom_elevated_button.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_assets.dart';
@@ -21,15 +26,24 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController nameController = TextEditingController(
+    text: "renad",
+  );
+  final TextEditingController emailController = TextEditingController(
+    text: "renad@example.com",
+  );
+  final TextEditingController passwordController = TextEditingController(
+    text: "123456",
+  );
+  final TextEditingController confirmPasswordController = TextEditingController(
+    text: "123456",
+  );
+  final TextEditingController phoneController = TextEditingController(
+    text: "01234567890",
+  );
   var formKey = GlobalKey<FormState>();
   bool isPasswordVisible = false;
-
+  bool isConfirmPasswordVisible = false;
   final List<String> avatarImages = [
     AppAssets.profileImage2,
     AppAssets.profileImage8,
@@ -112,17 +126,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                   SizedBox(height: height * 0.010),
 
+                  // CustomTextField(
+                  //   title: l10n.name,
+                  //   prefix: SvgPicture.asset(AppAssets.nameIcon),
+                  // ),
                   CustomTextField(
                     title: l10n.name,
                     prefix: SvgPicture.asset(AppAssets.nameIcon),
+                    controller: nameController,
+                    validation: (text) {
+                      if (text == null || text.trim().isEmpty) {
+                        return l10n.name_is_required;
+                      }
+                      return null;
+                    },
                   ),
-
                   SizedBox(height: height * 0.024),
 
-                  // CustomTextField(
-                  //   title: l10n.email,
-                  //   prefix: SvgPicture.asset(AppAssets.emailIcon),
-                  // ),
                   CustomTextField(
                     type: TextInputType.emailAddress,
                     title: l10n.email,
@@ -143,7 +163,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
 
                   SizedBox(height: height * 0.024),
-
                   CustomTextField(
                     type: TextInputType.visiblePassword,
                     title: l10n.password,
@@ -168,12 +187,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       if (text.length < 6) {
                         return l10n.password_must_be_at_least_6_characters;
                       }
-
                       return null;
                     },
                     isObsecure: !isPasswordVisible,
                   ),
-
                   SizedBox(height: height * 0.024),
 
                   CustomTextField(
@@ -183,11 +200,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     suffix: IconButton(
                       onPressed: () {
                         setState(() {
-                          isPasswordVisible = !isPasswordVisible;
+                          isConfirmPasswordVisible = !isConfirmPasswordVisible;
                         });
                       },
                       icon: Icon(
-                        isPasswordVisible
+                        isConfirmPasswordVisible
                             ? Icons.visibility
                             : Icons.visibility_off,
                       ),
@@ -197,24 +214,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       if (text == null || text.trim().isEmpty) {
                         return l10n.password_is_required;
                       }
-                      if (text.length < 6) {
-                        return l10n.password_must_be_at_least_6_characters;
+                      if (text != passwordController.text) {
+                        return l10n.passwords_do_not_match;
                       }
-
                       return null;
                     },
-                    isObsecure: !isPasswordVisible,
+                    isObsecure: !isConfirmPasswordVisible,
                   ),
 
                   SizedBox(height: height * 0.024),
-
-                  CustomTextField(
-                    title: l10n.phone_Number,
-                    prefix: SvgPicture.asset(AppAssets.phoneIcon),
-                  ),
-
-                  SizedBox(height: height * 0.024),
-
                   CustomTextField(
                     type: TextInputType.phone,
                     title: l10n.phone_Number,
@@ -233,7 +241,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   SizedBox(height: height * 0.024),
                   CustomElevatedButton(
                     onPressedButton2: () {
-                      register();
+                      register(context);
                     },
                     title: l10n.create_Account,
                     style: AppStyles.regular20Black,
@@ -266,21 +274,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   SizedBox(height: height * 0.018),
 
-                  // Container(
-                  //   decoration: BoxDecoration(
-                  //     borderRadius: .circular(30),
-                  //     border: .all(color: AppColors.primaryColor, width: 3),
-                  //   ),
-                  //   child: Row(
-                  //     mainAxisSize: .min,
-                  //     spacing: width * 0.03,
-                  //     mainAxisAlignment: MainAxisAlignment.center,
-                  //     children: [
-                  //       SvgPicture.asset(AppAssets.enIcon),
-                  //       SvgPicture.asset(AppAssets.arIcon),
-                  //     ],
-                  //   ),
-                  // ),
                   Container(
                     padding: EdgeInsets.symmetric(
                       horizontal: width * 0.03,
@@ -297,26 +290,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // LanguageSwitcher(
-                        //   icon: AppAssets.enIcon,
-                        //   isSelected: selectedLanguage == 'en',
-                        //   onTap: () {
-                        //     setState(() {
-                        //       selectedLanguage = 'en';
-                        //     });
-                        //   },
-                        // ),
-                        // SizedBox(width: width * 0.03),
-                        // LanguageSwitcher(
-                        //   icon: AppAssets.arIcon,
-                        //   isSelected: selectedLanguage == 'ar',
-                        //   onTap: () {
-                        //     setState(() {
-                        //       selectedLanguage = 'ar';
-                        //     });
-                        //   },
-                        // ),
-
                         Consumer<LanguageProvider>(
                           builder: (context, languageProvider, child) {
                             return Row(
@@ -356,13 +329,47 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
+  
 
-  void register() {
-    if (formKey.currentState?.validate() == true) {
-      Navigator.pushNamedAndRemoveUntil(
+  final authService = AuthService();
+  bool isLoading = false;
+
+  void register(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
+
+    if (formKey.currentState?.validate() != true) return;
+
+    if (passwordController.text != confirmPasswordController.text) {
+      AppOverlay.showError(context, l10n.passwords_do_not_match);
+      return;
+    }
+
+    setState(() => isLoading = true);
+
+    final result = await authService.register(
+      email: emailController.text,
+      password: passwordController.text,
+    );
+
+    if (!mounted) return;
+    setState(() => isLoading = false);
+
+    if (result.success) {
+      AppOverlay.showSuccess(
         context,
-        AppRoutes.mainScreen,
-        (route) => false,
+        l10n.account_created_successfully,
+        onFinished: () {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            AppRoutes.mainScreen,
+            (route) => false,
+          );
+        },
+      );
+    } else {
+      AppOverlay.showError(
+        context,
+        getAuthErrorMessage(l10n, result.errorCode!),
       );
     }
   }

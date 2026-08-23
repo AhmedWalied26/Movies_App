@@ -284,6 +284,18 @@ abstract class AppLocalizations {
   /// **'Phone number is required'**
   String get phone_number_required;
 
+  /// No description provided for @name_is_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Name is required'**
+  String get name_is_required;
+
+  /// No description provided for @passwords_do_not_match.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwords_do_not_match;
+
   /// No description provided for @phone_number_invalid.
   ///
   /// In en, this message translates to:
@@ -451,6 +463,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Favorite Movie Here'**
   String get favorite_Movie_Here;
+
+  /// No description provided for @login_successful.
+  ///
+  /// In en, this message translates to:
+  /// **'Login successful!'**
+  String get login_successful;
+
+  /// No description provided for @account_created_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Account created successfully!'**
+  String get account_created_successfully;
+
+  /// No description provided for @user_not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'No account found with this email.'**
+  String get user_not_found;
+
+  /// No description provided for @wrong_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Incorrect password. Please try again.'**
+  String get wrong_password;
+
+  /// No description provided for @invalid_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email address.'**
+  String get invalid_email;
+
+  /// No description provided for @user_disabled.
+  ///
+  /// In en, this message translates to:
+  /// **'This account has been disabled.'**
+  String get user_disabled;
+
+  /// No description provided for @weak_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is too weak. Use at least 6 characters.'**
+  String get weak_password;
+
+  /// No description provided for @email_already_in_use.
+  ///
+  /// In en, this message translates to:
+  /// **'An account already exists with this email.'**
+  String get email_already_in_use;
+
+  /// No description provided for @invalid_credential.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email or password.'**
+  String get invalid_credential;
+
+  /// No description provided for @too_many_requests.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many attempts. Please try again later.'**
+  String get too_many_requests;
+
+  /// No description provided for @network_request_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Network error. Please check your internet connection.'**
+  String get network_request_failed;
+
+  /// No description provided for @operation_not_allowed.
+  ///
+  /// In en, this message translates to:
+  /// **'This sign-in method is not enabled.'**
+  String get operation_not_allowed;
+
+  /// No description provided for @something_went_wrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please try again.'**
+  String get something_went_wrong;
 }
 
 class _AppLocalizationsDelegate

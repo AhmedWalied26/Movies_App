@@ -1,8 +1,13 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/features/auth/login/widgets/language_switcher.dart';
 import 'package:movies_app/providers/language_provider.dart';
+import 'package:movies_app/services/firebase_service.dart';
+import 'package:movies_app/widgets/app_overlay.dart';
 import 'package:movies_app/widgets/custom_elevated_button.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_assets.dart';
@@ -21,8 +26,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController(
+    text: "renad@example.com",
+  );
+  final TextEditingController passwordController = TextEditingController(
+    text: "123456",
+  );
 
   bool isPasswordVisible = false;
 
@@ -134,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       CustomElevatedButton(
                         onPressedButton2: () {
-                          login();
+                          login(context);
                         },
                         title: l10n.login,
                         style: AppStyles.regular20Black,
@@ -232,26 +241,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            // LanguageSwitcher(
-                            //   icon: AppAssets.enIcon,
-                            //   isSelected: selectedLanguage == 'en',
-                            //   onTap: () {
-                            //     setState(() {
-                            //       selectedLanguage = 'en';
-                            //     });
-                            //   },
-                            // ),
-                            // SizedBox(width: width * 0.03),
-                            // LanguageSwitcher(
-                            //   icon: AppAssets.arIcon,
-                            //   isSelected: selectedLanguage == 'ar',
-                            //   onTap: () {
-                            //     setState(() {
-                            //       selectedLanguage = 'ar';
-                            //     });
-                            //   },
-                            // ),
-
                             Consumer<LanguageProvider>(
                               builder: (context, languageProvider, child) {
                                 return Row(
@@ -293,13 +282,41 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void login() {
-    if (formKey.currentState?.validate() == true) {
-      Navigator.pushNamedAndRemoveUntil(
+
+  final authService = AuthService();
+  bool isLoading = false;
+
+  void login(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
+
+    if (formKey.currentState?.validate() != true) return;
+
+    setState(() => isLoading = true);
+
+    final result = await authService.login(
+      email: emailController.text,
+      password: passwordController.text,
+    );
+
+    if (!mounted) return;
+    setState(() => isLoading = false);
+
+    if (result.success) {
+      AppOverlay.showSuccess(
         context,
-        AppRoutes.mainScreen,
-        (route) => false,
+        l10n.login_successful,
+        onFinished: () {
+          if (mounted) {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              AppRoutes.mainScreen,
+              (route) => false,
+            );
+          }
+        },
       );
+    } else {
+  AppOverlay.showError(context, getAuthErrorMessage(l10n, result.errorCode!));
     }
   }
 }

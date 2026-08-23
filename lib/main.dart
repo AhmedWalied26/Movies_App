@@ -20,17 +20,14 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
-);
-   runApp(
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  runApp(
     ChangeNotifierProvider(
       create: (context) => LanguageProvider(),
 
       child: MoviesApp(),
     ),
   );
-  
 }
 
 class MoviesApp extends StatelessWidget {
@@ -38,7 +35,7 @@ class MoviesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-var languageProvider = Provider.of<LanguageProvider>(context);
+    var languageProvider = Provider.of<LanguageProvider>(context);
 
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -58,7 +55,7 @@ var languageProvider = Provider.of<LanguageProvider>(context);
         AppRoutes.profileScreen: (context) => ProfileTab(),
       },
 
-      initialRoute: AppRoutes.exploreScreen,
+      initialRoute: AppRoutes.loginScreen,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: .dark,

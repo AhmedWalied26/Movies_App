@@ -41,6 +41,8 @@
   "watch_List": "قائمة المشاهدة",
   "history": "السجل",
   "pick_Avatar": "اختر صورة شخصية",
+  "name_is_required": "الاسم مطلوب",
+  "passwords_do_not_match": "كلمتا المرور غير متطابقتين",
   "reset_Password": "إعادة تعيين كلمة المرور",
   "password_must_be_at_least_6_characters": "كلمة المرور يجب أن تكون 6 أحرف على الأقل",
   "phone_number_required": "رقم الهاتف مطلوب",
@@ -57,5 +59,18 @@
   "romance": "رومانسي",
   "crime": "جريمة",
   "adventure": "مغامرة",
-   "wish_list":"قائمة الرغبات"
+  "wish_list":"قائمة الرغبات",
+  "login_successful": "تم تسجيل الدخول بنجاح!",
+  "account_created_successfully": "تم إنشاء الحساب بنجاح!",
+  "user_not_found": "لا يوجد حساب بهذا البريد الإلكتروني.",
+  "wrong_password": "كلمة المرور غير صحيحة. حاول مرة أخرى.",
+  "invalid_email": "من فضلك أدخل بريد إلكتروني صحيح.",
+  "user_disabled": "تم تعطيل هذا الحساب.",
+  "weak_password": "كلمة المرور ضعيفة جدًا. استخدم 6 أحرف على الأقل.",
+  "email_already_in_use": "يوجد حساب بالفعل بهذا البريد الإلكتروني.",
+  "invalid_credential": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
+  "too_many_requests": "محاولات كثيرة جدًا. حاول مرة أخرى لاحقًا.",
+  "network_request_failed": "خطأ في الشبكة. تحقق من اتصالك بالإنترنت.",
+  "operation_not_allowed": "طريقة تسجيل الدخول هذه غير مفعّلة.",
+  "something_went_wrong": "حدث خطأ ما. حاول مرة أخرى."
 }
