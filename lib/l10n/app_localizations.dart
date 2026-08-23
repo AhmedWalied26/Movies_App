@@ -421,6 +421,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Favorite Movie Here'**
   String get favorite_Movie_Here;
+
+  /// No description provided for @genres.
+  ///
+  /// In en, this message translates to:
+  /// **'Genres'**
+  String get genres;
+
+  /// No description provided for @cast.
+  ///
+  /// In en, this message translates to:
+  /// **'Cast'**
+  String get cast;
+
+  /// No description provided for @summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary'**
+  String get summary;
+
+  /// No description provided for @similar.
+  ///
+  /// In en, this message translates to:
+  /// **'Similar'**
+  String get similar;
+
+  /// No description provided for @screenshots.
+  ///
+  /// In en, this message translates to:
+  /// **'Screen Shots'**
+  String get screenshots;
 }
 
 class _AppLocalizationsDelegate

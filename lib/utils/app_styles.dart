@@ -214,6 +214,11 @@ class AppStyles {
     fontWeight: FontWeight.bold,
     color: AppColors.primaryColor,
   );
+  static TextStyle bold20lightGrey = GoogleFonts.roboto(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: AppColors.lightGreyColor,
+  );
   static TextStyle regular12Error = GoogleFonts.roboto(
     fontSize: 12,
     fontWeight: FontWeight.w400,

@@ -174,4 +174,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get favorite_Movie_Here => 'Favorite Movie Here';
+
+  @override
+  String get genres => 'Genres';
+
+  @override
+  String get cast => 'Cast';
+
+  @override
+  String get summary => 'Summary';
+
+  @override
+  String get similar => 'Similar';
+
+  @override
+  String get screenshots => 'Screen Shots';
 }

@@ -51,6 +51,11 @@
   "romance": "Romance",
   "crime": "Crime",
   "adventure": "Adventure",
-  "wish_list":"wish List",
-  "favorite_Movie_Here" : "Favorite Movie Here"
+  "wish_list": "wish List",
+  "favorite_Movie_Here": "Favorite Movie Here",
+  "genres": "Genres",
+  "cast": "Cast",
+  "summary": "Summary",
+  "similar": "Similar",
+  "screenshots": "Screen Shots"
 }

@@ -174,4 +174,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get favorite_Movie_Here => 'المفضل القادم هنا';
+
+  @override
+  String get genres => 'الأنواع';
+
+  @override
+  String get cast => 'طاقم التمثيل';
+
+  @override
+  String get summary => 'الملخص';
+
+  @override
+  String get similar => 'أفلام مشابهة';
+
+  @override
+  String get screenshots => 'لقطات الشاشة';
 }
