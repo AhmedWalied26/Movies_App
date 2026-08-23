@@ -47,29 +47,29 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCdxSqWwHFIm431dxTFPn_1jlEraQycY74',
-    appId: '1:1069182548645:web:3bacfebb2c4aaf57156b4c',
-    messagingSenderId: '1069182548645',
-    projectId: 'movies-app-874f9',
-    authDomain: 'movies-app-874f9.firebaseapp.com',
-    storageBucket: 'movies-app-874f9.firebasestorage.app',
-    measurementId: 'G-8H6GKBQP2J',
+    apiKey: 'AIzaSyCI93ChCbIxBCk8fp7jGRC44O1_LEtpZnA',
+    appId: '1:800963077338:web:a2aceb258c44dd4dc0f1e3',
+    messagingSenderId: '800963077338',
+    projectId: 'movies-app-15cb4',
+    authDomain: 'movies-app-15cb4.firebaseapp.com',
+    storageBucket: 'movies-app-15cb4.firebasestorage.app',
+    measurementId: 'G-4EDNQGDRHX',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDRBB2FhdyYAQ7242EhwRjrGEUS0wtGHjA',
-    appId: '1:1069182548645:android:8f96f27f87775f85156b4c',
-    messagingSenderId: '1069182548645',
-    projectId: 'movies-app-874f9',
-    storageBucket: 'movies-app-874f9.firebasestorage.app',
+    apiKey: 'AIzaSyA0OfrMlaWW7FfEhM3sUh5v8xjdIeAsqpU',
+    appId: '1:800963077338:android:622a041ef68bfbfbc0f1e3',
+    messagingSenderId: '800963077338',
+    projectId: 'movies-app-15cb4',
+    storageBucket: 'movies-app-15cb4.firebasestorage.app',
   );
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAEcdlPPErYYre_f99pZekKImWAb1XLQcA',
-    appId: '1:1069182548645:ios:8fe2c0088179b4af156b4c',
-    messagingSenderId: '1069182548645',
-    projectId: 'movies-app-874f9',
-    storageBucket: 'movies-app-874f9.firebasestorage.app',
-    iosClientId: '1069182548645-89l7tn2c12b9tj7lfq0s81kbqkrjhook.apps.googleusercontent.com',
+    apiKey: 'AIzaSyByVDzNuwhnP0drGtzAKD4kTSeaHQY95yo',
+    appId: '1:800963077338:ios:5fa4817cafa7e426c0f1e3',
+    messagingSenderId: '800963077338',
+    projectId: 'movies-app-15cb4',
+    storageBucket: 'movies-app-15cb4.firebasestorage.app',
+    iosClientId: '800963077338-hdvpaprotikmel36cu6mu1qqq6b0v6bb.apps.googleusercontent.com',
     iosBundleId: 'com.example.moviesApp',
   );
 }
