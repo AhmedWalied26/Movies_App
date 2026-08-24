@@ -22,6 +22,16 @@ class _ProfileTabState extends State<ProfileTab> {
   String profileName = 'John Safwat';
   String profileAvatar = AppAssets.profileImage8;
 
+  Future<void> _signOut() async {
+    await ProfileService.instance.signOut();
+    if (!mounted) return;
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      AppRoutes.loginScreen,
+      (route) => false,
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -102,7 +112,7 @@ class _ProfileTabState extends State<ProfileTab> {
                       child: CustomElevatedButton(
                         isExitButton: true,
                         bgColor: AppColors.redColor,
-                        onPressedButton2: () {},
+                        onPressedButton2: _signOut,
                         title: loc.exit,
                         style: AppStyles.regular20White,
                         child: SvgPicture.asset(AppAssets.exitIcon),

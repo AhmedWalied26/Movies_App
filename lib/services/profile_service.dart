@@ -46,4 +46,8 @@ class ProfileService {
     await _profileReference(user).delete();
     await user.delete();
   }
+
+  Future<void> signOut() {
+    return _auth.signOut();
+  }
 }

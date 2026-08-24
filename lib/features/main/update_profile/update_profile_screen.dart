@@ -20,6 +20,8 @@ class UpdateProfileScreen extends StatefulWidget {
 
 class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   String selectedAvatar = AppAssets.profileImage8;
+  String nameHint = '';
+  String phoneHint = '';
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
   bool isLoading = true;
@@ -39,8 +41,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     }
 
     final profile = await ProfileService.instance.loadProfile();
-    nameController.text = (profile['name'] as String?) ?? user.displayName ?? '';
-    phoneController.text = (profile['phone'] as String?) ?? '';
+    nameHint = (profile['name'] as String?) ?? user.displayName ?? '';
+    phoneHint = (profile['phone'] as String?) ?? '';
+    nameController.clear();
+    phoneController.clear();
     selectedAvatar = (profile['avatar'] as String?) ?? AppAssets.profileImage8;
     if (mounted) setState(() => isLoading = false);
   }
@@ -49,8 +53,12 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     setState(() => isSaving = true);
     try {
       await ProfileService.instance.updateProfile(
-        name: nameController.text.trim(),
-        phone: phoneController.text.trim(),
+        name: nameController.text.trim().isEmpty
+          ? nameHint
+          : nameController.text.trim(),
+        phone: phoneController.text.trim().isEmpty
+          ? phoneHint
+          : phoneController.text.trim(),
         avatar: selectedAvatar,
       );
       if (mounted) Navigator.pop(context, true);
@@ -154,6 +162,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
             CustomTextField(
               title: l.name,
+              hintText: nameHint.isEmpty ? null : nameHint,
               prefix: SvgPicture.asset(AppAssets.profileNameIcon),
               controller: nameController,
             ),
@@ -162,6 +171,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
             CustomTextField(
               title: l.phone_Number,
+              hintText: phoneHint.isEmpty ? null : phoneHint,
               prefix: SvgPicture.asset(AppAssets.phoneIcon),
               controller: phoneController,
             ),
