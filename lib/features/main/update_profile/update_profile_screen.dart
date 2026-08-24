@@ -50,10 +50,11 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     if (user == null) return;
     setState(() => isSaving = true);
     try {
-      await user.updateDisplayName(nameController.text.trim());
-      await user.updateDisplayName(nameController.text.trim());
+      final newName = nameController.text.trim();
+      await user.updateDisplayName(newName);
+      await user.reload();
       await AuthService.instance.saveProfile(
-        name: nameController.text.trim(),
+        name: newName,
         phone: phoneController.text.trim(),
         avatar: selectedAvatar,
         email: user.email,
