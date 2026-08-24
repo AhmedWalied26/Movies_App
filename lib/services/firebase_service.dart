@@ -8,7 +8,7 @@ class AuthResult {
 
   AuthResult({required this.success, this.errorCode, this.user});
 }
-
+//
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
