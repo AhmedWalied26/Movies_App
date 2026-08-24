@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:movies_app/api/auth_service.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:movies_app/features/auth/register/widgets/customized_avatar.dart';
 import 'package:movies_app/widgets/custom_elevated_button.dart';
@@ -31,6 +33,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
   ];
 
   int selectedAvatarIndex = 1;
+  bool isLoading = false;
+
+  Future<void> _register() async {
+    if (nameController.text.trim().isEmpty ||
+        emailController.text.trim().isEmpty ||
+        passwordController.text.isEmpty ||
+        passwordController.text != confirmPasswordController.text) {
+      return;
+    }
+    setState(() => isLoading = true);
+    try {
+      await AuthService.instance.register(
+        name: nameController.text.trim(),
+        email: emailController.text.trim(),
+        password: passwordController.text,
+        phone: phoneController.text.trim(),
+        avatar: avatarImages[selectedAvatarIndex],
+      );
+      if (!mounted) return;
+      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.mainScreen, (route) => false);
+    } on FirebaseAuthException catch (error) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(error.message ?? 'Unable to create account')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => isLoading = false);
+    }
+  }
 
   @override
   void dispose() {
@@ -103,6 +135,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 CustomTextField(
                   title: l10n.name,
                   prefix: SvgPicture.asset(AppAssets.nameIcon),
+                  controller: nameController,
                 ),
 
                 SizedBox(height: height * 0.024),
@@ -110,6 +143,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 CustomTextField(
                   title: l10n.email,
                   prefix: SvgPicture.asset(AppAssets.emailIcon),
+                  controller: emailController,
                 ),
 
                 SizedBox(height: height * 0.024),
@@ -117,6 +151,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 CustomTextField(
                   title: l10n.password,
                   prefix: SvgPicture.asset(AppAssets.passwordIcon),
+                  controller: passwordController,
+                  isObsecure: true,
                   suffix: IconButton(
                     onPressed: () {},
                     icon: SvgPicture.asset(AppAssets.visibleOffIcon),
@@ -128,6 +164,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 CustomTextField(
                   title: l10n.confirm_Password,
                   prefix: SvgPicture.asset(AppAssets.passwordIcon),
+                  controller: confirmPasswordController,
+                  isObsecure: true,
                   suffix: IconButton(
                     onPressed: () {},
                     icon: SvgPicture.asset(AppAssets.visibleOffIcon),
@@ -139,12 +177,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 CustomTextField(
                   title: l10n.phone_Number,
                   prefix: SvgPicture.asset(AppAssets.phoneIcon),
+                  controller: phoneController,
                 ),
 
                 SizedBox(height: height * 0.024),
 
                 CustomElevatedButton(
-                  onPressedButton2: () {},
+                  onPressedButton2: isLoading ? () {} : _register,
                   title: l10n.create_Account,
                   style: AppStyles.regular20Black,
                 ),

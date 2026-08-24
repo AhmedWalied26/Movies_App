@@ -68,10 +68,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get forget_Password => 'Forget Password';
 
   @override
+  String get password_Reset_Email_Sent =>
+      'A password reset email has been sent.';
+
+  @override
+  String get password_Reset_Error => 'Unable to send the password reset email.';
+
+  @override
+  String get old_Password => 'Old Password';
+
+  @override
+  String get new_Password => 'New Password';
+
+  @override
   String get login => 'Login';
 
   @override
   String get dont_Have_Account => 'Don’t Have Account';
+
+  @override
+  String get account_Not_Found =>
+      'No account was found with this email. Please create an account first.';
 
   @override
   String get create_One => 'Create One';
@@ -81,6 +98,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get login_With_Google => 'Login With Google';
+
+  @override
+  String get google_Login_Error => 'Unable to sign in with Google.';
 
   @override
   String get register => 'Register';

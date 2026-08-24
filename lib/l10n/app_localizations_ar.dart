@@ -68,10 +68,27 @@ class AppLocalizationsAr extends AppLocalizations {
   String get forget_Password => 'نسيت كلمة المرور';
 
   @override
+  String get password_Reset_Email_Sent =>
+      'تم إرسال بريد إلكتروني لإعادة تعيين كلمة المرور.';
+
+  @override
+  String get password_Reset_Error => 'تعذر إرسال بريد إعادة تعيين كلمة المرور.';
+
+  @override
+  String get old_Password => 'كلمة المرور القديمة';
+
+  @override
+  String get new_Password => 'كلمة المرور الجديدة';
+
+  @override
   String get login => 'تسجيل الدخول';
 
   @override
   String get dont_Have_Account => 'ليس لديك حساب';
+
+  @override
+  String get account_Not_Found =>
+      'لم يتم العثور على حساب بهذا البريد الإلكتروني. يرجى إنشاء حساب أولاً.';
 
   @override
   String get create_One => 'إنشاء حساب';
@@ -81,6 +98,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get login_With_Google => 'تسجيل الدخول باستخدام Google';
+
+  @override
+  String get google_Login_Error => 'تعذر تسجيل الدخول باستخدام Google.';
 
   @override
   String get register => 'إنشاء حساب';

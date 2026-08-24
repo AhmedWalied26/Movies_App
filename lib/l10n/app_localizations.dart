@@ -206,6 +206,30 @@ abstract class AppLocalizations {
   /// **'Forget Password'**
   String get forget_Password;
 
+  /// No description provided for @password_Reset_Email_Sent.
+  ///
+  /// In en, this message translates to:
+  /// **'A password reset email has been sent.'**
+  String get password_Reset_Email_Sent;
+
+  /// No description provided for @password_Reset_Error.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to send the password reset email.'**
+  String get password_Reset_Error;
+
+  /// No description provided for @old_Password.
+  ///
+  /// In en, this message translates to:
+  /// **'Old Password'**
+  String get old_Password;
+
+  /// No description provided for @new_Password.
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get new_Password;
+
   /// No description provided for @login.
   ///
   /// In en, this message translates to:
@@ -217,6 +241,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Don’t Have Account'**
   String get dont_Have_Account;
+
+  /// No description provided for @account_Not_Found.
+  ///
+  /// In en, this message translates to:
+  /// **'No account was found with this email. Please create an account first.'**
+  String get account_Not_Found;
 
   /// No description provided for @create_One.
   ///
@@ -235,6 +265,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Login With Google'**
   String get login_With_Google;
+
+  /// No description provided for @google_Login_Error.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to sign in with Google.'**
+  String get google_Login_Error;
 
   /// No description provided for @register.
   ///

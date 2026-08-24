@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:movies_app/api/auth_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/widgets/custom_elevated_button.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
@@ -7,6 +9,7 @@ import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/widgets/custom_text_field.dart';
+import 'package:movies_app/utils/app_routes.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({super.key});
@@ -17,6 +20,62 @@ class UpdateProfileScreen extends StatefulWidget {
 
 class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   String selectedAvatar = AppAssets.profileImage8;
+  final nameController = TextEditingController();
+  final phoneController = TextEditingController();
+  bool isLoading = true;
+  bool isSaving = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfile();
+  }
+
+  Future<void> _loadProfile() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      if (mounted) setState(() => isLoading = false);
+      return;
+    }
+    final snapshot = await AuthService.instance.getProfile();
+    final data = snapshot?.data() ?? {};
+    nameController.text = (data['name'] as String?) ?? user.displayName ?? '';
+    phoneController.text = (data['phone'] as String?) ?? '';
+    selectedAvatar = (data['avatar'] as String?) ?? AppAssets.profileImage8;
+    if (mounted) setState(() => isLoading = false);
+  }
+
+  Future<void> _updateProfile() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+    setState(() => isSaving = true);
+    try {
+      await user.updateDisplayName(nameController.text.trim());
+      await user.updateDisplayName(nameController.text.trim());
+      await AuthService.instance.saveProfile(
+        name: nameController.text.trim(),
+        phone: phoneController.text.trim(),
+        avatar: selectedAvatar,
+        email: user.email,
+      );
+      if (mounted) Navigator.pop(context, true);
+    } on FirebaseException catch (error) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(error.message ?? 'Unable to update profile')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => isSaving = false);
+    }
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    phoneController.dispose();
+    super.dispose();
+  }
 
   void _showAvatarBottomSheet() {
     showModalBottomSheet(
@@ -44,11 +103,24 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     );
   }
 
+  Future<void> _deleteAccount() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+    await AuthService.instance.deleteAccount();
+    if (mounted) {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        AppRoutes.loginScreen,
+        (route) => false,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    var l = AppLocalizations.of(context)!;
+    var loc = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: AppColors.darkBlackColor,
@@ -61,9 +133,11 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           icon: Icon(Icons.arrow_back, color: AppColors.primaryColor),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(l.pick_Avatar, style: AppStyles.bold16Primary),
+        title: Text(loc.pick_Avatar, style: AppStyles.bold16Primary),
       ),
-      body: Padding(
+        body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Padding(
         padding: EdgeInsets.symmetric(
           horizontal: width * 0.04,
           vertical: height * 0.02,
@@ -84,34 +158,39 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             SizedBox(height: height * 0.02),
 
             CustomTextField(
-              title: l.name,
+              title: loc.name,
               prefix: SvgPicture.asset(AppAssets.profileNameIcon),
+              controller: nameController,
             ),
 
             SizedBox(height: height * 0.02),
 
             CustomTextField(
-              title: l.phone_Number,
+              title: loc.phone_Number,
               prefix: SvgPicture.asset(AppAssets.phoneIcon),
+              controller: phoneController,
             ),
 
             SizedBox(height: height * 0.01),
             TextButton(
-              onPressed: () {},
-              child: Text(l.reset_Password, style: AppStyles.bold16White),
+              onPressed: () => Navigator.pushNamed(
+                context,
+                AppRoutes.resetPasswordScreen,
+              ),
+              child: Text(loc.reset_Password, style: AppStyles.bold16White),
             ),
             Spacer(),
             CustomElevatedButton(
               bgColor: AppColors.redColor,
-              onPressedButton2: () {},
-              title: l.delete_Account,
+              onPressedButton2: _deleteAccount,
+              title: loc.delete_Account,
               style: AppStyles.regular20White,
             ),
 
             SizedBox(height: height * 0.019),
             CustomElevatedButton(
-              onPressedButton2: () {},
-              title: l.update_Data,
+              onPressedButton2: isSaving ? () {} : _updateProfile,
+              title: loc.update_Data,
               style: AppStyles.regular20Black,
             ),
             SizedBox(height: height * 0.01),
