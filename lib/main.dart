@@ -1,11 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:movies_app/features/auth/forget_password/forget_password_screen.dart';
 import 'package:movies_app/features/auth/login/login_screen.dart';
 import 'package:movies_app/features/auth/register/regsister_screen.dart';
-import 'package:movies_app/firebase_options.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/features/main/tabs/browse/browse_tab.dart';
 import 'package:movies_app/features/main/tabs/profile/profile_tab.dart';
@@ -51,7 +49,7 @@ class MoviesApp extends StatelessWidget {
         AppRoutes.loginScreen: (context) => const LoginScreen(),
         AppRoutes.registerScreen: (context) => const RegisterScreen(),
         AppRoutes.forgotPasswordScreen: (context) =>
-        const ForgetPasswordScreen(),
+            const ForgetPasswordScreen(),
         AppRoutes.onboardingScreen: (context) => OnBoardingScreens(),
         AppRoutes.browseScreen: (context) => BrowseTab(),
         AppRoutes.profileScreen: (context) => ProfileTab(),
