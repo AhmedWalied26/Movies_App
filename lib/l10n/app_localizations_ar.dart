@@ -83,6 +83,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get login_With_Google => 'تسجيل الدخول باستخدام Google';
 
   @override
+  String get please_check_your_email => 'من فضلك راجع بريدك الإلكتروني';
+
+  @override
   String get register => 'إنشاء حساب';
 
   @override
@@ -93,6 +96,25 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get confirm_Password => 'تأكيد كلمة المرور';
+
+  @override
+  String get password_must_be_at_least_6_characters =>
+      'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+
+  @override
+  String get password_is_required => 'كلمة المرور مطلوبة';
+
+  @override
+  String get phone_number_required => 'رقم الهاتف مطلوب';
+
+  @override
+  String get name_is_required => 'الاسم مطلوب';
+
+  @override
+  String get passwords_do_not_match => 'كلمتا المرور غير متطابقتين';
+
+  @override
+  String get phone_number_invalid => 'رقم الهاتف يجب أن يكون 11 رقم على الأقل';
 
   @override
   String get phone_Number => 'رقم الهاتف';
@@ -174,4 +196,46 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get favorite_Movie_Here => 'المفضل القادم هنا';
+
+  @override
+  String get login_successful => 'تم تسجيل الدخول بنجاح!';
+
+  @override
+  String get account_created_successfully => 'تم إنشاء الحساب بنجاح!';
+
+  @override
+  String get user_not_found => 'لا يوجد حساب بهذا البريد الإلكتروني.';
+
+  @override
+  String get wrong_password => 'كلمة المرور غير صحيحة. حاول مرة أخرى.';
+
+  @override
+  String get invalid_email => 'من فضلك أدخل بريد إلكتروني صحيح.';
+
+  @override
+  String get user_disabled => 'تم تعطيل هذا الحساب.';
+
+  @override
+  String get weak_password =>
+      'كلمة المرور ضعيفة جدًا. استخدم 6 أحرف على الأقل.';
+
+  @override
+  String get email_already_in_use => 'يوجد حساب بالفعل بهذا البريد الإلكتروني.';
+
+  @override
+  String get invalid_credential =>
+      'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
+
+  @override
+  String get too_many_requests => 'محاولات كثيرة جدًا. حاول مرة أخرى لاحقًا.';
+
+  @override
+  String get network_request_failed =>
+      'خطأ في الشبكة. تحقق من اتصالك بالإنترنت.';
+
+  @override
+  String get operation_not_allowed => 'طريقة تسجيل الدخول هذه غير مفعّلة.';
+
+  @override
+  String get something_went_wrong => 'حدث خطأ ما. حاول مرة أخرى.';
 }

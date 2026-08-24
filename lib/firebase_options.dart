@@ -30,10 +30,7 @@ class DefaultFirebaseOptions {
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -47,29 +44,39 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCI93ChCbIxBCk8fp7jGRC44O1_LEtpZnA',
-    appId: '1:800963077338:web:a2aceb258c44dd4dc0f1e3',
-    messagingSenderId: '800963077338',
-    projectId: 'movies-app-15cb4',
-    authDomain: 'movies-app-15cb4.firebaseapp.com',
-    storageBucket: 'movies-app-15cb4.firebasestorage.app',
-    measurementId: 'G-4EDNQGDRHX',
+    apiKey: 'AIzaSyD94rrYtZPIP2ou2yWyEx9zfmhrFKw-ATQ',
+    appId: '1:707456573917:web:5bc7ccab0a8f66c6fd9634',
+    messagingSenderId: '707456573917',
+    projectId: 'movies-app-e632d',
+    authDomain: 'movies-app-e632d.firebaseapp.com',
+    storageBucket: 'movies-app-e632d.firebasestorage.app',
+    measurementId: 'G-E5SWWPZ8LH',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyA0OfrMlaWW7FfEhM3sUh5v8xjdIeAsqpU',
-    appId: '1:800963077338:android:622a041ef68bfbfbc0f1e3',
-    messagingSenderId: '800963077338',
-    projectId: 'movies-app-15cb4',
-    storageBucket: 'movies-app-15cb4.firebasestorage.app',
+    apiKey: 'AIzaSyBXOIq2tS41JdQlstsXGul6MnvQQtPG4dk',
+    appId: '1:707456573917:android:69ceca99fb7e6624fd9634',
+    messagingSenderId: '707456573917',
+    projectId: 'movies-app-e632d',
+    storageBucket: 'movies-app-e632d.firebasestorage.app',
   );
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyByVDzNuwhnP0drGtzAKD4kTSeaHQY95yo',
-    appId: '1:800963077338:ios:5fa4817cafa7e426c0f1e3',
-    messagingSenderId: '800963077338',
-    projectId: 'movies-app-15cb4',
-    storageBucket: 'movies-app-15cb4.firebasestorage.app',
-    iosClientId: '800963077338-hdvpaprotikmel36cu6mu1qqq6b0v6bb.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAMDYhkKANySAMGASEssTUjFDcUy9r5I_s',
+    appId: '1:707456573917:ios:bebe2cacb10dbc35fd9634',
+    messagingSenderId: '707456573917',
+    projectId: 'movies-app-e632d',
+    storageBucket: 'movies-app-e632d.firebasestorage.app',
+    iosClientId: '707456573917-5b1s9r9u0s7m5ghunjt8tenlf0hbv6lq.apps.googleusercontent.com',
     iosBundleId: 'com.example.moviesApp',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyD94rrYtZPIP2ou2yWyEx9zfmhrFKw-ATQ',
+    appId: '1:707456573917:web:80fecd50281abf0afd9634',
+    messagingSenderId: '707456573917',
+    projectId: 'movies-app-e632d',
+    authDomain: 'movies-app-e632d.firebaseapp.com',
+    storageBucket: 'movies-app-e632d.firebasestorage.app',
+    measurementId: 'G-66BTFJBZTV',
   );
 }

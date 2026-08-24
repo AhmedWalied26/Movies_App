@@ -29,6 +29,7 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = context.width;
     return TextFormField(
+      
       onChanged: onChanged,
       onTapOutside: (event) {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -50,7 +51,22 @@ class CustomTextField extends StatelessWidget {
         ),
         prefixIconConstraints: BoxConstraints(minWidth: 0),
         suffixIcon: suffix,
+        errorStyle: const TextStyle(
+          color: Colors.red,
+          fontSize: 12,
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.red, width: 1),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.red, width: 1.5),
+        ),
+
       ),
+      
     );
+    
   }
 }
