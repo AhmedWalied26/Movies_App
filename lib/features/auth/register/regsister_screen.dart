@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:movies_app/features/auth/login/widgets/language_switcher.dart';
 import 'package:movies_app/features/auth/register/widgets/customized_avatar.dart';
 import 'package:movies_app/providers/language_provider.dart';
+import 'package:movies_app/services/profile_service.dart';
 import 'package:movies_app/services/firebase_service.dart';
 import 'package:movies_app/utils/app_validation.dart';
 import 'package:movies_app/widgets/app_overlay.dart';
@@ -318,6 +319,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
     setState(() => isLoading = false);
 
     if (result.success) {
+      await ProfileService.instance.updateProfile(
+        name: nameController.text.trim(),
+        phone: phoneController.text.trim(),
+        avatar: avatarImages[selectedAvatarIndex],
+      );
       AppOverlay.showSuccess(
         context,
         l10n.account_created_successfully,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/features/main/tabs/profile/widgets/custom_column.dart';
+import 'package:movies_app/services/profile_service.dart';
 import 'package:movies_app/widgets/custom_elevated_button.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_assets.dart';
@@ -9,8 +11,34 @@ import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
 
-class ProfileTab extends StatelessWidget {
+class ProfileTab extends StatefulWidget {
   const ProfileTab({super.key});
+
+  @override
+  State<ProfileTab> createState() => _ProfileTabState();
+}
+
+class _ProfileTabState extends State<ProfileTab> {
+  String profileName = 'John Safwat';
+  String profileAvatar = AppAssets.profileImage8;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfile();
+  }
+
+  Future<void> _loadProfile() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    final profile = await ProfileService.instance.loadProfile();
+    if (!mounted) return;
+    setState(() {
+      profileName = (profile['name'] as String?) ?? user.displayName ?? profileName;
+      profileAvatar = (profile['avatar'] as String?) ?? profileAvatar;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +65,13 @@ class ProfileTab extends StatelessWidget {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(40),
                           child: Image.asset(
-                            AppAssets.profileImage8,
+                            profileAvatar,
                             height: height * 0.118,
                             fit: BoxFit.cover,
                           ),
                         ),
                         const SizedBox(height: 8),
-                        Text('John Safwat', style: AppStyles.bold20White),
+                        Text(profileName, style: AppStyles.bold20White),
                       ],
                     ),
                     CustomColumn(label_1: loc.watch_List, label_2: loc.history),
@@ -58,11 +86,12 @@ class ProfileTab extends StatelessWidget {
                     Expanded(
                       flex: 3,
                       child: CustomElevatedButton(
-                        onPressedButton2: () {
-                          Navigator.pushNamed(
+                        onPressedButton2: () async {
+                          final updated = await Navigator.pushNamed(
                             context,
                             AppRoutes.updateProfileScreen,
                           );
+                          if (updated == true && mounted) _loadProfile();
                         },
                         title: loc.edit_Profile,
                         style: AppStyles.regular20White,
