@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:movies_app/services/profile_service.dart';
 import 'package:movies_app/widgets/custom_elevated_button.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/features/main/update_profile/widgets/update_profile_avatar.dart';
 import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/app_colors.dart';
+import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/widgets/custom_text_field.dart';
 
@@ -17,6 +20,72 @@ class UpdateProfileScreen extends StatefulWidget {
 
 class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   String selectedAvatar = AppAssets.profileImage8;
+  final nameController = TextEditingController();
+  final phoneController = TextEditingController();
+  bool isLoading = true;
+  bool isSaving = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfile();
+  }
+
+  Future<void> _loadProfile() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      if (mounted) setState(() => isLoading = false);
+      return;
+    }
+
+    final profile = await ProfileService.instance.loadProfile();
+    nameController.text = (profile['name'] as String?) ?? user.displayName ?? '';
+    phoneController.text = (profile['phone'] as String?) ?? '';
+    selectedAvatar = (profile['avatar'] as String?) ?? AppAssets.profileImage8;
+    if (mounted) setState(() => isLoading = false);
+  }
+
+  Future<void> _updateProfile() async {
+    setState(() => isSaving = true);
+    try {
+      await ProfileService.instance.updateProfile(
+        name: nameController.text.trim(),
+        phone: phoneController.text.trim(),
+        avatar: selectedAvatar,
+      );
+      if (mounted) Navigator.pop(context, true);
+    } on FirebaseException catch (error) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(error.message ?? 'Unable to update profile')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => isSaving = false);
+    }
+  }
+
+  Future<void> _deleteAccount() async {
+    try {
+      await ProfileService.instance.deleteAccount();
+      if (mounted) {
+        Navigator.pushNamedAndRemoveUntil(context, AppRoutes.loginScreen, (route) => false);
+      }
+    } on FirebaseException catch (error) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(error.message ?? 'Unable to delete account')),
+        );
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    phoneController.dispose();
+    super.dispose();
+  }
 
   void _showAvatarBottomSheet() {
     showModalBottomSheet(
@@ -86,6 +155,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             CustomTextField(
               title: l.name,
               prefix: SvgPicture.asset(AppAssets.profileNameIcon),
+              controller: nameController,
             ),
 
             SizedBox(height: height * 0.02),
@@ -93,24 +163,28 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             CustomTextField(
               title: l.phone_Number,
               prefix: SvgPicture.asset(AppAssets.phoneIcon),
+              controller: phoneController,
             ),
 
             SizedBox(height: height * 0.01),
             TextButton(
-              onPressed: () {},
+              onPressed: () => Navigator.pushNamed(
+                context,
+                AppRoutes.resetPasswordScreen,
+              ),
               child: Text(l.reset_Password, style: AppStyles.bold16White),
             ),
             Spacer(),
             CustomElevatedButton(
               bgColor: AppColors.redColor,
-              onPressedButton2: () {},
+              onPressedButton2: _deleteAccount,
               title: l.delete_Account,
               style: AppStyles.regular20White,
             ),
 
             SizedBox(height: height * 0.019),
             CustomElevatedButton(
-              onPressedButton2: () {},
+              onPressedButton2: isLoading || isSaving ? () {} : _updateProfile,
               title: l.update_Data,
               style: AppStyles.regular20Black,
             ),
