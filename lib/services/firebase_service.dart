@@ -8,6 +8,7 @@ class AuthResult {
 
   AuthResult({required this.success, this.errorCode, this.user});
 }
+
 //
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -47,7 +48,7 @@ class AuthService {
   }
 }
 
-  String getAuthErrorMessage(AppLocalizations l10n, String code) {
+String getAuthErrorMessage(AppLocalizations l10n, String code) {
   switch (code) {
     case 'user-not-found':
       return l10n.user_not_found;
@@ -72,5 +73,4 @@ class AuthService {
     default:
       return l10n.something_went_wrong;
   }
-
-  }
+}

@@ -1,12 +1,10 @@
-import 'dart:developer';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:movies_app/features/auth/login/widgets/language_switcher.dart';
 import 'package:movies_app/features/auth/register/widgets/customized_avatar.dart';
 import 'package:movies_app/providers/language_provider.dart';
 import 'package:movies_app/services/firebase_service.dart';
+import 'package:movies_app/utils/app_validation.dart';
 import 'package:movies_app/widgets/app_overlay.dart';
 import 'package:movies_app/widgets/custom_elevated_button.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
@@ -101,7 +99,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         final bool isSelected = index == selectedAvatarIndex;
 
                         return Padding(
-                          // padding: EdgeInsets.only(left: index == 0 ? 0 : 24),
                           padding: EdgeInsetsDirectional.only(
                             start: index == 0 ? 0 : 24,
                           ),
@@ -125,20 +122,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Text(l10n.avatar, style: AppStyles.regular16White),
 
                   SizedBox(height: height * 0.010),
-
-                  // CustomTextField(
-                  //   title: l10n.name,
-                  //   prefix: SvgPicture.asset(AppAssets.nameIcon),
-                  // ),
                   CustomTextField(
                     title: l10n.name,
                     prefix: SvgPicture.asset(AppAssets.nameIcon),
                     controller: nameController,
                     validation: (text) {
-                      if (text == null || text.trim().isEmpty) {
-                        return l10n.name_is_required;
-                      }
-                      return null;
+                      return AppValidation.validateUserName(context, text);
                     },
                   ),
                   SizedBox(height: height * 0.024),
@@ -149,16 +138,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     prefix: SvgPicture.asset(AppAssets.emailIcon),
                     controller: emailController,
                     validation: (text) {
-                      if (text == null || text.trim().isEmpty) {
-                        return l10n.please_check_your_email;
-                      }
-                      final bool emailValid = RegExp(
-                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
-                      ).hasMatch(emailController.text);
-                      if (!emailValid) {
-                        return l10n.please_check_your_email;
-                      }
-                      return null;
+                      return AppValidation.validateEmail(context, text);
                     },
                   ),
 
@@ -181,13 +161,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     controller: passwordController,
                     validation: (text) {
-                      if (text == null || text.trim().isEmpty) {
-                        return l10n.password_is_required;
-                      }
-                      if (text.length < 6) {
-                        return l10n.password_must_be_at_least_6_characters;
-                      }
-                      return null;
+                      return AppValidation.validatePassword(context, text);
                     },
                     isObsecure: !isPasswordVisible,
                   ),
@@ -211,13 +185,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     controller: confirmPasswordController,
                     validation: (text) {
-                      if (text == null || text.trim().isEmpty) {
-                        return l10n.password_is_required;
-                      }
-                      if (text != passwordController.text) {
-                        return l10n.passwords_do_not_match;
-                      }
-                      return null;
+                      return AppValidation.validateConfirmPassword(
+                        context,
+                        text,
+                        passwordController.text,
+                      );
                     },
                     isObsecure: !isConfirmPasswordVisible,
                   ),
@@ -229,13 +201,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     prefix: SvgPicture.asset(AppAssets.phoneIcon),
                     controller: phoneController,
                     validation: (text) {
-                      if (text == null || text.trim().isEmpty) {
-                        return l10n.phone_number_required;
-                      }
-                      if (text.length < 11) {
-                        return l10n.phone_number_invalid;
-                      }
-                      return null;
+                      return AppValidation.validatePhone(context, text);
                     },
                   ),
                   SizedBox(height: height * 0.024),
@@ -319,8 +285,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ],
                     ),
                   ),
-
-                  const SizedBox(height: 40),
                 ],
               ),
             ),
@@ -329,7 +293,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
-  
 
   final authService = AuthService();
   bool isLoading = false;

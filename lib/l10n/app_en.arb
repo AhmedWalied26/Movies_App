@@ -72,5 +72,6 @@
   "too_many_requests": "Too many attempts. Please try again later.",
   "network_request_failed": "Network error. Please check your internet connection.",
   "operation_not_allowed": "This sign-in method is not enabled.",
-  "something_went_wrong": "Something went wrong. Please try again."
+  "something_went_wrong": "Something went wrong. Please try again.",
+  "valid_user_name": "Enter valid user name."
 }

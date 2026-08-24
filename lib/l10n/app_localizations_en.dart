@@ -238,4 +238,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get something_went_wrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get valid_user_name => 'Enter valid user name.';
 }

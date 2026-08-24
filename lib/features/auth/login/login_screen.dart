@@ -1,12 +1,9 @@
-import 'dart:developer';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/features/auth/login/widgets/language_switcher.dart';
 import 'package:movies_app/providers/language_provider.dart';
 import 'package:movies_app/services/firebase_service.dart';
+import 'package:movies_app/utils/app_validation.dart';
 import 'package:movies_app/widgets/app_overlay.dart';
 import 'package:movies_app/widgets/custom_elevated_button.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
@@ -49,7 +46,6 @@ class _LoginScreenState extends State<LoginScreen> {
     final l10n = AppLocalizations.of(context)!;
     var height = context.height;
     var width = context.width;
-    String selectedLanguage = AppLocalizations.of(context)!.localeName;
 
     return Scaffold(
       backgroundColor: AppColors.blackColor,
@@ -73,16 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         prefix: SvgPicture.asset(AppAssets.emailIcon),
                         controller: emailController,
                         validation: (text) {
-                          if (text == null || text.trim().isEmpty) {
-                            return l10n.please_check_your_email;
-                          }
-                          final bool emailValid = RegExp(
-                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
-                          ).hasMatch(emailController.text);
-                          if (!emailValid) {
-                            return l10n.please_check_your_email;
-                          }
-                          return null;
+                          return AppValidation.validateEmail(context, text);
                         },
                       ),
 
@@ -106,14 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         controller: passwordController,
                         validation: (text) {
-                          if (text == null || text.trim().isEmpty) {
-                            return l10n.password_is_required;
-                          }
-                          if (text.length < 6) {
-                            return l10n.password_must_be_at_least_6_characters;
-                          }
-
-                          return null;
+                          return AppValidation.validatePassword(context, text);
                         },
                         isObsecure: !isPasswordVisible,
                       ),
@@ -282,7 +262,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-
   final authService = AuthService();
   bool isLoading = false;
 
@@ -316,7 +295,10 @@ class _LoginScreenState extends State<LoginScreen> {
         },
       );
     } else {
-  AppOverlay.showError(context, getAuthErrorMessage(l10n, result.errorCode!));
+      AppOverlay.showError(
+        context,
+        getAuthErrorMessage(l10n, result.errorCode!),
+      );
     }
   }
 }

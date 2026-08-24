@@ -541,6 +541,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Something went wrong. Please try again.'**
   String get something_went_wrong;
+
+  /// No description provided for @valid_user_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter valid user name.'**
+  String get valid_user_name;
 }
 
 class _AppLocalizationsDelegate
