@@ -14,21 +14,11 @@ import 'package:movies_app/features/main/update_profile/reset_password_screen.da
 import 'package:movies_app/features/onboarding/on_boarding_screens.dart';
 import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_theme.dart';
-import 'package:movies_app/providers/language_provider.dart';
-
-import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => LanguageProvider(),
-
-      child: MoviesApp(),
-    ),
-  );
+  runApp(const MoviesApp());
 }
 
 class MoviesApp extends StatelessWidget {
@@ -36,11 +26,9 @@ class MoviesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var languageProvider = Provider.of<LanguageProvider>(context);
-
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
-      locale: Locale(languageProvider.appLanguage),
+      // locale: Locale(languageProvider.appLanguage),
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
       routes: {
