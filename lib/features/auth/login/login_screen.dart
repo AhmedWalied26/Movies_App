@@ -28,6 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
   );
 
   bool isPasswordVisible = false;
+  bool isLoadingGoogle = false;
 
   var formKey = GlobalKey<FormState>();
 
@@ -177,7 +178,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: height * 0.027),
 
                       CustomElevatedButton(
-                        onPressedButton2: () {},
+                        onPressedButton2: () {
+                          signInWithGoogle(context);
+                        
+                        },
                         title: l10n.login_With_Google,
                         style: AppStyles.regular20Black,
                         child: SvgPicture.asset(
@@ -252,4 +256,85 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     }
   }
+
+
+
+
+
+  
+Future<void> signInWithGoogle(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
+
+    setState(() {
+      isLoadingGoogle = true;
+    });
+
+    try {
+      await GoogleSignIn.instance.initialize(
+        serverClientId:
+            '707456573917-mr0aclsteug4qglrouv7cc0gaokpt3hi.apps.googleusercontent.com',
+      );
+
+      final GoogleSignInAccount? googleUser = await GoogleSignIn.instance
+          .authenticate();
+
+      if (googleUser == null) {
+        return;
+      }
+
+      final GoogleSignInAuthentication googleAuth = googleUser.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        idToken: googleAuth.idToken,
+      );
+
+      final userCredential = await FirebaseAuth.instance.signInWithCredential(
+        credential,
+      );
+
+      final user = userCredential.user;
+      if (user == null) return;
+
+      final userExists = await readUserFromFireStore(user.uid);
+
+      if (userExists == null) {
+        await addUserInFireStore(
+          UserModel(
+            uId: user.uid,
+            email: user.email ?? '',
+            name: user.displayName ?? '',
+          ),
+        );
+      }
+
+      if (!mounted) return;
+
+      AppOverlay.showSuccess(
+        context,
+        l10n.login_successful,
+        onFinished: () {
+          if (mounted) {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              AppRoutes.mainScreen,
+              (route) => false,
+            );
+          }
+        },
+      );
+    } on GoogleSignInException catch (e) {
+      if (e.code != GoogleSignInExceptionCode.canceled && mounted) {
+        AppOverlay.showError(context, 'try again later');
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          isLoadingGoogle = false;
+        });
+      }
+    }
+  }
+
+
+
 }
