@@ -5,7 +5,7 @@ import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
 
 class MovieInfo extends StatelessWidget {
-  final String text;
+  final num text;
   final String icon;
   const MovieInfo({super.key, required this.text, required this.icon});
 
@@ -14,7 +14,7 @@ class MovieInfo extends StatelessWidget {
     var height = context.height;
     var width = context.width;
     return Container(
-      padding: .symmetric(horizontal: width * 0.05, vertical: height * 0.006),
+      padding: .symmetric(horizontal: width * 0.05, vertical: height * 0.007),
       decoration: BoxDecoration(
         borderRadius: .circular(16),
         color: AppColors.darkGreyColor,
@@ -24,7 +24,7 @@ class MovieInfo extends StatelessWidget {
         mainAxisSize: .min,
         children: [
           SvgPicture.asset(icon),
-          Text(text, style: AppStyles.bold24White),
+          Text(text.toString(), style: AppStyles.bold24White),
         ],
       ),
     );

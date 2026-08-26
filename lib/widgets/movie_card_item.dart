@@ -6,7 +6,9 @@ import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
 
 class MovieCardItem extends StatelessWidget {
-  const MovieCardItem({super.key});
+  final String? movieImage;
+  final double? movieRate;
+  const MovieCardItem({super.key, this.movieImage, this.movieRate});
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +19,7 @@ class MovieCardItem extends StatelessWidget {
       alignment: .topStart,
       decoration: BoxDecoration(
         borderRadius: .circular(20),
-        image: DecorationImage(
-          fit: .fill,
-          image: AssetImage(AppAssets.movieImage),
-        ),
+        image: DecorationImage(fit: .fill, image: NetworkImage(movieImage!)),
       ),
       child: Container(
         padding: .symmetric(horizontal: width * 0.02, vertical: height * 0.005),
@@ -32,7 +31,7 @@ class MovieCardItem extends StatelessWidget {
           spacing: width * 0.01,
           mainAxisSize: .min,
           children: [
-            Text('7.7', style: AppStyles.regular16White),
+            Text(movieRate.toString(), style: AppStyles.regular16White),
             SvgPicture.asset(
               AppAssets.rateIcon,
               width: width * 0.034,

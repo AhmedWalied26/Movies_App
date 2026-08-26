@@ -6,7 +6,7 @@ import 'package:movies_app/utils/size_utils.dart';
 
 class MovieHead extends StatelessWidget {
   final String movieName;
-  final String movieTime;
+  final int movieTime;
   const MovieHead({
     super.key,
     required this.movieName,
@@ -36,7 +36,7 @@ class MovieHead extends StatelessWidget {
         SizedBox(height: height * 0.2),
         Text(movieName, textAlign: .center, style: AppStyles.bold24White),
         SizedBox(height: height * 0.015),
-        Text(movieTime, style: AppStyles.bold20lightGrey),
+        Text(movieTime.toString(), style: AppStyles.bold20lightGrey),
       ],
     );
   }
