@@ -9,6 +9,7 @@ import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
 import 'package:movies_app/widgets/custom_elevated_button.dart';
 import 'package:movies_app/widgets/custom_text_field.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({super.key});
@@ -24,24 +25,46 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     try {
       String email = emailController.text.trim().toLowerCase();
 
+      // 1. التحقق أن الحقل ليس فارغاً
       if (email.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Please enter your email address')),
+          const SnackBar(content: Text('Please enter your email address')),
         );
         return;
       }
 
+      // 2. البحث في جدول الـ users للتأكد من وجود الإيميل مسبقاً
+      final querySnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('email', isEqualTo: email)
+          .get();
+
+      // 3. لو الإيميل مش موجود، أظهر رسالة خطأ فوراً
+      if (querySnapshot.docs.isEmpty) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('No user found with this email.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+        return;
+      }
+
+      // 4. لو الإيميل موجود، أرسل رسالة إعادة تعيين كلمة المرور
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Password reset link sent! Check your email.'),
           backgroundColor: Colors.green,
         ),
       );
 
+      // الانتقال لشاشة تسجيل الدخول بعد الإرسال الناجح
       Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
+
     } on FirebaseAuthException catch (e) {
       String message = 'An error occurred';
       if (e.code == 'user-not-found') {
@@ -57,10 +80,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         SnackBar(content: Text(message), backgroundColor: Colors.red),
       );
     } catch (e) {
-      rethrow;
+      print("ERROR: $e");
     }
   }
-
   @override
   void dispose() {
     emailController.dispose();
