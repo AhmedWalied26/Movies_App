@@ -28,7 +28,11 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       // 1. التحقق أن الحقل ليس فارغاً
       if (email.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Please enter your email address')),
+           SnackBar(
+               content: Text(
+                   'Please enter your email address'
+               )
+           ),
         );
         return;
       }
@@ -43,8 +47,10 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       if (querySnapshot.docs.isEmpty) {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('No user found with this email.'),
+           SnackBar(
+            content: Text(
+                'No user found with this email.'
+            ),
             backgroundColor: Colors.red,
           ),
         );
