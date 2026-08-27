@@ -33,7 +33,14 @@ class HomeTab extends StatelessWidget {
             CarouselSlider.builder(
               itemCount: 6,
               itemBuilder: (context, index, realIndex) {
-                return SizedBox(width: width * 0.52, child: MovieCardItem());
+                return SizedBox(
+                  width: width * 0.52,
+                  child: MovieCardItem(
+                    movieImage:
+                        'https://yts.gg/assets/images/movies/Chaos_2005/background.jpg',
+                    movieRate: 6,
+                  ),
+                );
               },
               options: CarouselOptions(
                 autoPlay: true,
@@ -77,7 +84,14 @@ class HomeTab extends StatelessWidget {
                 scrollDirection: .horizontal,
                 itemCount: 10,
                 itemBuilder: (context, index) {
-                  return SizedBox(width: width * 0.33, child: MovieCardItem());
+                  return SizedBox(
+                    width: width * 0.33,
+                    child: MovieCardItem(
+                      movieImage:
+                          'https://yts.gg/assets/images/movies/Chaos_2005/background.jpg',
+                      movieRate: 6,
+                    ),
+                  );
                 },
               ),
             ),

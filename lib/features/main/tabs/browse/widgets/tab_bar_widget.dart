@@ -76,7 +76,11 @@ class TabBarWidget extends StatelessWidget {
                   padding: .symmetric(horizontal: width * 0.016),
                   itemCount: 10,
                   itemBuilder: (context, index) {
-                    return MovieCardItem();
+                    return MovieCardItem(
+                      movieImage:
+                          'https://yts.gg/assets/images/movies/Chaos_2005/background.jpg',
+                      movieRate: 6,
+                    );
                   },
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
