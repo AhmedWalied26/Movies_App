@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:movies_app/features/auth/login/widgets/google_sign_in_button.dart';
 import 'package:movies_app/services/firebase_service.dart';
 import 'package:movies_app/utils/app_validation.dart';
 import 'package:movies_app/widgets/app_overlay.dart';
@@ -28,7 +29,6 @@ class _LoginScreenState extends State<LoginScreen> {
   );
 
   bool isPasswordVisible = false;
-
   var formKey = GlobalKey<FormState>();
 
   @override
@@ -59,7 +59,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: height * 0.024),
                       Image.asset(AppAssets.mainLogo),
                       SizedBox(height: height * 0.069),
-
                       CustomTextField(
                         type: TextInputType.emailAddress,
                         title: l10n.email,
@@ -69,9 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           return AppValidation.validateEmail(context, text);
                         },
                       ),
-
                       SizedBox(height: height * 0.022),
-
                       CustomTextField(
                         type: TextInputType.visiblePassword,
                         title: l10n.password,
@@ -95,7 +92,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         isObsecure: !isPasswordVisible,
                       ),
                       SizedBox(height: height * 0.017),
-
                       Align(
                         alignment: Alignment.centerRight,
                         child: Padding(
@@ -104,7 +100,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             onTap: () {
                               Navigator.pushReplacementNamed(
                                 context,
-
                                 AppRoutes.forgotPasswordScreen,
                               );
                             },
@@ -115,10 +110,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                       ),
-
                       SizedBox(height: height * 0.033),
-
                       CustomElevatedButton(
+                        isLoading: isLoading,
                         onPressedButton2: () {
                           login(context);
                         },
@@ -126,7 +120,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: AppStyles.regular20Black,
                       ),
                       SizedBox(height: height * 0.022),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -134,7 +127,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             '${l10n.dont_Have_Account} ? ',
                             style: AppStyles.regular14White,
                           ),
-
                           GestureDetector(
                             onTap: () {
                               Navigator.pushReplacementNamed(
@@ -151,9 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ],
                       ),
-
                       SizedBox(height: height * 0.027),
-
                       Row(
                         children: [
                           const Expanded(
@@ -173,20 +163,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ],
                       ),
-
                       SizedBox(height: height * 0.027),
-
-                      CustomElevatedButton(
-                        onPressedButton2: () {},
-                        title: l10n.login_With_Google,
-                        style: AppStyles.regular20Black,
-                        child: SvgPicture.asset(
-                          AppAssets.googleIcon,
-                          height: height * 0.026,
-                        ),
-                      ),
+                      GoogleSignInButton(),
                       SizedBox(height: height * 0.033),
-
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: .circular(30),

@@ -54,5 +54,10 @@ class AppAssets {
   static const String ironManMovie = 'assets/images/ironman.png';
   static const String civilWarMovie = 'assets/images/civilwar.png';
   static const String avengersMovie = 'assets/images/avengers.png';
+  static const String castMovie = 'assets/images/cast_movie_image.png';
+  static const String movieScreenShotImage =
+      'assets/images/movie_screen_shot_image.png';
+  static const String movieDetailsImage =
+      'assets/images/movie_details_image.png';
   static const String doctorStrangeMovie = 'assets/images/doctor_strange.png';
 }

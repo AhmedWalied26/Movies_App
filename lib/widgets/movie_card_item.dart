@@ -9,6 +9,9 @@ import 'package:movies_app/utils/size_utils.dart';
 class MovieCardItem extends StatelessWidget {
   final Movies? movie;
   const MovieCardItem({super.key, this.movie});
+  final String? movieImage;
+  final double? movieRate;
+  const MovieCardItem({super.key, this.movieImage, this.movieRate});
 
   @override
   Widget build(BuildContext context) {
