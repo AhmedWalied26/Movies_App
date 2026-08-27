@@ -204,6 +204,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   SizedBox(height: height * 0.024),
                   CustomElevatedButton(
+                    isLoading: isLoading,
                     onPressedButton2: () {
                       register(context);
                     },
@@ -298,7 +299,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         onFinished: () {
           if (navigator.mounted) {
             navigator.pushNamedAndRemoveUntil(
-              AppRoutes.mainScreen,
+              AppRoutes.loginScreen,
               (route) => false,
             );
           }

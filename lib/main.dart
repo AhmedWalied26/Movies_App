@@ -1,5 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/features/auth/login/cubit/auth_view_model.dart';
+import 'package:movies_app/services/firebase_service.dart';
 import 'firebase_options.dart';
 import 'package:movies_app/features/auth/forget_password/forget_password_screen.dart';
 import 'package:movies_app/features/auth/login/login_screen.dart';
@@ -18,7 +21,12 @@ import 'package:movies_app/utils/app_theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(const MoviesApp());
+  runApp(
+    BlocProvider(
+      create: (context) => AuthViewModel(AuthService()),
+      child: const MoviesApp(),
+    ),
+  );
 }
 
 class MoviesApp extends StatelessWidget {
@@ -44,8 +52,7 @@ class MoviesApp extends StatelessWidget {
         AppRoutes.browseScreen: (context) => BrowseTab(),
         AppRoutes.profileScreen: (context) => ProfileTab(),
       },
-
-      initialRoute: AppRoutes.loginScreen,
+      initialRoute: AppRoutes.exploreScreen,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.dark,

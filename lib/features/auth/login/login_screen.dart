@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:movies_app/features/auth/login/widgets/google_sign_in_button.dart';
 import 'package:movies_app/services/firebase_service.dart';
 import 'package:movies_app/utils/app_validation.dart';
 import 'package:movies_app/widgets/app_overlay.dart';
@@ -28,8 +29,6 @@ class _LoginScreenState extends State<LoginScreen> {
   );
 
   bool isPasswordVisible = false;
-  bool isLoadingGoogle = false;
-
   var formKey = GlobalKey<FormState>();
 
   @override
@@ -60,7 +59,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: height * 0.024),
                       Image.asset(AppAssets.mainLogo),
                       SizedBox(height: height * 0.069),
-
                       CustomTextField(
                         type: TextInputType.emailAddress,
                         title: l10n.email,
@@ -70,9 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           return AppValidation.validateEmail(context, text);
                         },
                       ),
-
                       SizedBox(height: height * 0.022),
-
                       CustomTextField(
                         type: TextInputType.visiblePassword,
                         title: l10n.password,
@@ -96,7 +92,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         isObsecure: !isPasswordVisible,
                       ),
                       SizedBox(height: height * 0.017),
-
                       Align(
                         alignment: Alignment.centerRight,
                         child: Padding(
@@ -105,7 +100,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             onTap: () {
                               Navigator.pushReplacementNamed(
                                 context,
-
                                 AppRoutes.forgotPasswordScreen,
                               );
                             },
@@ -116,10 +110,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                       ),
-
                       SizedBox(height: height * 0.033),
-
                       CustomElevatedButton(
+                        isLoading: isLoading,
                         onPressedButton2: () {
                           login(context);
                         },
@@ -127,7 +120,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: AppStyles.regular20Black,
                       ),
                       SizedBox(height: height * 0.022),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -135,7 +127,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             '${l10n.dont_Have_Account} ? ',
                             style: AppStyles.regular14White,
                           ),
-
                           GestureDetector(
                             onTap: () {
                               Navigator.pushReplacementNamed(
@@ -152,9 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ],
                       ),
-
                       SizedBox(height: height * 0.027),
-
                       Row(
                         children: [
                           const Expanded(
@@ -174,23 +163,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ],
                       ),
-
                       SizedBox(height: height * 0.027),
-
-                      CustomElevatedButton(
-                        onPressedButton2: () {
-                          signInWithGoogle(context);
-                        
-                        },
-                        title: l10n.login_With_Google,
-                        style: AppStyles.regular20Black,
-                        child: SvgPicture.asset(
-                          AppAssets.googleIcon,
-                          height: height * 0.026,
-                        ),
-                      ),
+                      GoogleSignInButton(),
                       SizedBox(height: height * 0.033),
-
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: .circular(30),
@@ -256,85 +231,4 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     }
   }
-
-
-
-
-
-  
-Future<void> signInWithGoogle(BuildContext context) async {
-    final l10n = AppLocalizations.of(context)!;
-
-    setState(() {
-      isLoadingGoogle = true;
-    });
-
-    try {
-      await GoogleSignIn.instance.initialize(
-        serverClientId:
-            '707456573917-mr0aclsteug4qglrouv7cc0gaokpt3hi.apps.googleusercontent.com',
-      );
-
-      final GoogleSignInAccount? googleUser = await GoogleSignIn.instance
-          .authenticate();
-
-      if (googleUser == null) {
-        return;
-      }
-
-      final GoogleSignInAuthentication googleAuth = googleUser.authentication;
-
-      final credential = GoogleAuthProvider.credential(
-        idToken: googleAuth.idToken,
-      );
-
-      final userCredential = await FirebaseAuth.instance.signInWithCredential(
-        credential,
-      );
-
-      final user = userCredential.user;
-      if (user == null) return;
-
-      final userExists = await readUserFromFireStore(user.uid);
-
-      if (userExists == null) {
-        await addUserInFireStore(
-          UserModel(
-            uId: user.uid,
-            email: user.email ?? '',
-            name: user.displayName ?? '',
-          ),
-        );
-      }
-
-      if (!mounted) return;
-
-      AppOverlay.showSuccess(
-        context,
-        l10n.login_successful,
-        onFinished: () {
-          if (mounted) {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              AppRoutes.mainScreen,
-              (route) => false,
-            );
-          }
-        },
-      );
-    } on GoogleSignInException catch (e) {
-      if (e.code != GoogleSignInExceptionCode.canceled && mounted) {
-        AppOverlay.showError(context, 'try again later');
-      }
-    } finally {
-      if (mounted) {
-        setState(() {
-          isLoadingGoogle = false;
-        });
-      }
-    }
-  }
-
-
-
 }
