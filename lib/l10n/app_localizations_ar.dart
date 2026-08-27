@@ -241,4 +241,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get valid_user_name => 'من فضلك أدخل اسم مستخدم صحيح.';
+
+  @override
+  String get similar => 'Similar';
+
+  @override
+  String get summary => 'Summary';
+
+  @override
+  String get screenshots => 'Screenshots';
+
+  @override
+  String get genres => 'Genres';
+
+  @override
+  String get cast => 'Cast';
 }

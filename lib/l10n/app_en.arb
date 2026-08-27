@@ -73,5 +73,10 @@
   "network_request_failed": "Network error. Please check your internet connection.",
   "operation_not_allowed": "This sign-in method is not enabled.",
   "something_went_wrong": "Something went wrong. Please try again.",
-  "valid_user_name": "Enter valid user name."
+  "valid_user_name": "Enter valid user name.",
+  "similar" : "Similar",
+  "summary" : "Summary",
+  "screenshots" : "Screenshots",
+  "genres" : "Genres",
+  "cast" : "Cast"
 }

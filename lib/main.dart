@@ -21,7 +21,9 @@ import 'package:movies_app/features/onboarding/on_boarding_screens.dart';
 import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_theme.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     MultiBlocProvider(
       providers: [
@@ -31,13 +33,8 @@ void main() {
         BlocProvider<MovieSuggestionViewModel>(
           create: (context) => MovieSuggestionViewModel(),
         ),
+        BlocProvider(create: (context) => AuthViewModel(AuthService())),
       ],
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(
-    BlocProvider(
-      create: (context) => AuthViewModel(AuthService()),
       child: const MoviesApp(),
     ),
   );
@@ -67,7 +64,7 @@ class MoviesApp extends StatelessWidget {
         AppRoutes.browseScreen: (context) => BrowseTab(),
         AppRoutes.profileScreen: (context) => ProfileTab(),
       },
-      initialRoute: AppRoutes.exploreScreen,
+      initialRoute: AppRoutes.movieDetailsScreen,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.dark,

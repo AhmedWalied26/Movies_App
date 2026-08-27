@@ -24,40 +24,27 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   Future<void> resetPassword() async {
     try {
       String email = emailController.text.trim().toLowerCase();
-
-      // 1. التحقق أن الحقل ليس فارغاً
       if (email.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
-           SnackBar(
-               content: Text(
-                   'Please enter your email address'
-               )
-           ),
+          SnackBar(content: Text('Please enter your email address')),
         );
         return;
       }
-
-      // 2. البحث في جدول الـ users للتأكد من وجود الإيميل مسبقاً
       final querySnapshot = await FirebaseFirestore.instance
           .collection('users')
           .where('email', isEqualTo: email)
           .get();
 
-      // 3. لو الإيميل مش موجود، أظهر رسالة خطأ فوراً
       if (querySnapshot.docs.isEmpty) {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-           SnackBar(
-            content: Text(
-                'No user found with this email.'
-            ),
+          SnackBar(
+            content: Text('No user found with this email.'),
             backgroundColor: Colors.red,
           ),
         );
         return;
       }
-
-      // 4. لو الإيميل موجود، أرسل رسالة إعادة تعيين كلمة المرور
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
 
       if (!mounted) return;
@@ -67,10 +54,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
           backgroundColor: Colors.green,
         ),
       );
-
-      // الانتقال لشاشة تسجيل الدخول بعد الإرسال الناجح
       Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
-
     } on FirebaseAuthException catch (e) {
       String message = 'An error occurred';
       if (e.code == 'user-not-found') {
@@ -86,9 +70,10 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         SnackBar(content: Text(message), backgroundColor: Colors.red),
       );
     } catch (e) {
-      print("ERROR: $e");
+      rethrow;
     }
   }
+
   @override
   void dispose() {
     emailController.dispose();

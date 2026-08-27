@@ -59,7 +59,7 @@
   "romance": "رومانسي",
   "crime": "جريمة",
   "adventure": "مغامرة",
-  "wish_list":"قائمة الرغبات",
+  "wish_list": "قائمة الرغبات",
   "login_successful": "تم تسجيل الدخول بنجاح!",
   "account_created_successfully": "تم إنشاء الحساب بنجاح!",
   "user_not_found": "لا يوجد حساب بهذا البريد الإلكتروني.",
@@ -73,5 +73,10 @@
   "network_request_failed": "خطأ في الشبكة. تحقق من اتصالك بالإنترنت.",
   "operation_not_allowed": "طريقة تسجيل الدخول هذه غير مفعّلة.",
   "valid_user_name": "من فضلك أدخل اسم مستخدم صحيح.",
-  "something_went_wrong": "حدث خطأ ما. حاول مرة أخرى."
+  "something_went_wrong": "حدث خطأ ما. حاول مرة أخرى.",
+  "similar": "Similar",
+  "summary": "Summary",
+  "screenshots": "Screenshots",
+  "genres": "Genres",
+  "cast": "Cast"
 }

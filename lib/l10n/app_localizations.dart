@@ -547,6 +547,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter valid user name.'**
   String get valid_user_name;
+
+  /// No description provided for @similar.
+  ///
+  /// In en, this message translates to:
+  /// **'Similar'**
+  String get similar;
+
+  /// No description provided for @summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary'**
+  String get summary;
+
+  /// No description provided for @screenshots.
+  ///
+  /// In en, this message translates to:
+  /// **'Screenshots'**
+  String get screenshots;
+
+  /// No description provided for @genres.
+  ///
+  /// In en, this message translates to:
+  /// **'Genres'**
+  String get genres;
+
+  /// No description provided for @cast.
+  ///
+  /// In en, this message translates to:
+  /// **'Cast'**
+  String get cast;
 }
 
 class _AppLocalizationsDelegate
