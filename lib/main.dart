@@ -45,7 +45,7 @@ class MoviesApp extends StatelessWidget {
         AppRoutes.profileScreen: (context) => ProfileTab(),
       },
 
-      initialRoute: AppRoutes.loginScreen,
+      initialRoute: AppRoutes.mainScreen,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.dark,
