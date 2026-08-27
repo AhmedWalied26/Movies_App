@@ -240,5 +240,20 @@ class AppLocalizationsAr extends AppLocalizations {
   String get something_went_wrong => 'حدث خطأ ما. حاول مرة أخرى.';
 
   @override
-  String get valid_user_name => 'Enter valid user name.';
+  String get valid_user_name => 'من فضلك أدخل اسم مستخدم صحيح.';
+
+  @override
+  String get similar => 'Similar';
+
+  @override
+  String get summary => 'Summary';
+
+  @override
+  String get screenshots => 'Screenshots';
+
+  @override
+  String get genres => 'Genres';
+
+  @override
+  String get cast => 'Cast';
 }

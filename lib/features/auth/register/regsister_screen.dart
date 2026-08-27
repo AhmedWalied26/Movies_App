@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:movies_app/features/auth/login/widgets/language_switcher.dart';
 import 'package:movies_app/features/auth/register/widgets/customized_avatar.dart';
-import 'package:movies_app/providers/language_provider.dart';
+import 'package:movies_app/services/profile_service.dart';
 import 'package:movies_app/services/firebase_service.dart';
 import 'package:movies_app/utils/app_validation.dart';
 import 'package:movies_app/widgets/app_overlay.dart';
@@ -14,7 +13,6 @@ import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
 import 'package:movies_app/widgets/custom_text_field.dart';
-import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -206,6 +204,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   SizedBox(height: height * 0.024),
                   CustomElevatedButton(
+                    isLoading: isLoading,
                     onPressedButton2: () {
                       register(context);
                     },
@@ -239,49 +238,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ],
                   ),
                   SizedBox(height: height * 0.018),
-
                   Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: width * 0.03,
-                      vertical: 6,
-                    ),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      border: Border.all(
-                        color: AppColors.primaryColor,
-                        width: 2,
-                      ),
+                      borderRadius: .circular(30),
+                      border: .all(color: AppColors.primaryColor, width: 3),
                     ),
                     child: Row(
-                      mainAxisSize: MainAxisSize.min,
+                      mainAxisSize: .min,
+                      spacing: width * 0.03,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Consumer<LanguageProvider>(
-                          builder: (context, languageProvider, child) {
-                            return Row(
-                              textDirection: TextDirection.ltr,
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                LanguageSwitcher(
-                                  icon: AppAssets.enIcon,
-                                  isSelected:
-                                      languageProvider.appLanguage == 'en',
-                                  onTap: () =>
-                                      languageProvider.changeLanguage('en'),
-                                ),
-                                const SizedBox(width: 40),
-                                LanguageSwitcher(
-                                  icon: AppAssets.arIcon,
-                                  isSelected:
-                                      languageProvider.appLanguage == 'ar',
-                                  onTap: () =>
-                                      languageProvider.changeLanguage('ar'),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
+                        SvgPicture.asset(AppAssets.enIcon),
+                        SvgPicture.asset(AppAssets.arIcon),
                       ],
                     ),
                   ),
@@ -318,18 +286,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
     setState(() => isLoading = false);
 
     if (result.success) {
+      await ProfileService.instance.updateProfile(
+        name: nameController.text.trim(),
+        phone: phoneController.text.trim(),
+        avatar: avatarImages[selectedAvatarIndex],
+      );
+      if (!context.mounted) return;
+      final navigator = Navigator.of(context);
       AppOverlay.showSuccess(
         context,
         l10n.account_created_successfully,
         onFinished: () {
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            AppRoutes.mainScreen,
-            (route) => false,
-          );
+          if (navigator.mounted) {
+            navigator.pushNamedAndRemoveUntil(
+              AppRoutes.loginScreen,
+              (route) => false,
+            );
+          }
         },
       );
     } else {
+      if (!context.mounted) return;
       AppOverlay.showError(
         context,
         getAuthErrorMessage(l10n, result.errorCode!),

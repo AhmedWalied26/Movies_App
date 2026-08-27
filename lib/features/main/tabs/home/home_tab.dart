@@ -1,59 +1,118 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_app/widgets/movie_card_item.dart';
-import 'package:movies_app/l10n/app_localizations.dart';
-import 'package:movies_app/utils/app_assets.dart';
-import 'package:movies_app/utils/app_styles.dart';
-import 'package:movies_app/utils/size_utils.dart';
+import 'package:movies_app/features/main/tabs/home/home_tab_view_model.dart';
+import 'package:movies_app/features/main/tabs/home/home_tab_view_model_bottom.dart';
+import 'package:movies_app/utils/app_routes.dart';
+import 'package:movies_app/widgets/main_error.dart';
+import 'package:provider/provider.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../../../utils/app_assets.dart';
+import '../../../../utils/app_colors.dart';
+import '../../../../utils/app_styles.dart';
+import '../../../../widgets/movie_card_item.dart';
+import '../../../../widgets/main_loading_widget.dart';
 
-class HomeTab extends StatelessWidget {
+class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
 
   @override
+  State<HomeTab> createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
+  HomeTabViewModel viewModel = HomeTabViewModel();
+  HomeTabViewModelBottom viewModelBottom = HomeTabViewModelBottom();
+
+  @override
+  void initState() {
+    super.initState();
+    viewModel.getMoviesByGenre('');
+    viewModelBottom.getMoviesByGenre('Action');
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var height = context.height;
-    var width = context.width;
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
+
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
           colorFilter: ColorFilter.mode(
             Colors.black.withValues(alpha: 0.5),
-            .darken,
+            BlendMode.darken,
           ),
-          fit: .fill,
+          fit: BoxFit.fill,
           image: AssetImage(AppAssets.onBoardingImage6),
         ),
       ),
       child: SingleChildScrollView(
-        padding: .only(bottom: height * 0.1),
+        padding: EdgeInsets.only(bottom: height * 0.1),
         child: Column(
-          crossAxisAlignment: .stretch,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Image.asset(AppAssets.availableNowImage),
-            CarouselSlider.builder(
-              itemCount: 6,
-              itemBuilder: (context, index, realIndex) {
-                return SizedBox(width: width * 0.52, child: MovieCardItem());
-              },
-              options: CarouselOptions(
-                autoPlay: true,
-                height: height * 0.351,
-                enlargeCenterPage: true,
-                viewportFraction: 0.55,
+            ChangeNotifierProvider(
+              create: (context) => viewModel,
+              child: Consumer<HomeTabViewModel>(
+                builder: (context, viewModel, child) {
+                  if (viewModel.isLoading == true) {
+                    return MainLoadingwidget();
+                  } else if (viewModel.errorMessage != null) {
+                    return MainError(
+                      errorMessage: viewModel.errorMessage!,
+                      onTap: () {
+                        viewModel.moviesList;
+                      },
+                    );
+                  } else if (viewModel.moviesList == null) {
+                    return MainLoadingwidget();
+                  } else {
+                    var moviesList = viewModel.moviesList ?? [];
+                    return CarouselSlider.builder(
+                      itemCount: moviesList.length,
+                      itemBuilder: (context, index, realIndex) {
+                        return SizedBox(
+                          width: width * 0.5,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                AppRoutes.movieDetailsScreen,
+                                arguments: moviesList[index].id,
+                              );
+                            },
+                            child: MovieCardItem(
+                              movie: moviesList[index] as dynamic,
+                            ),
+                          ),
+                        );
+                      },
+                      options: CarouselOptions(
+                        autoPlay: true,
+                        height: height * 0.38,
+                        enlargeCenterPage: true,
+                        viewportFraction: 0.5,
+                      ),
+                    );
+                  }
+                },
               ),
             ),
             Image.asset(AppAssets.watchNowImage),
             Padding(
-              padding: .directional(start: width * 0.035),
+              padding: EdgeInsetsDirectional.only(start: width * 0.035),
               child: Row(
-                mainAxisAlignment: .spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     AppLocalizations.of(context)!.action,
                     style: AppStyles.regular20White,
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, AppRoutes.browseScreen);
+                    },
                     child: Row(
                       spacing: width * 0.01,
                       children: [
@@ -61,7 +120,10 @@ class HomeTab extends StatelessWidget {
                           AppLocalizations.of(context)!.see_More,
                           style: AppStyles.regular16DarkPrimary,
                         ),
-                        Icon(Icons.arrow_forward),
+                        const Icon(
+                          Icons.arrow_forward,
+                          color: AppColors.primaryColor,
+                        ),
                       ],
                     ),
                   ),
@@ -70,15 +132,52 @@ class HomeTab extends StatelessWidget {
             ),
             SizedBox(
               height: height * 0.22,
-              child: ListView.separated(
-                padding: .symmetric(horizontal: width * 0.035),
-                separatorBuilder: (context, index) =>
-                    SizedBox(width: width * 0.035),
-                scrollDirection: .horizontal,
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return SizedBox(width: width * 0.33, child: MovieCardItem());
-                },
+              child: ChangeNotifierProvider(
+                create: (context) => viewModelBottom,
+                child: Consumer<HomeTabViewModelBottom>(
+                  builder: (context, viewModel, child) {
+                    if (viewModel.isLoading == true) {
+                      return MainLoadingwidget();
+                    } else if (viewModel.errorMessage != null) {
+                      return MainError(
+                        errorMessage: viewModel.errorMessage!,
+                        onTap: () {
+                          viewModel.getMoviesByGenre("Action");
+                        },
+                      );
+                    } else if (viewModel.actionMoviesList == null) {
+                      return MainLoadingwidget();
+                    } else {
+                      var moviesList = viewModel.actionMoviesList ?? [];
+                      return ListView.separated(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: width * 0.035,
+                        ),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: moviesList.length,
+                        separatorBuilder: (context, index) =>
+                            SizedBox(width: width * 0.035),
+                        itemBuilder: (context, index) {
+                          return SizedBox(
+                            width: width * 0.33,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  AppRoutes.movieDetailsScreen,
+                                  arguments: moviesList[index].id,
+                                );
+                              },
+                              child: MovieCardItem(
+                                movie: moviesList[index] as dynamic,
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                  },
+                ),
               ),
             ),
           ],

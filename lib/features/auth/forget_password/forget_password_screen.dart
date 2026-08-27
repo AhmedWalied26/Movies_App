@@ -7,6 +7,9 @@ import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
+import 'package:movies_app/widgets/custom_elevated_button.dart';
+import 'package:movies_app/widgets/custom_text_field.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({super.key});
@@ -21,31 +24,38 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   Future<void> resetPassword() async {
     try {
       String email = emailController.text.trim().toLowerCase();
-      print("Email entered: $email");
-
       if (email.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
-           SnackBar(content: Text('Please enter your email address')),
+          SnackBar(content: Text('Please enter your email address')),
         );
         return;
       }
+      final querySnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('email', isEqualTo: email)
+          .get();
 
-      await FirebaseAuth.instance.sendPasswordResetEmail(
-        email: email,
-      );
+      if (querySnapshot.docs.isEmpty) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('No user found with this email.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+        return;
+      }
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-         SnackBar(
+        const SnackBar(
           content: Text('Password reset link sent! Check your email.'),
           backgroundColor: Colors.green,
         ),
       );
-
       Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
-
     } on FirebaseAuthException catch (e) {
-      print("Firebase error: ${e.code}");
       String message = 'An error occurred';
       if (e.code == 'user-not-found') {
         message = 'No user found with this email.';
@@ -57,13 +67,10 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(message),
-          backgroundColor: Colors.red,
-        ),
+        SnackBar(content: Text(message), backgroundColor: Colors.red),
       );
     } catch (e) {
-      print("General error: $e");
+      rethrow;
     }
   }
 
@@ -89,60 +96,30 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
           onPressed: () {
             Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
           },
-          icon:  Icon(Icons.arrow_back, color: AppColors.primaryColor),
+          icon: Icon(Icons.arrow_back, color: AppColors.primaryColor),
         ),
         title: Text(l10n.forget_Password, style: AppStyles.regular16Primary),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          physics:  BouncingScrollPhysics(),
+          physics: BouncingScrollPhysics(),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+            padding: EdgeInsets.symmetric(horizontal: width * 0.035),
             child: Column(
               children: [
-                SizedBox(
-                  width: 430,
-                  height: 430,
-                  child: Image.asset(
-                    AppAssets.forgetPasswordImage,
-                  ),
-                ),
-
-                SizedBox(height: height * 0.00),
-
-                TextField(
+                Image.asset(AppAssets.forgetPasswordImage),
+                CustomTextField(
+                  prefix: SvgPicture.asset(AppAssets.emailIcon),
                   controller: emailController,
-                  style:  TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    labelText: l10n.email,
-                    labelStyle:  TextStyle(color: Colors.grey),
-                    prefixIcon: Padding(
-                      padding:  EdgeInsets.all(12.0),
-                      child: SvgPicture.asset(AppAssets.emailIcon),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide:  BorderSide(color: Colors.grey),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide:  BorderSide(color: AppColors.primaryColor),
-                    ),
-                  ),
+                  title: AppLocalizations.of(context)!.email,
                 ),
 
                 SizedBox(height: height * 0.02),
 
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primaryColor,
-                    minimumSize: Size(width, 50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  onPressed: resetPassword,
-                  child: Text(l10n.verify_Email, style: AppStyles.regular20Black),
+                CustomElevatedButton(
+                  onPressedButton2: resetPassword,
+                  title: AppLocalizations.of(context)!.verify_Email,
+                  style: AppStyles.regular20Black,
                 ),
               ],
             ),
