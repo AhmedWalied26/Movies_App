@@ -9,6 +9,7 @@ class CustomElevatedButton extends StatelessWidget {
   final Widget? child;
   final BorderSide? side;
   final bool isExitButton;
+  final bool isLoading;
   const CustomElevatedButton({
     super.key,
     required this.onPressedButton2,
@@ -18,6 +19,7 @@ class CustomElevatedButton extends StatelessWidget {
     this.child,
     this.side,
     this.isExitButton = false,
+    this.isLoading = false,
   });
 
   @override
@@ -32,15 +34,21 @@ class CustomElevatedButton extends StatelessWidget {
             : BorderSide(color: AppColors.primaryColor, width: 2),
       ),
       onPressed: onPressedButton2,
-      child: Row(
-        textDirection: isExitButton ? .rtl : .ltr,
-        spacing: child == null ? 0 : 12,
-        mainAxisAlignment: .center,
-        children: [
-          child ?? SizedBox(),
-          Text(title, style: style),
-        ],
-      ),
+      child: isLoading
+          ? SizedBox(
+              height: 26,
+              width: 26,
+              child: CircularProgressIndicator(color: AppColors.blackColor),
+            )
+          : Row(
+              textDirection: isExitButton ? .rtl : .ltr,
+              spacing: child == null ? 0 : 12,
+              mainAxisAlignment: .center,
+              children: [
+                child ?? SizedBox(),
+                Text(title, style: style),
+              ],
+            ),
     );
   }
 }

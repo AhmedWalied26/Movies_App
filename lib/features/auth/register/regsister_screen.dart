@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:movies_app/features/auth/register/widgets/customized_avatar.dart';
+import 'package:movies_app/services/profile_service.dart';
+import 'package:movies_app/services/firebase_service.dart';
+import 'package:movies_app/utils/app_validation.dart';
+import 'package:movies_app/widgets/app_overlay.dart';
 import 'package:movies_app/widgets/custom_elevated_button.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_assets.dart';
@@ -18,12 +22,24 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController nameController = TextEditingController(
+    text: "renad",
+  );
+  final TextEditingController emailController = TextEditingController(
+    text: "renad@example.com",
+  );
+  final TextEditingController passwordController = TextEditingController(
+    text: "123456",
+  );
+  final TextEditingController confirmPasswordController = TextEditingController(
+    text: "123456",
+  );
+  final TextEditingController phoneController = TextEditingController(
+    text: "01234567890",
+  );
+  var formKey = GlobalKey<FormState>();
+  bool isPasswordVisible = false;
+  bool isConfirmPasswordVisible = false;
   final List<String> avatarImages = [
     AppAssets.profileImage2,
     AppAssets.profileImage8,
@@ -68,134 +84,233 @@ class _RegisterScreenState extends State<RegisterScreen> {
           physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: width * 0.024),
-            child: Column(
-              children: [
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: List.generate(avatarImages.length, (index) {
-                      final bool isSelected = index == selectedAvatarIndex;
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: List.generate(avatarImages.length, (index) {
+                        final bool isSelected = index == selectedAvatarIndex;
 
-                      return Padding(
-                        padding: EdgeInsets.only(left: index == 0 ? 0 : 24),
-                        child: CustomizedAvatar(
-                          imagePath: avatarImages[index],
-                          size: isSelected ? 140 : 80,
-                          isSelected: isSelected,
-                          onTap: () {
-                            setState(() {
-                              selectedAvatarIndex = index;
-                            });
-                          },
-                        ),
-                      );
-                    }),
-                  ),
-                ),
-                SizedBox(height: height * 0.010),
+                        return Padding(
+                          padding: EdgeInsetsDirectional.only(
+                            start: index == 0 ? 0 : 24,
+                          ),
 
-                Text(l10n.avatar, style: AppStyles.regular16White),
-
-                SizedBox(height: height * 0.010),
-
-                CustomTextField(
-                  title: l10n.name,
-                  prefix: SvgPicture.asset(AppAssets.nameIcon),
-                ),
-
-                SizedBox(height: height * 0.024),
-
-                CustomTextField(
-                  title: l10n.email,
-                  prefix: SvgPicture.asset(AppAssets.emailIcon),
-                ),
-
-                SizedBox(height: height * 0.024),
-
-                CustomTextField(
-                  title: l10n.password,
-                  prefix: SvgPicture.asset(AppAssets.passwordIcon),
-                  suffix: IconButton(
-                    onPressed: () {},
-                    icon: SvgPicture.asset(AppAssets.visibleOffIcon),
-                  ),
-                ),
-
-                SizedBox(height: height * 0.024),
-
-                CustomTextField(
-                  title: l10n.confirm_Password,
-                  prefix: SvgPicture.asset(AppAssets.passwordIcon),
-                  suffix: IconButton(
-                    onPressed: () {},
-                    icon: SvgPicture.asset(AppAssets.visibleOffIcon),
-                  ),
-                ),
-
-                SizedBox(height: height * 0.024),
-
-                CustomTextField(
-                  title: l10n.phone_Number,
-                  prefix: SvgPicture.asset(AppAssets.phoneIcon),
-                ),
-
-                SizedBox(height: height * 0.024),
-
-                CustomElevatedButton(
-                  onPressedButton2: () {},
-                  title: l10n.create_Account,
-                  style: AppStyles.regular20Black,
-                ),
-                SizedBox(height: height * 0.017),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '${l10n.already_Have_Account} ? ',
-                      style: AppStyles.regular14White,
-                    ),
-
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushReplacementNamed(
-                          context,
-                          AppRoutes.loginScreen,
+                          child: CustomizedAvatar(
+                            imagePath: avatarImages[index],
+                            size: isSelected ? 130 : 60,
+                            isSelected: isSelected,
+                            onTap: () {
+                              setState(() {
+                                selectedAvatarIndex = index;
+                              });
+                            },
+                          ),
                         );
+                      }),
+                    ),
+                  ),
+                  SizedBox(height: height * 0.010),
+
+                  Text(l10n.avatar, style: AppStyles.regular16White),
+
+                  SizedBox(height: height * 0.010),
+                  CustomTextField(
+                    title: l10n.name,
+                    prefix: SvgPicture.asset(AppAssets.nameIcon),
+                    controller: nameController,
+                    validation: (text) {
+                      return AppValidation.validateUserName(context, text);
+                    },
+                  ),
+                  SizedBox(height: height * 0.024),
+
+                  CustomTextField(
+                    type: TextInputType.emailAddress,
+                    title: l10n.email,
+                    prefix: SvgPicture.asset(AppAssets.emailIcon),
+                    controller: emailController,
+                    validation: (text) {
+                      return AppValidation.validateEmail(context, text);
+                    },
+                  ),
+
+                  SizedBox(height: height * 0.024),
+                  CustomTextField(
+                    type: TextInputType.visiblePassword,
+                    title: l10n.password,
+                    prefix: SvgPicture.asset(AppAssets.passwordIcon),
+                    suffix: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          isPasswordVisible = !isPasswordVisible;
+                        });
                       },
-                      child: Text(
-                        l10n.login,
-                        style: AppStyles.bold14Primary.copyWith(
-                          color: AppColors.primaryColor,
-                        ),
+                      icon: Icon(
+                        isPasswordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
                       ),
                     ),
-                  ],
-                ),
-                SizedBox(height: height * 0.018),
-
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: .circular(30),
-                    border: .all(color: AppColors.primaryColor, width: 3),
+                    controller: passwordController,
+                    validation: (text) {
+                      return AppValidation.validatePassword(context, text);
+                    },
+                    isObsecure: !isPasswordVisible,
                   ),
-                  child: Row(
-                    mainAxisSize: .min,
-                    spacing: width * 0.03,
+                  SizedBox(height: height * 0.024),
+
+                  CustomTextField(
+                    type: TextInputType.visiblePassword,
+                    title: l10n.confirm_Password,
+                    prefix: SvgPicture.asset(AppAssets.passwordIcon),
+                    suffix: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          isConfirmPasswordVisible = !isConfirmPasswordVisible;
+                        });
+                      },
+                      icon: Icon(
+                        isConfirmPasswordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
+                    ),
+                    controller: confirmPasswordController,
+                    validation: (text) {
+                      return AppValidation.validateConfirmPassword(
+                        context,
+                        text,
+                        passwordController.text,
+                      );
+                    },
+                    isObsecure: !isConfirmPasswordVisible,
+                  ),
+
+                  SizedBox(height: height * 0.024),
+                  CustomTextField(
+                    type: TextInputType.phone,
+                    title: l10n.phone_Number,
+                    prefix: SvgPicture.asset(AppAssets.phoneIcon),
+                    controller: phoneController,
+                    validation: (text) {
+                      return AppValidation.validatePhone(context, text);
+                    },
+                  ),
+                  SizedBox(height: height * 0.024),
+                  CustomElevatedButton(
+                    isLoading: isLoading,
+                    onPressedButton2: () {
+                      register(context);
+                    },
+                    title: l10n.create_Account,
+                    style: AppStyles.regular20Black,
+                  ),
+                  SizedBox(height: height * 0.017),
+
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SvgPicture.asset(AppAssets.enIcon),
-                      SvgPicture.asset(AppAssets.arIcon),
+                      Text(
+                        '${l10n.already_Have_Account} ? ',
+                        style: AppStyles.regular14White,
+                      ),
+
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushReplacementNamed(
+                            context,
+                            AppRoutes.loginScreen,
+                          );
+                        },
+                        child: Text(
+                          l10n.login,
+                          style: AppStyles.bold14Primary.copyWith(
+                            color: AppColors.primaryColor,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
-                ),
-              ],
+                  SizedBox(height: height * 0.018),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: .circular(30),
+                      border: .all(color: AppColors.primaryColor, width: 3),
+                    ),
+                    child: Row(
+                      mainAxisSize: .min,
+                      spacing: width * 0.03,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(AppAssets.enIcon),
+                        SvgPicture.asset(AppAssets.arIcon),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
+  }
+
+  final authService = AuthService();
+  bool isLoading = false;
+
+  void register(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
+
+    if (formKey.currentState?.validate() != true) return;
+
+    if (passwordController.text != confirmPasswordController.text) {
+      AppOverlay.showError(context, l10n.passwords_do_not_match);
+      return;
+    }
+
+    setState(() => isLoading = true);
+
+    final result = await authService.register(
+      email: emailController.text,
+      password: passwordController.text,
+    );
+
+    if (!mounted) return;
+    setState(() => isLoading = false);
+
+    if (result.success) {
+      await ProfileService.instance.updateProfile(
+        name: nameController.text.trim(),
+        phone: phoneController.text.trim(),
+        avatar: avatarImages[selectedAvatarIndex],
+      );
+      if (!context.mounted) return;
+      final navigator = Navigator.of(context);
+      AppOverlay.showSuccess(
+        context,
+        l10n.account_created_successfully,
+        onFinished: () {
+          if (navigator.mounted) {
+            navigator.pushNamedAndRemoveUntil(
+              AppRoutes.loginScreen,
+              (route) => false,
+            );
+          }
+        },
+      );
+    } else {
+      if (!context.mounted) return;
+      AppOverlay.showError(
+        context,
+        getAuthErrorMessage(l10n, result.errorCode!),
+      );
+    }
   }
 }

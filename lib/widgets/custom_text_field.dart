@@ -4,6 +4,7 @@ import 'package:movies_app/utils/size_utils.dart';
 
 class CustomTextField extends StatelessWidget {
   final String title;
+  final String? hintText;
   final Widget? prefix;
   final Widget? suffix;
   final TextEditingController? controller;
@@ -15,6 +16,7 @@ class CustomTextField extends StatelessWidget {
   const CustomTextField({
     super.key,
     required this.title,
+    this.hintText,
     this.prefix,
     this.suffix,
     this.controller,
@@ -29,6 +31,7 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = context.width;
     return TextFormField(
+      
       onChanged: onChanged,
       onTapOutside: (event) {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -40,7 +43,7 @@ class CustomTextField extends StatelessWidget {
       validator: validation,
       controller: controller,
       decoration: InputDecoration(
-        hintText: title,
+        hintText: hintText ?? title,
         prefixIcon: Padding(
           padding: EdgeInsetsDirectional.only(
             start: width * 0.025,
@@ -50,7 +53,22 @@ class CustomTextField extends StatelessWidget {
         ),
         prefixIconConstraints: BoxConstraints(minWidth: 0),
         suffixIcon: suffix,
+        errorStyle: const TextStyle(
+          color: Colors.red,
+          fontSize: 12,
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.red, width: 1),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.red, width: 1.5),
+        ),
+
       ),
+      
     );
+    
   }
 }
