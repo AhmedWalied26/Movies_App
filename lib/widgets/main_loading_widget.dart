@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../utils/app_colors.dart';
+import '../utils/app_colors.dart';
 
 class MainLoadingwidget extends StatelessWidget {
   const MainLoadingwidget({super.key});
@@ -8,9 +8,7 @@ class MainLoadingwidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: CircularProgressIndicator(
-        color: AppColors.primaryColor,
-      ),
+      child: CircularProgressIndicator(color: AppColors.primaryColor),
     );
   }
 }

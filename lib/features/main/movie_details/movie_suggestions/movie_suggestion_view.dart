@@ -5,7 +5,12 @@ import 'package:movies_app/widgets/movie_card_item.dart';
 
 class MovieSuggestionView extends StatelessWidget {
   final List<MovieSuggestion>? movieSuggestion;
-  const MovieSuggestionView({super.key, required this.movieSuggestion});
+  final ValueChanged<int> onMovieTap;
+  const MovieSuggestionView({
+    super.key,
+    required this.movieSuggestion,
+    required this.onMovieTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +27,16 @@ class MovieSuggestionView extends StatelessWidget {
         crossAxisSpacing: width * 0.04,
       ),
       itemBuilder: (context, index) {
-        return MovieCardItem(
-          movieImage: movieSuggestion![index].mediumCoverImage,
-          movieRate: movieSuggestion![index].rating!,
+        final movie = movieSuggestion![index];
+        return InkWell(
+          onTap: () {
+            onMovieTap(movie.id!);
+          },
+          child: MovieCardItem(
+            isSuggestion: true,
+            movieImage: movie.mediumCoverImage,
+            movieRate: movie.rating!,
+          ),
         );
       },
     );

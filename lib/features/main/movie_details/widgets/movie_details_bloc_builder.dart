@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/features/main/movie_details/cubit/movie_details_state.dart';
 import 'package:movies_app/features/main/movie_details/cubit/movie_details_view_model.dart';
 import 'package:movies_app/features/main/movie_details/movie_details_screen.dart';
-import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/widgets/main_error.dart';
+import 'package:movies_app/widgets/main_loading_widget.dart';
 
 class MovieDetailsBlocBuilder extends StatefulWidget {
   const MovieDetailsBlocBuilder({super.key});
@@ -16,9 +16,11 @@ class MovieDetailsBlocBuilder extends StatefulWidget {
 
 class _MovieDetailsBlocBuilderState extends State<MovieDetailsBlocBuilder> {
   @override
-  void initState() {
-    super.initState();
-    context.read<MovieDetailsViewModel>().getMovieDetails(16);
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    var args = ModalRoute.of(context)!.settings.arguments as int;
+    context.read<MovieDetailsViewModel>().getMovieDetails(args);
   }
 
   @override
@@ -26,9 +28,7 @@ class _MovieDetailsBlocBuilderState extends State<MovieDetailsBlocBuilder> {
     return BlocBuilder<MovieDetailsViewModel, MovieDetailsState>(
       builder: (context, state) {
         if (state is MovieDetailsLoadingState) {
-          return Center(
-            child: CircularProgressIndicator(color: AppColors.primaryColor),
-          );
+          return MainLoadingwidget();
         } else if (state is MovieDetailsErrorState) {
           return MainError(onTap: () {});
         } else if (state is MovieDetailsSuccessState) {

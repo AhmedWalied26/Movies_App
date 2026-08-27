@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/features/main/tabs/home/home_tab_view_model.dart';
 import 'package:movies_app/features/main/tabs/home/home_tab_view_model_bottom.dart';
 import 'package:movies_app/utils/app_routes.dart';
+import 'package:movies_app/widgets/main_error.dart';
 import 'package:provider/provider.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../utils/app_assets.dart';
 import '../../../../utils/app_colors.dart';
 import '../../../../utils/app_styles.dart';
 import '../../../../widgets/movie_card_item.dart';
-import '../../widgets/main_error_widget.dart';
-import '../../widgets/main_loading_widget.dart';
+import '../../../../widgets/main_loading_widget.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -52,42 +52,53 @@ class _HomeTabState extends State<HomeTab> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Image.asset(AppAssets.availableNowImage),
-          ChangeNotifierProvider(
-            create: (context) =>  viewModel,
-            child: Consumer<HomeTabViewModel>(
+            ChangeNotifierProvider(
+              create: (context) => viewModel,
+              child: Consumer<HomeTabViewModel>(
                 builder: (context, viewModel, child) {
-                 if (viewModel.isLoading == true){
-                   return MainLoadingwidget();
-                 } else if(viewModel.errorMessage != null) {
-                   return MainErrorWidget(errorMessage: viewModel.errorMessage!,
-                       onPressed: (){
-                     viewModel.moviesList;
-                       });
-                 }else if (viewModel.moviesList == null){
-                   return MainLoadingwidget();
-                 }else{
-                  var moviesList = viewModel.moviesList?? [];
-                  return CarouselSlider.builder(
-                  itemCount: moviesList.length,
-                  itemBuilder: (context, index , realIndex) {
-                  return SizedBox(
-                  width: width*0.5,
-                  child: MovieCardItem(
-                  movie: moviesList[index],
-                  ),
-                  );
-                  },
-                  options: CarouselOptions(
-                  autoPlay: true,
-                  height: height * 0.38,
-                  enlargeCenterPage: true,
-                  viewportFraction: 0.5,
-                  ),
-                );
-                }
-               },
-            ),
+                  if (viewModel.isLoading == true) {
+                    return MainLoadingwidget();
+                  } else if (viewModel.errorMessage != null) {
+                    return MainError(
+                      errorMessage: viewModel.errorMessage!,
+                      onTap: () {
+                        viewModel.moviesList;
+                      },
+                    );
+                  } else if (viewModel.moviesList == null) {
+                    return MainLoadingwidget();
+                  } else {
+                    var moviesList = viewModel.moviesList ?? [];
+                    return CarouselSlider.builder(
+                      itemCount: moviesList.length,
+                      itemBuilder: (context, index, realIndex) {
+                        return SizedBox(
+                          width: width * 0.5,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                AppRoutes.movieDetailsScreen,
+                                arguments: moviesList[index].id,
+                              );
+                            },
+                            child: MovieCardItem(
+                              movie: moviesList[index] as dynamic,
+                            ),
+                          ),
+                        );
+                      },
+                      options: CarouselOptions(
+                        autoPlay: true,
+                        height: height * 0.38,
+                        enlargeCenterPage: true,
+                        viewportFraction: 0.5,
+                      ),
+                    );
+                  }
+                },
               ),
+            ),
             Image.asset(AppAssets.watchNowImage),
             Padding(
               padding: EdgeInsetsDirectional.only(start: width * 0.035),
@@ -121,31 +132,45 @@ class _HomeTabState extends State<HomeTab> {
             ),
             SizedBox(
               height: height * 0.22,
-              child:  ChangeNotifierProvider(
-                create: (context) =>  viewModelBottom,
+              child: ChangeNotifierProvider(
+                create: (context) => viewModelBottom,
                 child: Consumer<HomeTabViewModelBottom>(
                   builder: (context, viewModel, child) {
-                    if (viewModel.isLoading == true){
+                    if (viewModel.isLoading == true) {
                       return MainLoadingwidget();
-                    } else if(viewModel.errorMessage != null) {
-                      return MainErrorWidget(errorMessage: viewModel.errorMessage!,
-                          onPressed: (){
-                            viewModel.getMoviesByGenre("Action");
-                          });
-                    }else if (viewModel.actionMoviesList == null){
+                    } else if (viewModel.errorMessage != null) {
+                      return MainError(
+                        errorMessage: viewModel.errorMessage!,
+                        onTap: () {
+                          viewModel.getMoviesByGenre("Action");
+                        },
+                      );
+                    } else if (viewModel.actionMoviesList == null) {
                       return MainLoadingwidget();
-                    }else{
-                      var moviesList = viewModel.actionMoviesList?? [];
+                    } else {
+                      var moviesList = viewModel.actionMoviesList ?? [];
                       return ListView.separated(
-                        padding: EdgeInsets.symmetric(horizontal: width * 0.035),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: width * 0.035,
+                        ),
                         scrollDirection: Axis.horizontal,
                         itemCount: moviesList.length,
-                        separatorBuilder: (context, index) => SizedBox(width: width * 0.035),
+                        separatorBuilder: (context, index) =>
+                            SizedBox(width: width * 0.035),
                         itemBuilder: (context, index) {
                           return SizedBox(
                             width: width * 0.33,
-                            child: MovieCardItem(
-                              movie: moviesList[index],
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  AppRoutes.movieDetailsScreen,
+                                  arguments: moviesList[index].id,
+                                );
+                              },
+                              child: MovieCardItem(
+                                movie: moviesList[index] as dynamic,
+                              ),
                             ),
                           );
                         },
@@ -161,54 +186,3 @@ class _HomeTabState extends State<HomeTab> {
     );
   }
 }
-
-
-/*
-FutureBuilder(
-                future: DioManager.getMoviesByGenre("Action"),
-                builder: (context, snapshot) {
-                  //todo : Loading ;
-                  if(snapshot.connectionState == ConnectionState.waiting){
-                    return MainLoadingwidget();
-                  }
-                  else if (snapshot.hasError){
-                    return MainErrorWidget(
-                        errorMessage: "Something went wrong",
-                        onPressed: (){
-                          DioManager.getMoviesByGenre("Drama");
-                          setState(() {
-
-                          });
-                        }
-                    );
-                  }
-                  else if (snapshot.data!.status != "ok"){
-                    return MainErrorWidget(
-                        errorMessage: snapshot.data!.message!,
-                        onPressed: (){
-                          DioManager.getMoviesByGenre("Drama");
-                          setState(() {
-
-                          });
-                        }
-                    );
-                  }
-                  else {
-                    var moviesList = snapshot.data?.data?.movies ?? [];
-                    return ListView.separated(
-                      padding: EdgeInsets.symmetric(horizontal: width * 0.035),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: moviesList.length,
-                      separatorBuilder: (context, index) => SizedBox(width: width * 0.035),
-                      itemBuilder: (context, index) {
-                        return SizedBox(
-                          width: width * 0.33,
-                          child: MovieCardItem(
-                            movie: moviesList[index],
-                          ),
-                        );
-                      },
-                    );
-                  }
-                },)
- */

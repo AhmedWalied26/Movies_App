@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/api/model/movie_details_response/movie.dart';
 import 'package:movies_app/api/model/movie_suggestions_response/movie_suggestion.dart';
-import 'package:movies_app/features/main/movie_details/movie_suggestions/cubit/movie_suggestion_view_model.dart';
 import 'package:movies_app/features/main/movie_details/movie_suggestions/widgets/movie_suggestion_bloc_builder.dart';
 import 'package:movies_app/features/main/movie_details/widgets/movie_cast.dart';
 import 'package:movies_app/features/main/movie_details/widgets/movie_geners.dart';
@@ -32,14 +30,6 @@ class MovieDetailsScreen extends StatefulWidget {
 }
 
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
-  @override
-  void initState() {
-    super.initState();
-    context.read<MovieSuggestionViewModel>().getMovieSuggestions(
-      widget.movieDetails!.id!,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     var height = context.height;

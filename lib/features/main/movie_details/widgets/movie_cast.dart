@@ -46,19 +46,21 @@ class MovieCast extends StatelessWidget {
                       movieDetails.cast![index].urlSmallImage!,
                     ),
                   ),
-                  Column(
-                    crossAxisAlignment: .start,
-                    spacing: height * 0.004,
-                    children: [
-                      Text(
-                        'Name : ${movieDetails.cast![index].name!}',
-                        style: AppStyles.regular20White,
-                      ),
-                      Text(
-                        'Character : ${movieDetails.cast![index].characterName!}',
-                        style: AppStyles.regular20White,
-                      ),
-                    ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: .start,
+                      spacing: height * 0.004,
+                      children: [
+                        Text(
+                          'Name : ${movieDetails.cast![index].name!}',
+                          style: AppStyles.regular20White,
+                        ),
+                        Text(
+                          'Character : ${movieDetails.cast![index].characterName}',
+                          style: AppStyles.regular20White,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

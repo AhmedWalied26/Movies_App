@@ -22,7 +22,9 @@ class MovieHead extends StatelessWidget {
           mainAxisAlignment: .spaceBetween,
           children: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+              },
               icon: Icon(Icons.arrow_back_ios_new_outlined, size: 30),
             ),
             IconButton(
@@ -31,9 +33,9 @@ class MovieHead extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: height * 0.15),
-        SvgPicture.asset(AppAssets.videoIcon),
         SizedBox(height: height * 0.2),
+        SvgPicture.asset(AppAssets.videoIcon),
+        SizedBox(height: height * 0.14),
         Text(movieName, textAlign: .center, style: AppStyles.bold24White),
         SizedBox(height: height * 0.015),
         Text(movieTime.toString(), style: AppStyles.bold20lightGrey),
