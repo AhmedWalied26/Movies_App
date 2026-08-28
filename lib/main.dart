@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/features/auth/login/cubit/auth_view_model.dart';
 import 'package:movies_app/services/firebase_service.dart';
+import 'features/main/tabs/home/cubit/home_general_cubit.dart';
+import 'features/main/tabs/home/cubit/home_genre_cubit.dart';
 import 'firebase_options.dart';
 import 'package:movies_app/features/auth/forget_password/forget_password_screen.dart';
 import 'package:movies_app/features/auth/login/login_screen.dart';
@@ -33,7 +35,11 @@ void main() async {
         BlocProvider<MovieSuggestionViewModel>(
           create: (context) => MovieSuggestionViewModel(),
         ),
-        BlocProvider(create: (context) => AuthViewModel(AuthService())),
+        BlocProvider(create: (context) => AuthViewModel(AuthService())
+        ),
+        BlocProvider<HomeGeneralCubit>(
+          create: (context) => HomeGeneralCubit(),
+        ),
       ],
       child: const MoviesApp(),
     ),
