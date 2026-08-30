@@ -33,7 +33,7 @@ class _MovieSuggestionBlocBuilderState
         if (state is MovieSuggestionLoadingState) {
           return MainLoadingwidget();
         } else if (state is MovieSuggestionErrorState) {
-          return MainError(
+          return MainError(onPressed: (){},
             onTap: () {
               context.read<MovieSuggestionViewModel>().getMovieSuggestions(
                 widget.movieId,
