@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/features/main/tabs/home/cubit/home_general_cubit.dart';
 import 'package:movies_app/features/main/tabs/home/cubit/home_general_state.dart';
-import 'package:movies_app/features/main/tabs/home/cubit/home_genre_cubit.dart';
-import 'package:movies_app/features/main/tabs/home/cubit/home_genre_state.dart';
 import 'package:movies_app/features/main/tabs/home/widgets/home_tab_widget_byGenre.dart';
 import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/widgets/main_error.dart';
@@ -23,7 +21,6 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
-
   @override
   void initState() {
     super.initState();
@@ -52,51 +49,51 @@ class _HomeTabState extends State<HomeTab> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Image.asset(AppAssets.availableNowImage),
-            BlocBuilder<HomeGeneralCubit , HomeGeneralState>(
-                  builder: (context, state) {
-                      if (state is HomeGeneralLoadingState) {
-                      return const MainLoadingwidget();
-                      } else if (state is HomeGeneralErrorState) {
-                      return MainError(
-                        errorMessage: state.errorMessage,
-                        onPressed: () {
-                          context.read<HomeGeneralCubit>().getMoviesGeneral();
-                        },
-                        onTap: () {
-                          context.read<HomeGeneralCubit>().getMoviesGeneral();
-                        },
-                      );
-                      } else if (state is HomeGeneralSuccessState) {
-                        var moviesList = state.moviesList;
-                        return CarouselSlider.builder(
-                          itemCount: moviesList.length,
-                          itemBuilder: (context, index, realIndex) {
-                            return SizedBox(
-                              width: width * 0.5,
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    AppRoutes.movieDetailsScreen,
-                                    arguments: moviesList[index].id,
-                                  );
-                                },
-                                child: MovieCardItem(
-                                  movie: moviesList[index] as dynamic,
-                                ),
-                              ),
+            BlocBuilder<HomeGeneralCubit, HomeGeneralState>(
+              builder: (context, state) {
+                if (state is HomeGeneralLoadingState) {
+                  return const MainLoadingwidget();
+                } else if (state is HomeGeneralErrorState) {
+                  return MainError(
+                    errorMessage: state.errorMessage,
+                    onPressed: () {
+                      context.read<HomeGeneralCubit>().getMoviesGeneral();
+                    },
+                    onTap: () {
+                      context.read<HomeGeneralCubit>().getMoviesGeneral();
+                    },
+                  );
+                } else if (state is HomeGeneralSuccessState) {
+                  var moviesList = state.moviesList;
+                  return CarouselSlider.builder(
+                    itemCount: moviesList.length,
+                    itemBuilder: (context, index, realIndex) {
+                      return SizedBox(
+                        width: width * 0.5,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              AppRoutes.movieDetailsScreen,
+                              arguments: moviesList[index].id,
                             );
                           },
-                          options: CarouselOptions(
-                            autoPlay: true,
-                            height: height * 0.38,
-                            enlargeCenterPage: true,
-                            viewportFraction: 0.5,
+                          child: MovieCardItem(
+                            movie: moviesList[index] as dynamic,
                           ),
-                        );
-                      }
-                      return const SizedBox();
-                  },
+                        ),
+                      );
+                    },
+                    options: CarouselOptions(
+                      autoPlay: true,
+                      height: height * 0.38,
+                      enlargeCenterPage: true,
+                      viewportFraction: 0.5,
+                    ),
+                  );
+                }
+                return const SizedBox();
+              },
             ),
             Image.asset(AppAssets.watchNowImage),
             Padding(
@@ -131,7 +128,7 @@ class _HomeTabState extends State<HomeTab> {
             ),
             SizedBox(
               height: height * 0.22,
-              child: HomeTabWidgetByGenre(genre: "Horror",),
+              child: HomeTabWidgetByGenre(genre: "Horror"),
             ),
           ],
         ),
