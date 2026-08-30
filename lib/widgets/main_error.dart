@@ -6,7 +6,7 @@ import 'package:movies_app/utils/size_utils.dart';
 class MainError extends StatelessWidget {
   final VoidCallback onTap;
   final String? errorMessage;
-  const MainError({super.key, required this.onTap, this.errorMessage});
+  const MainError({super.key, required this.onTap, this.errorMessage, required Null Function() onPressed});
 
   @override
   Widget build(BuildContext context) {
