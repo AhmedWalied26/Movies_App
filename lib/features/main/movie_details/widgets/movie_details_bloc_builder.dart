@@ -30,7 +30,7 @@ class _MovieDetailsBlocBuilderState extends State<MovieDetailsBlocBuilder> {
         if (state is MovieDetailsLoadingState) {
           return MainLoadingwidget();
         } else if (state is MovieDetailsErrorState) {
-          return MainError(onTap: () {});
+          return MainError(onTap: () {} , onPressed: (){},);
         } else if (state is MovieDetailsSuccessState) {
           var data = state.moviesList;
           return MovieDetailsScreen(movieDetails: data!);
