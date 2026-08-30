@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/api/model/movie_list/movies.dart';
@@ -34,7 +35,7 @@ class MovieCardItem extends StatelessWidget {
                   movie!.mediumCoverImage!.isNotEmpty)
             ? DecorationImage(
                 fit: .fill,
-                image: NetworkImage(movie!.mediumCoverImage!),
+                image: CachedNetworkImageProvider(movie!.mediumCoverImage!),
               )
             : null,
       ),
