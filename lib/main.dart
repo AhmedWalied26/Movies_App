@@ -33,7 +33,9 @@ void main() async {
         BlocProvider<MovieSuggestionViewModel>(
           create: (context) => MovieSuggestionViewModel(),
         ),
-        BlocProvider(create: (context) => AuthViewModel(AuthService())),
+        BlocProvider<AuthViewModel>(
+          create: (context) => AuthViewModel(AuthService()),
+        ),
       ],
       child: const MoviesApp(),
     ),
@@ -64,7 +66,7 @@ class MoviesApp extends StatelessWidget {
         AppRoutes.browseScreen: (context) => BrowseTab(),
         AppRoutes.profileScreen: (context) => ProfileTab(),
       },
-      initialRoute: AppRoutes.mainScreen,
+      initialRoute: AppRoutes.exploreScreen,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.dark,

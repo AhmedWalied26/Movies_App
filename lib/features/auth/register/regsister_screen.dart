@@ -23,19 +23,19 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController nameController = TextEditingController(
-    text: "renad",
+    text: "Ahmed",
   );
   final TextEditingController emailController = TextEditingController(
-    text: "renad@example.com",
+    text: "renad99@example.com",
   );
   final TextEditingController passwordController = TextEditingController(
-    text: "123456",
+    text: "@#Aahmed123",
   );
   final TextEditingController confirmPasswordController = TextEditingController(
-    text: "123456",
+    text: "@#Aahmed123",
   );
   final TextEditingController phoneController = TextEditingController(
-    text: "01234567890",
+    text: "01000080975",
   );
   var formKey = GlobalKey<FormState>();
   bool isPasswordVisible = false;
