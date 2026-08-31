@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/size_utils.dart';
 import 'package:movies_app/widgets/custom_text_field.dart';
+import '../../../../utils/app_routes.dart';
+import '../../../../widgets/movie_card_item.dart';
+import 'cubit/search_cubit.dart';
+import 'cubit/search_state.dart';
 
 class SearchTab extends StatelessWidget {
   const SearchTab({super.key});
@@ -11,23 +16,89 @@ class SearchTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var width = context.width;
-    return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: width * 0.035),
-        child: Column(
-          children: [
-            CustomTextField(
-              title: AppLocalizations.of(context)!.search,
-              prefix: Padding(
-                padding: EdgeInsetsDirectional.only(start: width * 0.025),
-                child: SvgPicture.asset(AppAssets.searchIcon),
+    return BlocProvider(
+      create: (context) => SearchCubit()..getInitialMovies(),
+      child: Builder(
+        builder: (context) {
+          return SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: width * 0.035),
+              child: Column(
+                children: [
+                  CustomTextField(
+                    title: AppLocalizations.of(context)!.search,
+                    prefix: Padding(
+                      padding: EdgeInsetsDirectional.only(start: width * 0.025),
+                      child: SvgPicture.asset(AppAssets.searchIcon),
+                    ),
+                    onChanged: (text) {
+                      context.read<SearchCubit>().searchMovies(text);
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  Expanded(
+                    child: BlocBuilder<SearchCubit, SearchState>(
+                      builder: (context, state) {
+                        if (state is SearchLoadingState) {
+                          return const Center(child: CircularProgressIndicator());
+                        } else if (state is SearchErrorState) {
+                          return Center(
+                            child: Text(
+                              state.errorMessage,
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          );
+                        } else if (state is SearchSuccessState) {
+                          var movies = state.moviesList;
+                          if (movies.isEmpty) {
+                            return const Center(
+                              child: Text(
+                                'No movies found',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            );
+                          }
+                          return GridView.builder(
+                            padding: EdgeInsets.symmetric(horizontal: width * 0.016),
+                            itemCount: movies.length,
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 12,
+                              crossAxisSpacing: 12,
+                              childAspectRatio: 0.7,
+                            ),
+                            itemBuilder: (context, index) {
+                              var movie = movies[index];
+                              return InkWell(
+                                onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  AppRoutes.movieDetailsScreen,
+                                  arguments: movies[index].id,
+                                );
+                              },
+                                child: MovieCardItem(
+                                  movie: movie,
+                                  movieImage: (movie.largeCoverImage != null && movie.largeCoverImage!.isNotEmpty)
+                                      ? movie.largeCoverImage!
+                                      : (movie.mediumCoverImage != null && movie.mediumCoverImage!.isNotEmpty)
+                                      ? movie.mediumCoverImage!
+                                      : 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba',
+                                  movieRate: movie.rating?.toDouble() ?? 0.0,
+                                ),
+                              );
+                            },
+                          );
+                        }
+                        return const SizedBox();
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
-            Expanded(
-              child: Center(child: Image.asset(AppAssets.emptyListImage)),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
