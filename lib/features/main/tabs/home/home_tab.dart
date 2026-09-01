@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/features/main/tabs/home/cubit/home_general_cubit.dart';
 import 'package:movies_app/features/main/tabs/home/cubit/home_general_state.dart';
-import 'package:movies_app/features/main/tabs/home/widgets/home_tab_widget_byGenre.dart';
+import 'package:movies_app/features/main/tabs/home/widgets/home_tab_widget_by_genre.dart';
 import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/widgets/main_error.dart';
 import '../../../../l10n/app_localizations.dart';

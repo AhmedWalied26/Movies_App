@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/features/main/movie_details/cubit/movie_details_state.dart';
 import 'package:movies_app/features/main/movie_details/cubit/movie_details_view_model.dart';
 import 'package:movies_app/features/main/movie_details/movie_details_screen.dart';
+import 'package:movies_app/services/movie_history_service.dart';
 import 'package:movies_app/widgets/main_error.dart';
 import 'package:movies_app/widgets/main_loading_widget.dart';
 
@@ -15,6 +16,8 @@ class MovieDetailsBlocBuilder extends StatefulWidget {
 }
 
 class _MovieDetailsBlocBuilderState extends State<MovieDetailsBlocBuilder> {
+  bool _historySaved = false;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -33,6 +36,10 @@ class _MovieDetailsBlocBuilderState extends State<MovieDetailsBlocBuilder> {
           return MainError(onTap: () {} , onPressed: (){},);
         } else if (state is MovieDetailsSuccessState) {
           var data = state.moviesList;
+          if (!_historySaved && data != null) {
+            _historySaved = true;
+            MovieHistoryService.instance.addMovie(data);
+          }
           return MovieDetailsScreen(movieDetails: data!);
         }
         return Container();

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:movies_app/api/model/movie_details_response/movie.dart';
 import 'package:movies_app/features/main/tabs/profile/widgets/custom_column.dart';
 import 'package:movies_app/services/profile_service.dart';
+import 'package:movies_app/services/movie_history_service.dart';
+import 'package:movies_app/features/main/tabs/profile/widgets/history_view.dart';
 import 'package:movies_app/widgets/custom_elevated_button.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_assets.dart';
@@ -21,6 +24,7 @@ class ProfileTab extends StatefulWidget {
 class _ProfileTabState extends State<ProfileTab> {
   String profileName = 'John Safwat';
   String profileAvatar = AppAssets.profileImage8;
+  late Future<List<Movie>> _historyFuture;
 
   Future<void> _signOut() async {
     await ProfileService.instance.signOut();
@@ -35,7 +39,14 @@ class _ProfileTabState extends State<ProfileTab> {
   @override
   void initState() {
     super.initState();
+    _historyFuture = MovieHistoryService.instance.loadHistory();
     _loadProfile();
+  }
+
+  void _reloadHistory() {
+    setState(() {
+      _historyFuture = MovieHistoryService.instance.loadHistory();
+    });
   }
 
   Future<void> _loadProfile() async {
@@ -152,8 +163,26 @@ class _ProfileTabState extends State<ProfileTab> {
                     Container(
                       width: double.infinity,
                       color: AppColors.blackColor,
-                      child: Center(
-                        child: Image.asset(AppAssets.emptyListImage),
+                      child: FutureBuilder<List<Movie>>(
+                        future: _historyFuture,
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                            return Center(
+                              child: Image.asset(AppAssets.emptyListImage),
+                            );
+                          }
+                          return HistoryView(
+                            movies: snapshot.data!,
+                            onMovieTap: (movieId) async {
+                              await Navigator.pushNamed(
+                                context,
+                                AppRoutes.movieDetailsScreen,
+                                arguments: movieId,
+                              );
+                              if (mounted) _reloadHistory();
+                            },
+                          );
+                        },
                       ),
                     ),
                   ],
