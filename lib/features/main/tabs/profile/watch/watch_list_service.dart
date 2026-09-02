@@ -53,7 +53,6 @@
 //   }
 // }
 
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:movies_app/api/model/movie_details_response/movie.dart';
@@ -69,10 +68,7 @@ class WatchListService {
   CollectionReference<Map<String, dynamic>>? _favoritesReference() {
     final user = _auth.currentUser;
     if (user == null) return null;
-    return _firestore
-        .collection('users')
-        .doc(user.uid)
-        .collection('favorites');
+    return _firestore.collection('users').doc(user.uid).collection('favorites');
   }
 
   Future<List<Movie>> loadSavedMovies() async {
@@ -97,6 +93,8 @@ class WatchListService {
     if (movieId == null) return false;
     final ref = _favoritesReference();
     if (ref == null) return false;
+    final user = FirebaseAuth.instance.currentUser;
+    print('Current user: ${user?.uid}');
 
     final doc = await ref.doc(movieId.toString()).get();
     return doc.exists;
