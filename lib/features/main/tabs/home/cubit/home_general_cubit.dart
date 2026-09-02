@@ -3,7 +3,18 @@ import 'package:movies_app/api/api_manager.dart';
 import 'home_general_state.dart';
 
 class HomeGeneralCubit extends Cubit<HomeGeneralState> {
-  HomeGeneralCubit() : super(HomeGeneralInitialState());
+  HomeGeneralCubit() : super(HomeGeneralInitialState()) {
+    getMoviesGeneral();
+  }
+
+  int selectedMovieIndex = 0;
+
+  void changeSelectedMovie(int index) {
+    selectedMovieIndex = index;
+    if (state is HomeGeneralSuccessState) {
+      emit(HomeGeneralSuccessState((state as HomeGeneralSuccessState).moviesList));
+    }
+  }
 
   void getMoviesGeneral() async {
     emit(HomeGeneralLoadingState());
