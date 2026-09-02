@@ -7,10 +7,12 @@ import 'package:movies_app/utils/size_utils.dart';
 class MovieHead extends StatelessWidget {
   final String movieName;
   final int movieTime;
+  final VoidCallback onIconWatchButton;
   const MovieHead({
     super.key,
     required this.movieName,
     required this.movieTime,
+    required this.onIconWatchButton,
   });
 
   @override
@@ -34,7 +36,10 @@ class MovieHead extends StatelessWidget {
           ],
         ),
         SizedBox(height: height * 0.2),
-        SvgPicture.asset(AppAssets.videoIcon),
+        InkWell(
+          onTap: onIconWatchButton,
+          child: SvgPicture.asset(AppAssets.videoIcon),
+        ),
         SizedBox(height: height * 0.14),
         Text(movieName, textAlign: .center, style: AppStyles.bold24White),
         SizedBox(height: height * 0.015),

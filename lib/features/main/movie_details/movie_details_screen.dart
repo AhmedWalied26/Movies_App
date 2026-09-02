@@ -8,12 +8,15 @@ import 'package:movies_app/features/main/movie_details/widgets/movie_head.dart';
 import 'package:movies_app/features/main/movie_details/widgets/movie_info.dart';
 import 'package:movies_app/features/main/movie_details/widgets/movie_screen_shots.dart';
 import 'package:movies_app/features/main/movie_details/widgets/movie_summary.dart';
+import 'package:movies_app/features/main/movie_details/widgets/movie_web_view.dart';
+import 'package:movies_app/features/main/tabs/profile/watch/watch_list_service.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
 import 'package:movies_app/widgets/custom_elevated_button.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
   final Movie? movieDetails;
@@ -30,6 +33,30 @@ class MovieDetailsScreen extends StatefulWidget {
 }
 
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
+  late YoutubePlayerController _playerController;
+  bool isSaved = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkIfSaved();
+  }
+
+  Future<void> _checkIfSaved() async {
+    final saved = await WatchListService.instance.isSaved(
+      widget.movieDetails?.id,
+    );
+    if (mounted) setState(() => isSaved = saved);
+  }
+
+  Future<void> _toggleSave() async {
+    if (widget.movieDetails == null) return;
+    final newState = await WatchListService.instance.toggleSave(
+      widget.movieDetails!,
+    );
+    if (mounted) setState(() => isSaved = newState);
+  }
+
   @override
   Widget build(BuildContext context) {
     var height = context.height;
@@ -77,15 +104,81 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                 child: Column(
                   children: [
                     MovieHead(
+                      onIconWatchButton: showTrailer,
                       movieName: widget.movieDetails!.title!,
                       movieTime: widget.movieDetails!.year!,
                     ),
                     SizedBox(height: height * 0.016),
+                    // CustomElevatedButton(
+                    //   onPressedButton2: () {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //         builder: (context) {
+                    //           return MovieWebView(
+                    //             url: widget.movieDetails!.url!,
+                    //           );
+                    //         },
+                    //       ),
+                    //     );
+                    //   },
+                    //   title: AppLocalizations.of(context)!.watch,
+                    //   style: AppStyles.bold24White,
+                    //   bgColor: AppColors.redColor,
+                    // ),
                     CustomElevatedButton(
-                      onPressedButton2: () {},
+                      onPressedButton2: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return MovieWebView(
+                                url: widget.movieDetails!.url!,
+                              );
+                            },
+                          ),
+                        );
+                      },
                       title: AppLocalizations.of(context)!.watch,
                       style: AppStyles.bold24White,
                       bgColor: AppColors.redColor,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: CustomElevatedButton(
+                            onPressedButton2: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return MovieWebView(
+                                      url: widget.movieDetails!.url!,
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                            title: AppLocalizations.of(context)!.watch,
+                            style: AppStyles.bold24White,
+                            bgColor: AppColors.redColor,
+                          ),
+                        ),
+                        SizedBox(width: width * 0.02),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.redColor,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: IconButton(
+                            icon: Icon(
+                              isSaved ? Icons.bookmark : Icons.bookmark_border,
+                              color: Colors.white,
+                            ),
+                            onPressed: _toggleSave,
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(height: height * 0.016),
                     Row(
@@ -134,5 +227,34 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
         ),
       ),
     );
+  }
+
+  void showTrailer() {
+    final videoId = YoutubePlayer.convertUrlToId(
+      'https://www.youtube.com/watch?v=${widget.movieDetails!.ytTrailerCode}',
+    );
+    _playerController = YoutubePlayerController(
+      initialVideoId: videoId ?? '',
+      flags: YoutubePlayerFlags(autoPlay: true),
+    );
+    showDialog(
+      barrierDismissible: true,
+      context: context,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: AppColors.transparentColor,
+          child: YoutubePlayer(
+            controller: _playerController,
+            showVideoProgressIndicator: true,
+            onReady: () {
+              _playerController.play();
+            },
+          ),
+        );
+      },
+    ).then((value) {
+      _playerController.pause();
+      _playerController.dispose();
+    });
   }
 }
