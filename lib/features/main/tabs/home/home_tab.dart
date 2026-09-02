@@ -39,6 +39,7 @@ class _HomeTabState extends State<HomeTab> {
             Colors.black.withValues(alpha: 0.5),
             BlendMode.darken,
           ),
+<<<<<<< HEAD
           fit: BoxFit.fill,
           image: AssetImage(AppAssets.onBoardingImage6),
         ),
@@ -55,6 +56,20 @@ class _HomeTabState extends State<HomeTab> {
                   return const MainLoadingwidget();
                 } else if (state is HomeGeneralErrorState) {
                   return MainError(
+=======
+          child: SingleChildScrollView(
+            padding: EdgeInsets.only(bottom: height * 0.1),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Image.asset(AppAssets.availableNowImage),
+                SizedBox(height: height * 0.02),
+
+                if (state is HomeGeneralLoadingState || state is HomeGeneralInitialState)
+                  const MainLoadingwidget()
+                else if (state is HomeGeneralErrorState)
+                  MainError(
+>>>>>>> f8a2f63 (feat: update home background dynamically with active movie poster)
                     errorMessage: state.errorMessage,
                     onPressed: () {
                       context.read<HomeGeneralCubit>().getMoviesGeneral();
