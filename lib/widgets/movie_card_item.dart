@@ -1,14 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:movies_app/api/model/movie_list/movies.dart';
 import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
 
 class MovieCardItem extends StatelessWidget {
-  final Movies? movie;
+  final dynamic movie;
+  final String? movieImage;
+  final double? movieRate;
+  final bool isSuggestion;
+
   const MovieCardItem({
     super.key,
     this.movie,
@@ -16,43 +19,68 @@ class MovieCardItem extends StatelessWidget {
     this.movieRate,
     this.isSuggestion = false,
   });
-  final String? movieImage;
-  final double? movieRate;
-  final bool isSuggestion;
 
   @override
   Widget build(BuildContext context) {
     var height = context.height;
     var width = context.width;
+
+    // 1. جلب رابط الصورة مع البدء بالبوستر الطولي الواضح أولاً
+    String imageUrl = '';
+    if (movieImage != null && movieImage!.isNotEmpty) {
+      imageUrl = movieImage!;
+    } else if (isSuggestion) {
+      imageUrl = movieImage ?? '';
+    } else if (movie != null) {
+      try {
+        imageUrl = movie.mediumCoverImage ??
+            movie.largeCoverImage ??
+            movie.smallCoverImage ??
+            movie.backgroundImage ?? '';
+      } catch (_) {
+        imageUrl = '';
+      }
+    }
+
+    // 2. جلب التقييم بأمان
+    double ratingValue = 0.0;
+    if (movieRate != null) {
+      ratingValue = movieRate!;
+    } else if (movie != null) {
+      try {
+        ratingValue = movie.rating != null ? double.parse(movie.rating.toString()) : 0.0;
+      } catch (_) {
+        ratingValue = 0.0;
+      }
+    }
+
     return Container(
-      padding: .directional(start: width * 0.02, top: width * 0.03),
-      alignment: .topStart,
+      padding: EdgeInsetsDirectional.only(start: width * 0.02, top: width * 0.03),
+      alignment: AlignmentDirectional.topStart,
       decoration: BoxDecoration(
-        borderRadius: .circular(20),
-        image: isSuggestion
-            ? DecorationImage(image: NetworkImage(movieImage!))
-            : (movie?.mediumCoverImage != null &&
-                  movie!.mediumCoverImage!.isNotEmpty)
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.grey[900],
+        image: imageUrl.isNotEmpty
             ? DecorationImage(
-                fit: .fill,
-                image: CachedNetworkImageProvider(movie!.mediumCoverImage!),
-              )
+          fit: BoxFit.cover,
+          image: CachedNetworkImageProvider(imageUrl),
+        )
             : null,
       ),
       child: Container(
-        padding: .symmetric(horizontal: width * 0.02, vertical: height * 0.005),
+        padding: EdgeInsets.symmetric(horizontal: width * 0.02, vertical: height * 0.005),
         decoration: BoxDecoration(
-          borderRadius: .circular(10),
+          borderRadius: BorderRadius.circular(10),
           color: AppColors.blackColor.withValues(alpha: 0.71),
         ),
         child: Row(
-          spacing: width * 0.01,
-          mainAxisSize: .min,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              isSuggestion ? movieRate.toString() : movie!.rating.toString(),
+              ratingValue.toString(),
               style: AppStyles.regular16White,
             ),
+            SizedBox(width: width * 0.01),
             SvgPicture.asset(
               AppAssets.rateIcon,
               width: width * 0.034,

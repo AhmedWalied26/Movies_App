@@ -49,4 +49,14 @@ class ApiManager {
       rethrow;
     }
   }
+  static Future<MoviesList> getAllMovies() async {
+    try {
+      var response = await dio.get(
+        EndPoints.movieList,
+      );
+      return MoviesList.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
