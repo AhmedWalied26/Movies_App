@@ -51,7 +51,9 @@ class MovieCardItem extends StatelessWidget {
           mainAxisSize: .min,
           children: [
             Text(
-              rating?.toStringAsFixed(1) ?? 'N/A',
+              isSuggestion
+                  ? movieRate.toString()
+                  : (movie?.rating ?? '0.0').toString(),
               style: AppStyles.regular16White,
             ),
             SvgPicture.asset(

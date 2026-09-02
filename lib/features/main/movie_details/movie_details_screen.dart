@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:movies_app/api/model/movie_details_response/movie.dart';
 import 'package:movies_app/api/model/movie_suggestions_response/movie_suggestion.dart';
@@ -55,6 +57,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
       widget.movieDetails!,
     );
     if (mounted) setState(() => isSaved = newState);
+    log('=============Saved=========');
   }
 
   @override
@@ -104,6 +107,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                 child: Column(
                   children: [
                     MovieHead(
+                      onSaveTab: _toggleSave,
                       onIconWatchButton: showTrailer,
                       onBookmarkButton: _toggleSave,
                       isSaved: isSaved,

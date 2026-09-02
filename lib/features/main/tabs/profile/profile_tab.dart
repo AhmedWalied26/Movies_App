@@ -5,6 +5,8 @@ import 'package:movies_app/api/model/movie_details_response/movie.dart';
 import 'package:movies_app/features/main/tabs/profile/watch/watch_list_service.dart';
 import 'package:movies_app/features/main/tabs/profile/widgets/custom_column.dart';
 import 'package:movies_app/services/profile_service.dart';
+import 'package:movies_app/services/movie_history_service.dart';
+import 'package:movies_app/features/main/tabs/profile/widgets/history_view.dart';
 import 'package:movies_app/widgets/custom_elevated_button.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_assets.dart';
@@ -26,6 +28,9 @@ class _ProfileTabState extends State<ProfileTab>
   late final TabController _tabController;
   String profileName = 'John Safwat';
   String profileAvatar = AppAssets.profileImage8;
+  late Future<List<Movie>> _historyFuture;
+  List<Movie> savedMovies = [];
+
   Future<void> _signOut() async {
     await ProfileService.instance.signOut();
     if (!mounted) return;
@@ -40,13 +45,27 @@ class _ProfileTabState extends State<ProfileTab>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _historyFuture = MovieHistoryService.instance.loadHistory();
     _loadProfile();
+    _loadSavedMovies();
   }
 
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  Future<void> _loadSavedMovies() async {
+    final movies = await WatchListService.instance.loadSavedMovies();
+    if (!mounted) return;
+    setState(() => savedMovies = movies);
+  }
+
+  void _reloadHistory() {
+    setState(() {
+      _historyFuture = MovieHistoryService.instance.loadHistory();
+    });
   }
 
   Future<void> _loadProfile() async {
@@ -208,8 +227,26 @@ class _ProfileTabState extends State<ProfileTab>
                     Container(
                       width: double.infinity,
                       color: AppColors.blackColor,
-                      child: Center(
-                        child: Image.asset(AppAssets.emptyListImage),
+                      child: FutureBuilder<List<Movie>>(
+                        future: _historyFuture,
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                            return Center(
+                              child: Image.asset(AppAssets.emptyListImage),
+                            );
+                          }
+                          return HistoryView(
+                            movies: snapshot.data!,
+                            onMovieTap: (movieId) async {
+                              await Navigator.pushNamed(
+                                context,
+                                AppRoutes.movieDetailsScreen,
+                                arguments: movieId,
+                              );
+                              if (mounted) _reloadHistory();
+                            },
+                          );
+                        },
                       ),
                     ),
                   ],
