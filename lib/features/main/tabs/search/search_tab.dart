@@ -11,7 +11,8 @@ import 'cubit/search_cubit.dart';
 import 'cubit/search_state.dart';
 
 class SearchTab extends StatelessWidget {
-  const SearchTab({super.key});
+  SearchTab({super.key});
+  final TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +27,7 @@ class SearchTab extends StatelessWidget {
               child: Column(
                 children: [
                   CustomTextField(
+                    controller: controller,
                     title: AppLocalizations.of(context)!.search,
                     prefix: Padding(
                       padding: EdgeInsetsDirectional.only(start: width * 0.025),
@@ -40,7 +42,9 @@ class SearchTab extends StatelessWidget {
                     child: BlocBuilder<SearchCubit, SearchState>(
                       builder: (context, state) {
                         if (state is SearchLoadingState) {
-                          return const Center(child: CircularProgressIndicator());
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
                         } else if (state is SearchErrorState) {
                           return Center(
                             child: Text(
@@ -58,37 +62,41 @@ class SearchTab extends StatelessWidget {
                               ),
                             );
                           }
-                          return GridView.builder(
-                            padding: EdgeInsets.symmetric(horizontal: width * 0.016),
-                            itemCount: movies.length,
-                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              mainAxisSpacing: 12,
-                              crossAxisSpacing: 12,
-                              childAspectRatio: 0.7,
-                            ),
-                            itemBuilder: (context, index) {
-                              var movie = movies[index];
-                              return InkWell(
-                                onTap: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  AppRoutes.movieDetailsScreen,
-                                  arguments: movies[index].id,
+                          return controller.text.isEmpty
+                              ? Center(
+                                  child: Image.asset(AppAssets.emptyListImage),
+                                )
+                              : GridView.builder(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: width * 0.016,
+                                  ),
+                                  itemCount: movies.length,
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        mainAxisSpacing: 12,
+                                        crossAxisSpacing: 12,
+                                        childAspectRatio: 0.7,
+                                      ),
+                                  itemBuilder: (context, index) {
+                                    var movie = movies[index];
+                                    return InkWell(
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                          context,
+                                          AppRoutes.movieDetailsScreen,
+                                          arguments: movies[index].id,
+                                        );
+                                      },
+                                      child: MovieCardItem(
+                                        movie: movie,
+                                        movieImage: movie.mediumCoverImage,
+                                        movieRate:
+                                            movie.rating?.toDouble() ?? 0.0,
+                                      ),
+                                    );
+                                  },
                                 );
-                              },
-                                child: MovieCardItem(
-                                  movie: movie,
-                                  movieImage: (movie.largeCoverImage != null && movie.largeCoverImage!.isNotEmpty)
-                                      ? movie.largeCoverImage!
-                                      : (movie.mediumCoverImage != null && movie.mediumCoverImage!.isNotEmpty)
-                                      ? movie.mediumCoverImage!
-                                      : 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba',
-                                  movieRate: movie.rating?.toDouble() ?? 0.0,
-                                ),
-                              );
-                            },
-                          );
                         }
                         return const SizedBox();
                       },

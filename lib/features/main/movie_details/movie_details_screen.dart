@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:movies_app/api/model/movie_details_response/movie.dart';
 import 'package:movies_app/api/model/movie_suggestions_response/movie_suggestion.dart';
@@ -9,6 +11,7 @@ import 'package:movies_app/features/main/movie_details/widgets/movie_info.dart';
 import 'package:movies_app/features/main/movie_details/widgets/movie_screen_shots.dart';
 import 'package:movies_app/features/main/movie_details/widgets/movie_summary.dart';
 import 'package:movies_app/features/main/movie_details/widgets/movie_web_view.dart';
+import 'package:movies_app/features/main/tabs/profile/watch/watch_list_service.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/app_colors.dart';
@@ -33,6 +36,29 @@ class MovieDetailsScreen extends StatefulWidget {
 
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   late YoutubePlayerController _playerController;
+  bool isSaved = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkIfSaved();
+  }
+
+  Future<void> _checkIfSaved() async {
+    final saved = await WatchListService.instance.isSaved(
+      widget.movieDetails?.id,
+    );
+    if (mounted) setState(() => isSaved = saved);
+  }
+
+  Future<void> _toggleSave() async {
+    if (widget.movieDetails == null) return;
+    final newState = await WatchListService.instance.toggleSave(
+      widget.movieDetails!,
+    );
+    if (mounted) setState(() => isSaved = newState);
+    log('=============Saved=========');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,11 +107,29 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                 child: Column(
                   children: [
                     MovieHead(
+                      onSaveTab: _toggleSave,
                       onIconWatchButton: showTrailer,
                       movieName: widget.movieDetails!.title!,
                       movieTime: widget.movieDetails!.year!,
                     ),
                     SizedBox(height: height * 0.016),
+                    // CustomElevatedButton(
+                    //   onPressedButton2: () {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //         builder: (context) {
+                    //           return MovieWebView(
+                    //             url: widget.movieDetails!.url!,
+                    //           );
+                    //         },
+                    //       ),
+                    //     );
+                    //   },
+                    //   title: AppLocalizations.of(context)!.watch,
+                    //   style: AppStyles.bold24White,
+                    //   bgColor: AppColors.redColor,
+                    // ),
                     CustomElevatedButton(
                       onPressedButton2: () {
                         Navigator.push(

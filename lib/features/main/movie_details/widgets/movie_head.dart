@@ -7,12 +7,14 @@ import 'package:movies_app/utils/size_utils.dart';
 class MovieHead extends StatelessWidget {
   final String movieName;
   final int movieTime;
+  final VoidCallback onSaveTab;
   final VoidCallback onIconWatchButton;
   const MovieHead({
     super.key,
     required this.movieName,
     required this.movieTime,
     required this.onIconWatchButton,
+    required this.onSaveTab,
   });
 
   @override
@@ -30,7 +32,7 @@ class MovieHead extends StatelessWidget {
               icon: Icon(Icons.arrow_back_ios_new_outlined, size: 30),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: onSaveTab,
               icon: Icon(Icons.bookmark_outlined, size: 30),
             ),
           ],

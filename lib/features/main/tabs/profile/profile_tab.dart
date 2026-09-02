@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/api/model/movie_details_response/movie.dart';
+import 'package:movies_app/features/main/tabs/profile/watch/watch_list_service.dart';
 import 'package:movies_app/features/main/tabs/profile/widgets/custom_column.dart';
 import 'package:movies_app/services/profile_service.dart';
 import 'package:movies_app/services/movie_history_service.dart';
@@ -13,6 +14,7 @@ import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
+import 'package:movies_app/widgets/movie_card_item.dart';
 
 class ProfileTab extends StatefulWidget {
   const ProfileTab({super.key});
@@ -26,6 +28,7 @@ class _ProfileTabState extends State<ProfileTab> {
   String profileAvatar = AppAssets.profileImage8;
   late Future<List<Movie>> _historyFuture;
 
+List<Movie> savedMovies = [];
   Future<void> _signOut() async {
     await ProfileService.instance.signOut();
     if (!mounted) return;
@@ -36,12 +39,19 @@ class _ProfileTabState extends State<ProfileTab> {
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _historyFuture = MovieHistoryService.instance.loadHistory();
-    _loadProfile();
-  }
+ @override
+void initState() {
+  super.initState();
+  _loadProfile();
+   _historyFuture = MovieHistoryService.instance.loadHistory();
+  _loadSavedMovies();
+}
+
+Future<void> _loadSavedMovies() async {
+  final movies = await WatchListService.instance.loadSavedMovies();
+  if (!mounted) return;
+  setState(() => savedMovies = movies);
+}
 
   void _reloadHistory() {
     setState(() {
@@ -154,12 +164,28 @@ class _ProfileTabState extends State<ProfileTab> {
                 child: TabBarView(
                   children: [
                     Container(
-                      width: double.infinity,
-                      color: AppColors.blackColor,
-                      child: Center(
-                        child: Image.asset(AppAssets.emptyListImage),
-                      ),
-                    ),
+  width: double.infinity,
+  color: AppColors.blackColor,
+  child: savedMovies.isEmpty
+      ? Center(child: Image.asset(AppAssets.emptyListImage))
+      : GridView.builder(
+          padding: EdgeInsets.symmetric(horizontal: width * 0.035, vertical: 12),
+          itemCount: savedMovies.length,
+          itemBuilder: (context, index) {
+            final movie = savedMovies[index];
+            return MovieCardItem(
+              movieImage: movie.mediumCoverImage ?? '',
+              movieRate: movie.rating ?? 0,
+            );
+          },
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 12,
+            crossAxisSpacing: 12,
+            childAspectRatio: 0.7,
+          ),
+        ),
+),
                     Container(
                       width: double.infinity,
                       color: AppColors.blackColor,
