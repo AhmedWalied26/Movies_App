@@ -26,9 +26,10 @@ class ProfileTab extends StatefulWidget {
 class _ProfileTabState extends State<ProfileTab> {
   String profileName = 'John Safwat';
   String profileAvatar = AppAssets.profileImage8;
+  late Stream<List<Movie>> _watchListStream;
   late Future<List<Movie>> _historyFuture;
 
-List<Movie> savedMovies = [];
+  List<Movie> savedMovies = [];
   Future<void> _signOut() async {
     await ProfileService.instance.signOut();
     if (!mounted) return;
@@ -39,19 +40,20 @@ List<Movie> savedMovies = [];
     );
   }
 
- @override
-void initState() {
-  super.initState();
-  _loadProfile();
-   _historyFuture = MovieHistoryService.instance.loadHistory();
-  _loadSavedMovies();
-}
+  @override
+  void initState() {
+    super.initState();
+    _watchListStream = WatchListService.instance.watchSavedMovies();
+    _loadProfile();
+    _historyFuture = MovieHistoryService.instance.loadHistory();
+    _loadSavedMovies();
+  }
 
-Future<void> _loadSavedMovies() async {
-  final movies = await WatchListService.instance.loadSavedMovies();
-  if (!mounted) return;
-  setState(() => savedMovies = movies);
-}
+  Future<void> _loadSavedMovies() async {
+    final movies = await WatchListService.instance.loadSavedMovies();
+    if (!mounted) return;
+    setState(() => savedMovies = movies);
+  }
 
   void _reloadHistory() {
     setState(() {
@@ -66,7 +68,8 @@ Future<void> _loadSavedMovies() async {
     final profile = await ProfileService.instance.loadProfile();
     if (!mounted) return;
     setState(() {
-      profileName = (profile['name'] as String?) ?? user.displayName ?? profileName;
+      profileName =
+          (profile['name'] as String?) ?? user.displayName ?? profileName;
       profileAvatar = (profile['avatar'] as String?) ?? profileAvatar;
     });
   }
@@ -164,7 +167,7 @@ Future<void> _loadSavedMovies() async {
                 child: TabBarView(
                   children: [
                     StreamBuilder<List<Movie>>(
-                      stream: WatchListService.instance.watchSavedMovies(),
+                      stream: _watchListStream,
                       builder: (context, snapshot) {
                         if (snapshot.hasError) {
                           return Center(
@@ -179,7 +182,9 @@ Future<void> _loadSavedMovies() async {
                           width: double.infinity,
                           color: AppColors.blackColor,
                           child: movies.isEmpty
-                              ? Center(child: Image.asset(AppAssets.emptyListImage))
+                              ? Center(
+                                  child: Image.asset(AppAssets.emptyListImage),
+                                )
                               : GridView.builder(
                                   padding: EdgeInsets.symmetric(
                                     horizontal: width * 0.035,

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:movies_app/api/model/movie_details_response/movie.dart';
 import 'package:movies_app/api/model/movie_suggestions_response/movie_suggestion.dart';
@@ -57,7 +55,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
       widget.movieDetails!,
     );
     if (mounted) setState(() => isSaved = newState);
-    log('=============Saved=========');
   }
 
   @override
@@ -107,7 +104,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                 child: Column(
                   children: [
                     MovieHead(
-                      onSaveTab: _toggleSave,
                       onIconWatchButton: showTrailer,
                       onBookmarkButton: _toggleSave,
                       isSaved: isSaved,
@@ -115,23 +111,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                       movieTime: widget.movieDetails!.year!,
                     ),
                     SizedBox(height: height * 0.016),
-                    // CustomElevatedButton(
-                    //   onPressedButton2: () {
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //         builder: (context) {
-                    //           return MovieWebView(
-                    //             url: widget.movieDetails!.url!,
-                    //           );
-                    //         },
-                    //       ),
-                    //     );
-                    //   },
-                    //   title: AppLocalizations.of(context)!.watch,
-                    //   style: AppStyles.bold24White,
-                    //   bgColor: AppColors.redColor,
-                    // ),
                     CustomElevatedButton(
                       onPressedButton2: () {
                         Navigator.push(
@@ -148,43 +127,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                       title: AppLocalizations.of(context)!.watch,
                       style: AppStyles.bold24White,
                       bgColor: AppColors.redColor,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: CustomElevatedButton(
-                            onPressedButton2: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return MovieWebView(
-                                      url: widget.movieDetails!.url!,
-                                    );
-                                  },
-                                ),
-                              );
-                            },
-                            title: AppLocalizations.of(context)!.watch,
-                            style: AppStyles.bold24White,
-                            bgColor: AppColors.redColor,
-                          ),
-                        ),
-                        SizedBox(width: width * 0.02),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: AppColors.redColor,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: IconButton(
-                            icon: Icon(
-                              isSaved ? Icons.bookmark : Icons.bookmark_border,
-                              color: isSaved ? AppColors.redColor : Colors.white,
-                            ),
-                            onPressed: _toggleSave,
-                          ),
-                        ),
-                      ],
                     ),
                     SizedBox(height: height * 0.016),
                     Row(

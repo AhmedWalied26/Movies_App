@@ -7,7 +7,6 @@ import 'package:movies_app/utils/size_utils.dart';
 class MovieHead extends StatelessWidget {
   final String movieName;
   final int movieTime;
-  final VoidCallback onSaveTab;
   final VoidCallback onIconWatchButton;
   final VoidCallback onBookmarkButton;
   final bool isSaved;
