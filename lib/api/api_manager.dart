@@ -49,4 +49,16 @@ class ApiManager {
       rethrow;
     }
   }
+
+  static Future<MoviesList> searchMovies(String query) async {
+    try {
+      var response = await dio.get(
+        EndPoints.movieList,
+        queryParameters: {"query_term": query},
+      );
+      return MoviesList.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
