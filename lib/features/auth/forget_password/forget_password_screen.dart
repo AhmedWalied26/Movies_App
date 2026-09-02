@@ -9,7 +9,6 @@ import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
 import 'package:movies_app/widgets/custom_elevated_button.dart';
 import 'package:movies_app/widgets/custom_text_field.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({super.key});
@@ -27,21 +26,6 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       if (email.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Please enter your email address')),
-        );
-        return;
-      }
-      final querySnapshot = await FirebaseFirestore.instance
-          .collection('users')
-          .where('email', isEqualTo: email)
-          .get();
-
-      if (querySnapshot.docs.isEmpty) {
-        if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('No user found with this email.'),
-            backgroundColor: Colors.red,
-          ),
         );
         return;
       }
@@ -70,7 +54,13 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         SnackBar(content: Text(message), backgroundColor: Colors.red),
       );
     } catch (e) {
-      rethrow;
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Unable to send password reset email: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 

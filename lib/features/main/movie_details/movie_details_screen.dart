@@ -105,6 +105,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   children: [
                     MovieHead(
                       onIconWatchButton: showTrailer,
+                      onBookmarkButton: _toggleSave,
+                      isSaved: isSaved,
                       movieName: widget.movieDetails!.title!,
                       movieTime: widget.movieDetails!.year!,
                     ),
@@ -173,7 +175,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           child: IconButton(
                             icon: Icon(
                               isSaved ? Icons.bookmark : Icons.bookmark_border,
-                              color: Colors.white,
+                              color: isSaved ? AppColors.redColor : Colors.white,
                             ),
                             onPressed: _toggleSave,
                           ),
@@ -230,12 +232,14 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   }
 
   void showTrailer() {
-    final videoId = YoutubePlayer.convertUrlToId(
+    final videoId = YoutubePlayerController.convertUrlToId(
       'https://www.youtube.com/watch?v=${widget.movieDetails!.ytTrailerCode}',
     );
-    _playerController = YoutubePlayerController(
-      initialVideoId: videoId ?? '',
-      flags: YoutubePlayerFlags(autoPlay: true),
+    if (videoId == null || videoId.isEmpty) return;
+
+    _playerController = YoutubePlayerController.fromVideoId(
+      videoId: videoId,
+      autoPlay: true,
     );
     showDialog(
       barrierDismissible: true,
@@ -243,18 +247,11 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
       builder: (context) {
         return Dialog(
           backgroundColor: AppColors.transparentColor,
-          child: YoutubePlayer(
-            controller: _playerController,
-            showVideoProgressIndicator: true,
-            onReady: () {
-              _playerController.play();
-            },
-          ),
+          child: YoutubePlayer(controller: _playerController),
         );
       },
     ).then((value) {
-      _playerController.pause();
-      _playerController.dispose();
+      _playerController.close();
     });
   }
 }
