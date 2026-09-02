@@ -23,13 +23,15 @@ class ProfileTab extends StatefulWidget {
   State<ProfileTab> createState() => _ProfileTabState();
 }
 
-class _ProfileTabState extends State<ProfileTab> {
+class _ProfileTabState extends State<ProfileTab>
+    with SingleTickerProviderStateMixin {
+  late final TabController _tabController;
   String profileName = 'John Safwat';
   String profileAvatar = AppAssets.profileImage8;
   late Stream<List<Movie>> _watchListStream;
   late Future<List<Movie>> _historyFuture;
-
   List<Movie> savedMovies = [];
+
   Future<void> _signOut() async {
     await ProfileService.instance.signOut();
     if (!mounted) return;
@@ -43,10 +45,16 @@ class _ProfileTabState extends State<ProfileTab> {
   @override
   void initState() {
     super.initState();
-    _watchListStream = WatchListService.instance.watchSavedMovies();
-    _loadProfile();
+    _tabController = TabController(length: 2, vsync: this);
     _historyFuture = MovieHistoryService.instance.loadHistory();
+    _loadProfile();
     _loadSavedMovies();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   Future<void> _loadSavedMovies() async {
@@ -81,165 +89,174 @@ class _ProfileTabState extends State<ProfileTab> {
     final loc = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: AppColors.darkBlackColor,
-      body: DefaultTabController(
-        length: 2,
-        child: Container(
-          color: AppColors.greyColor,
-          child: Column(
-            children: [
-              SizedBox(height: SizeConfig.height(context) * 0.05),
-              Padding(
-                padding: EdgeInsets.all(width * 0.035),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(40),
-                          child: Image.asset(
-                            profileAvatar,
-                            height: height * 0.118,
-                            fit: BoxFit.cover,
-                          ),
+      body: Container(
+        color: AppColors.greyColor,
+        child: Column(
+          children: [
+            SizedBox(height: SizeConfig.height(context) * 0.05),
+            Padding(
+              padding: EdgeInsets.all(width * 0.035),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(40),
+                        child: Image.asset(
+                          profileAvatar,
+                          height: height * 0.118,
+                          fit: BoxFit.cover,
                         ),
-                        const SizedBox(height: 8),
-                        Text(profileName, style: AppStyles.bold20White),
-                      ],
-                    ),
-                    CustomColumn(label_1: loc.watch_List, label_2: loc.history),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: width * 0.035),
-                child: Row(
-                  spacing: 10,
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: CustomElevatedButton(
-                        onPressedButton2: () async {
-                          final updated = await Navigator.pushNamed(
-                            context,
-                            AppRoutes.updateProfileScreen,
-                          );
-                          if (updated == true && mounted) _loadProfile();
-                        },
-                        title: loc.edit_Profile,
-                        style: AppStyles.regular20White,
                       ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: CustomElevatedButton(
-                        isExitButton: true,
-                        bgColor: AppColors.redColor,
-                        onPressedButton2: _signOut,
-                        title: loc.exit,
-                        style: AppStyles.regular20White,
-                        child: SvgPicture.asset(AppAssets.exitIcon),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: SizeConfig.height(context) * 0.02),
-              TabBar(
-                labelPadding: .only(bottom: height * 0.012),
-                dividerColor: Colors.transparent,
-                unselectedLabelColor: AppColors.primaryColor,
-                indicatorColor: AppColors.primaryColor,
-                indicatorSize: .tab,
-                tabs: [
-                  Tab(
-                    icon: const Icon(Icons.list, size: 40),
-                    child: Text(loc.watch_List, style: AppStyles.bold18White),
+                      const SizedBox(height: 8),
+                      Text(profileName, style: AppStyles.bold20White),
+                    ],
                   ),
-                  Tab(
-                    icon: const Icon(Icons.folder, size: 40),
-                    child: Text(loc.history, style: AppStyles.bold18White),
+                  CustomColumn(label_1: loc.watch_List, label_2: loc.history),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: width * 0.035),
+              child: Row(
+                spacing: 10,
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: CustomElevatedButton(
+                      onPressedButton2: () async {
+                        final updated = await Navigator.pushNamed(
+                          context,
+                          AppRoutes.updateProfileScreen,
+                        );
+                        if (updated == true && mounted) _loadProfile();
+                      },
+                      title: loc.edit_Profile,
+                      style: AppStyles.regular20White,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: CustomElevatedButton(
+                      isExitButton: true,
+                      bgColor: AppColors.redColor,
+                      onPressedButton2: _signOut,
+                      title: loc.exit,
+                      style: AppStyles.regular20White,
+                      child: SvgPicture.asset(AppAssets.exitIcon),
+                    ),
                   ),
                 ],
               ),
-              Expanded(
-                child: TabBarView(
-                  children: [
-                    StreamBuilder<List<Movie>>(
-                      stream: _watchListStream,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) {
-                          return Center(
-                            child: Text(
-                              'Unable to load watch list',
-                              style: AppStyles.regular16White,
-                            ),
-                          );
-                        }
-                        final movies = snapshot.data ?? const <Movie>[];
-                        return Container(
-                          width: double.infinity,
-                          color: AppColors.blackColor,
-                          child: movies.isEmpty
-                              ? Center(
-                                  child: Image.asset(AppAssets.emptyListImage),
-                                )
-                              : GridView.builder(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: width * 0.035,
-                                    vertical: 12,
-                                  ),
-                                  itemCount: movies.length,
-                                  itemBuilder: (context, index) {
-                                    final movie = movies[index];
-                                    return MovieCardItem(
+            ),
+            SizedBox(height: SizeConfig.height(context) * 0.02),
+            TabBar(
+              controller: _tabController,
+              labelPadding: .only(bottom: height * 0.012),
+              dividerColor: Colors.transparent,
+              unselectedLabelColor: AppColors.primaryColor,
+              indicatorColor: AppColors.primaryColor,
+              indicatorSize: .tab,
+              tabs: [
+                Tab(
+                  icon: const Icon(Icons.list, size: 40),
+                  child: Text(loc.watch_List, style: AppStyles.bold18White),
+                ),
+                Tab(
+                  icon: const Icon(Icons.folder, size: 40),
+                  child: Text(loc.history, style: AppStyles.bold18White),
+                ),
+              ],
+            ),
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  StreamBuilder<List<Movie>>(
+                    stream: _watchListStream,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Center(
+                          child: Text(
+                            'Unable to load watch list',
+                            style: AppStyles.regular16White,
+                          ),
+                        );
+                      }
+                      final movies = snapshot.data ?? const <Movie>[];
+                      return Container(
+                        width: double.infinity,
+                        color: AppColors.blackColor,
+                        child: movies.isEmpty
+                            ? Center(
+                                child: Image.asset(AppAssets.emptyListImage),
+                              )
+                            : GridView.builder(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: width * 0.035,
+                                  vertical: 12,
+                                ),
+                                itemCount: movies.length,
+                                itemBuilder: (context, index) {
+                                  final movie = movies[index];
+                                  return InkWell(
+                                    onTap: () {
+                                      if (movie.id == null) return;
+                                      Navigator.pushNamed(
+                                        context,
+                                        AppRoutes.movieDetailsScreen,
+                                        arguments: movie.id,
+                                      );
+                                    },
+                                    child: MovieCardItem(
                                       movieImage: movie.mediumCoverImage ?? '',
                                       movieRate: movie.rating ?? 0,
                                       isSuggestion: true,
-                                    );
-                                  },
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        mainAxisSpacing: 12,
-                                        crossAxisSpacing: 12,
-                                        childAspectRatio: 0.7,
-                                      ),
-                                ),
+                                    ),
+                                  );
+                                },
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      mainAxisSpacing: 12,
+                                      crossAxisSpacing: 12,
+                                      childAspectRatio: 0.7,
+                                    ),
+                              ),
+                      );
+                    },
+                  ),
+                  Container(
+                    width: double.infinity,
+                    color: AppColors.blackColor,
+                    child: FutureBuilder<List<Movie>>(
+                      future: _historyFuture,
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                          return Center(
+                            child: Image.asset(AppAssets.emptyListImage),
+                          );
+                        }
+                        return HistoryView(
+                          movies: snapshot.data!,
+                          onMovieTap: (movieId) async {
+                            await Navigator.pushNamed(
+                              context,
+                              AppRoutes.movieDetailsScreen,
+                              arguments: movieId,
+                            );
+                            if (mounted) _reloadHistory();
+                          },
                         );
                       },
                     ),
-                    Container(
-                      width: double.infinity,
-                      color: AppColors.blackColor,
-                      child: FutureBuilder<List<Movie>>(
-                        future: _historyFuture,
-                        builder: (context, snapshot) {
-                          if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                            return Center(
-                              child: Image.asset(AppAssets.emptyListImage),
-                            );
-                          }
-                          return HistoryView(
-                            movies: snapshot.data!,
-                            onMovieTap: (movieId) async {
-                              await Navigator.pushNamed(
-                                context,
-                                AppRoutes.movieDetailsScreen,
-                                arguments: movieId,
-                              );
-                              if (mounted) _reloadHistory();
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

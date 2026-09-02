@@ -22,10 +22,10 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController(
-    text: "ahmedwalied2611@gmail.com",
+    text: "youssef@example.com",
   );
   final TextEditingController passwordController = TextEditingController(
-    text: "@#Aahmed123",
+    text: "Youssef123@",
   );
 
   bool isPasswordVisible = false;

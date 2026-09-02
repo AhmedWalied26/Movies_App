@@ -16,13 +16,18 @@ class MovieDetailsBlocBuilder extends StatefulWidget {
 }
 
 class _MovieDetailsBlocBuilderState extends State<MovieDetailsBlocBuilder> {
+  int? _lastLoadedMovieId;
   bool _historySaved = false;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    var args = ModalRoute.of(context)!.settings.arguments as int;
+    final args = ModalRoute.of(context)?.settings.arguments;
+    if (args is! int || args == _lastLoadedMovieId) return;
+
+    _lastLoadedMovieId = args;
+    _historySaved = false;
     context.read<MovieDetailsViewModel>().getMovieDetails(args);
   }
 
@@ -33,7 +38,7 @@ class _MovieDetailsBlocBuilderState extends State<MovieDetailsBlocBuilder> {
         if (state is MovieDetailsLoadingState) {
           return MainLoadingwidget();
         } else if (state is MovieDetailsErrorState) {
-          return MainError(onTap: () {} , onPressed: (){},);
+          return MainError(onTap: () {}, onPressed: () {});
         } else if (state is MovieDetailsSuccessState) {
           var data = state.moviesList;
           if (!_historySaved && data != null) {
