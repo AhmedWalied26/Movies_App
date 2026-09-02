@@ -24,47 +24,19 @@ class MovieCardItem extends StatelessWidget {
   Widget build(BuildContext context) {
     var height = context.height;
     var width = context.width;
-
-    // 1. جلب رابط الصورة مع البدء بالبوستر الطولي الواضح أولاً
-    String imageUrl = '';
-    if (movieImage != null && movieImage!.isNotEmpty) {
-      imageUrl = movieImage!;
-    } else if (isSuggestion) {
-      imageUrl = movieImage ?? '';
-    } else if (movie != null) {
-      try {
-        imageUrl = movie.mediumCoverImage ??
-            movie.largeCoverImage ??
-            movie.smallCoverImage ??
-            movie.backgroundImage ?? '';
-      } catch (_) {
-        imageUrl = '';
-      }
-    }
-
-    // 2. جلب التقييم بأمان
-    double ratingValue = 0.0;
-    if (movieRate != null) {
-      ratingValue = movieRate!;
-    } else if (movie != null) {
-      try {
-        ratingValue = movie.rating != null ? double.parse(movie.rating.toString()) : 0.0;
-      } catch (_) {
-        ratingValue = 0.0;
-      }
-    }
-
+    final imageUrl = isSuggestion ? movieImage : movie?.mediumCoverImage;
     return Container(
       padding: EdgeInsetsDirectional.only(start: width * 0.02, top: width * 0.03),
       alignment: AlignmentDirectional.topStart,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.grey[900],
-        image: imageUrl.isNotEmpty
+        borderRadius: .circular(20),
+        image: imageUrl != null && imageUrl.isNotEmpty
             ? DecorationImage(
-          fit: BoxFit.cover,
-          image: CachedNetworkImageProvider(imageUrl),
-        )
+                fit: .fill,
+                image: isSuggestion
+                    ? NetworkImage(imageUrl)
+                    : CachedNetworkImageProvider(imageUrl),
+              )
             : null,
       ),
       child: Container(
@@ -77,7 +49,9 @@ class MovieCardItem extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              ratingValue.toString(),
+              isSuggestion
+                  ? movieRate.toString()
+                  : (movie?.rating ?? '0.0').toString(),
               style: AppStyles.regular16White,
             ),
             SizedBox(width: width * 0.01),

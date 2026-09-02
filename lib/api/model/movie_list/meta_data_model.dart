@@ -1,5 +1,6 @@
 /// api_version : 2
 /// execution_time : "0.01 ms"
+library;
 
 class MetaDataModel {
   MetaDataModel({

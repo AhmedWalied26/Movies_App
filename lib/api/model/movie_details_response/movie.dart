@@ -110,11 +110,11 @@ class Movie {
     largeScreenshotImage3: json['large_screenshot_image3'] as String?,
 
     cast: (json['cast'] as List<dynamic>?)
-        ?.map((e) => Cast.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => Cast.fromJson(Map<String, dynamic>.from(e as Map)))
         .toList(),
 
     torrents: (json['torrents'] as List<dynamic>?)
-        ?.map((e) => Torrent.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => Torrent.fromJson(Map<String, dynamic>.from(e as Map)))
         .toList(),
 
     dateUploaded: json['date_uploaded'] as String?,
