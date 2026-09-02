@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/features/main/movie_details/cubit/browse_state.dart';
-import 'package:movies_app/features/main/movie_details/cubit/browse_view_model.dart';
+import 'package:movies_app/features/main/tabs/browse/cubit/browse_state.dart';
+import 'package:movies_app/features/main/tabs/browse/cubit/browse_view_model.dart';
 import 'package:movies_app/features/main/tabs/browse/widgets/tab_bar_widget.dart';
 
 class BrowseTab extends StatelessWidget {

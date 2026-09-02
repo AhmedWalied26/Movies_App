@@ -15,13 +15,15 @@ class BrowseViewModel extends Cubit<BrowseState> {
   void getAllMoviesAndGenres() async {
     emit(BrowseLoadingState());
     try {
-      var response = await ApiManager.getAllMovies();
+      var response = await ApiManager.getAllMovie();
 
       var rawList = response.data?.movies ?? [];
 
-      allMovies = (rawList as List<dynamic>?)
-          ?.map((e) => e is Movie ? e : Movie.fromJson(e.toJson()))
-          .toList() ?? [];
+      allMovies =
+          (rawList as List<dynamic>?)
+              ?.map((e) => e is Movie ? e : Movie.fromJson(e.toJson()))
+              .toList() ??
+          [];
 
       uniqueGenres = {'All'};
       for (var movie in allMovies) {
