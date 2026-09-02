@@ -15,11 +15,16 @@ class MovieDetailsBlocBuilder extends StatefulWidget {
 }
 
 class _MovieDetailsBlocBuilderState extends State<MovieDetailsBlocBuilder> {
+  int? _lastLoadedMovieId;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    var args = ModalRoute.of(context)!.settings.arguments as int;
+    final args = ModalRoute.of(context)?.settings.arguments;
+    if (args is! int || args == _lastLoadedMovieId) return;
+
+    _lastLoadedMovieId = args;
     context.read<MovieDetailsViewModel>().getMovieDetails(args);
   }
 

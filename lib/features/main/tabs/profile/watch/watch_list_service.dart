@@ -28,20 +28,19 @@ class WatchListService {
   }
 
   Stream<List<Movie>> watchSavedMovies() {
-    return _auth.authStateChanges().asyncExpand((user) {
-      if (user == null) return Stream.value(const <Movie>[]);
+    final user = _auth.currentUser;
+    if (user == null) return Stream.value(const <Movie>[]);
 
-      return _firestore
-          .collection('users')
-          .doc(user.uid)
-          .collection('watchlist')
-          .snapshots()
-          .map(
-            (snapshot) => snapshot.docs
-                .map((doc) => Movie.fromJson(doc.data()))
-                .toList(),
-          );
-    });
+    return _firestore
+        .collection('users')
+        .doc(user.uid)
+        .collection('watchlist')
+        .snapshots()
+        .map(
+          (snapshot) => snapshot.docs
+              .map((doc) => Movie.fromJson(doc.data()))
+              .toList(),
+        );
   }
 
   Future<bool> isSaved(int? movieId) async {

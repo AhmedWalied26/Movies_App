@@ -21,7 +21,9 @@ class ProfileTab extends StatefulWidget {
   State<ProfileTab> createState() => _ProfileTabState();
 }
 
-class _ProfileTabState extends State<ProfileTab> {
+class _ProfileTabState extends State<ProfileTab>
+    with SingleTickerProviderStateMixin {
+  late final TabController _tabController;
   String profileName = 'John Safwat';
   String profileAvatar = AppAssets.profileImage8;
   Future<void> _signOut() async {
@@ -34,11 +36,18 @@ class _ProfileTabState extends State<ProfileTab> {
     );
   }
 
- @override
-void initState() {
-  super.initState();
-  _loadProfile();
-}
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+    _loadProfile();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   Future<void> _loadProfile() async {
     final user = FirebaseAuth.instance.currentUser;
@@ -59,12 +68,10 @@ void initState() {
     final loc = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: AppColors.darkBlackColor,
-      body: DefaultTabController(
-        length: 2,
-        child: Container(
-          color: AppColors.greyColor,
-          child: Column(
-            children: [
+      body: Container(
+        color: AppColors.greyColor,
+        child: Column(
+          children: [
               SizedBox(height: SizeConfig.height(context) * 0.05),
               Padding(
                 padding: EdgeInsets.all(width * 0.035),
@@ -125,6 +132,7 @@ void initState() {
               ),
               SizedBox(height: SizeConfig.height(context) * 0.02),
               TabBar(
+                controller: _tabController,
                 labelPadding: .only(bottom: height * 0.012),
                 dividerColor: Colors.transparent,
                 unselectedLabelColor: AppColors.primaryColor,
@@ -143,6 +151,7 @@ void initState() {
               ),
               Expanded(
                 child: TabBarView(
+                  controller: _tabController,
                   children: [
                     StreamBuilder<List<Movie>>(
                       stream: WatchListService.instance.watchSavedMovies(),
@@ -169,10 +178,20 @@ void initState() {
                                   itemCount: movies.length,
                                   itemBuilder: (context, index) {
                                     final movie = movies[index];
-                                    return MovieCardItem(
-                                      movieImage: movie.mediumCoverImage ?? '',
-                                      movieRate: movie.rating ?? 0,
-                                      isSuggestion: true,
+                                    return InkWell(
+                                      onTap: () {
+                                        if (movie.id == null) return;
+                                        Navigator.pushNamed(
+                                          context,
+                                          AppRoutes.movieDetailsScreen,
+                                          arguments: movie.id,
+                                        );
+                                      },
+                                      child: MovieCardItem(
+                                        movieImage: movie.mediumCoverImage ?? '',
+                                        movieRate: movie.rating ?? 0,
+                                        isSuggestion: true,
+                                      ),
                                     );
                                   },
                                   gridDelegate:
@@ -199,7 +218,6 @@ void initState() {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }
