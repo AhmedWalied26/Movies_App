@@ -9,14 +9,10 @@ import 'package:movies_app/widgets/main_error.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../utils/app_assets.dart';
 import '../../../../utils/app_colors.dart';
-import '../../../../utils/app_routes.dart';
 import '../../../../utils/app_styles.dart';
 import '../../../../utils/size_utils.dart';
-import '../../../../widgets/main_error.dart';
 import '../../../../widgets/main_loading_widget.dart';
 import '../../../../widgets/movie_card_item.dart';
-import 'cubit/home_general_cubit.dart';
-import 'cubit/home_general_state.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -49,15 +45,15 @@ class _HomeTabState extends State<HomeTab> {
               height: height * 0.65,
               child: (bgImage != null && bgImage.isNotEmpty)
                   ? Image.network(
-                bgImage,
-                fit: BoxFit.cover,
-                alignment: Alignment.topCenter,
-              )
+                      bgImage,
+                      fit: BoxFit.cover,
+                      alignment: Alignment.topCenter,
+                    )
                   : Image.asset(
-                AppAssets.onBoardingImage6,
-                fit: BoxFit.cover,
-                alignment: Alignment.topCenter,
-              ),
+                      AppAssets.onBoardingImage6,
+                      fit: BoxFit.cover,
+                      alignment: Alignment.topCenter,
+                    ),
             ),
             Positioned.fill(
               child: Container(
@@ -84,7 +80,8 @@ class _HomeTabState extends State<HomeTab> {
                   SizedBox(height: height * 0.01),
                   Image.asset(AppAssets.availableNowImage),
                   SizedBox(height: height * 0.02),
-                  if (state is HomeGeneralLoadingState || state is HomeGeneralInitialState)
+                  if (state is HomeGeneralLoadingState ||
+                      state is HomeGeneralInitialState)
                     const MainLoadingwidget()
                   else if (state is HomeGeneralErrorState)
                     MainError(
@@ -97,37 +94,40 @@ class _HomeTabState extends State<HomeTab> {
                       },
                     )
                   else if (state is HomeGeneralSuccessState)
-                      SizedBox(
-                        height: height * 0.36,
-                        child: CarouselSlider.builder(
-                          itemCount: state.moviesList.length,
-                          itemBuilder: (context, index, realIndex) {
-                            return SizedBox(
-                              width: width * 0.5,
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                    context, AppRoutes.movieDetailsScreen,
-                                    arguments: state.moviesList[index].id,
-                                  );
-                                },
-                                child: MovieCardItem(
-                                  movie: state.moviesList[index] as dynamic,
-                                ),
+                    SizedBox(
+                      height: height * 0.36,
+                      child: CarouselSlider.builder(
+                        itemCount: state.moviesList.length,
+                        itemBuilder: (context, index, realIndex) {
+                          return SizedBox(
+                            width: width * 0.5,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  AppRoutes.movieDetailsScreen,
+                                  arguments: state.moviesList[index].id,
+                                );
+                              },
+                              child: MovieCardItem(
+                                movie: state.moviesList[index] as dynamic,
                               ),
-                            );
+                            ),
+                          );
+                        },
+                        options: CarouselOptions(
+                          autoPlay: true,
+                          height: height * 0.36,
+                          enlargeCenterPage: true,
+                          viewportFraction: 0.5,
+                          onPageChanged: (index, reason) {
+                            context
+                                .read<HomeGeneralCubit>()
+                                .changeSelectedMovie(index);
                           },
-                          options: CarouselOptions(
-                            autoPlay: true,
-                            height: height * 0.36,
-                            enlargeCenterPage: true,
-                            viewportFraction: 0.5,
-                            onPageChanged: (index, reason) {
-                              context.read<HomeGeneralCubit>().changeSelectedMovie(index);
-                            },
-                          ),
                         ),
                       ),
+                    ),
                   Image.asset(AppAssets.watchNowImage),
                   Padding(
                     padding: EdgeInsetsDirectional.only(start: width * 0.035),
@@ -140,7 +140,10 @@ class _HomeTabState extends State<HomeTab> {
                         ),
                         TextButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, AppRoutes.browseScreen);
+                            Navigator.pushNamed(
+                              context,
+                              AppRoutes.browseScreen,
+                            );
                           },
                           child: Row(
                             spacing: width * 0.01,

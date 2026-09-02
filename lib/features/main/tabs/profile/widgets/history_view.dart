@@ -1,9 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/api/model/movie_details_response/movie.dart';
-import 'package:movies_app/utils/app_colors.dart';
-import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
+import 'package:movies_app/widgets/movie_card_item.dart';
 
 class HistoryView extends StatelessWidget {
   final List<Movie> movies;
@@ -33,35 +31,10 @@ class HistoryView extends StatelessWidget {
         return InkWell(
           onTap: () => onMovieTap(movie.id!),
           borderRadius: BorderRadius.circular(20),
-          child: Container(
-            alignment: Alignment.topLeft,
-            padding: EdgeInsets.all(width * 0.02),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: AppColors.darkGreyColor,
-              image: movie.mediumCoverImage == null
-                  ? null
-                  : DecorationImage(
-                      fit: BoxFit.cover,
-                      image: CachedNetworkImageProvider(
-                        movie.mediumCoverImage!,
-                      ),
-                    ),
-            ),
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: width * 0.02,
-                vertical: height * 0.005,
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: AppColors.blackColor.withValues(alpha: 0.71),
-              ),
-              child: Text(
-                movie.rating?.toString() ?? '-',
-                style: AppStyles.regular16White,
-              ),
-            ),
+          child: MovieCardItem(
+            isSuggestion: true,
+            movieImage: movie.mediumCoverImage,
+            movieRate: movie.rating,
           ),
         );
       },
