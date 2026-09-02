@@ -109,6 +109,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     MovieHead(
                       onSaveTab: _toggleSave,
                       onIconWatchButton: showTrailer,
+                      onBookmarkButton: _toggleSave,
+                      isSaved: isSaved,
                       movieName: widget.movieDetails!.title!,
                       movieTime: widget.movieDetails!.year!,
                     ),
@@ -146,6 +148,43 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                       title: AppLocalizations.of(context)!.watch,
                       style: AppStyles.bold24White,
                       bgColor: AppColors.redColor,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: CustomElevatedButton(
+                            onPressedButton2: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return MovieWebView(
+                                      url: widget.movieDetails!.url!,
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                            title: AppLocalizations.of(context)!.watch,
+                            style: AppStyles.bold24White,
+                            bgColor: AppColors.redColor,
+                          ),
+                        ),
+                        SizedBox(width: width * 0.02),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.redColor,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: IconButton(
+                            icon: Icon(
+                              isSaved ? Icons.bookmark : Icons.bookmark_border,
+                              color: isSaved ? AppColors.redColor : Colors.white,
+                            ),
+                            onPressed: _toggleSave,
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(height: height * 0.016),
                     Row(
@@ -197,12 +236,14 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   }
 
   void showTrailer() {
-    final videoId = YoutubePlayer.convertUrlToId(
+    final videoId = YoutubePlayerController.convertUrlToId(
       'https://www.youtube.com/watch?v=${widget.movieDetails!.ytTrailerCode}',
     );
-    _playerController = YoutubePlayerController(
-      initialVideoId: videoId ?? '',
-      flags: YoutubePlayerFlags(autoPlay: true),
+    if (videoId == null || videoId.isEmpty) return;
+
+    _playerController = YoutubePlayerController.fromVideoId(
+      videoId: videoId,
+      autoPlay: true,
     );
     showDialog(
       barrierDismissible: true,
@@ -210,18 +251,11 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
       builder: (context) {
         return Dialog(
           backgroundColor: AppColors.transparentColor,
-          child: YoutubePlayer(
-            controller: _playerController,
-            showVideoProgressIndicator: true,
-            onReady: () {
-              _playerController.play();
-            },
-          ),
+          child: YoutubePlayer(controller: _playerController),
         );
       },
     ).then((value) {
-      _playerController.pause();
-      _playerController.dispose();
+      _playerController.close();
     });
   }
 }

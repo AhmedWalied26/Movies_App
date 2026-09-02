@@ -24,18 +24,19 @@ class MovieCardItem extends StatelessWidget {
   Widget build(BuildContext context) {
     var height = context.height;
     var width = context.width;
+    final imageUrl = isSuggestion ? movieImage : movie?.mediumCoverImage;
+    final rating = isSuggestion ? movieRate : movie?.rating;
     return Container(
       padding: .directional(start: width * 0.02, top: width * 0.03),
       alignment: .topStart,
       decoration: BoxDecoration(
         borderRadius: .circular(20),
-        image: isSuggestion
-            ? DecorationImage(image: NetworkImage(movieImage!))
-            : (movie?.mediumCoverImage != null &&
-                  movie!.mediumCoverImage!.isNotEmpty)
+        image: imageUrl != null && imageUrl.isNotEmpty
             ? DecorationImage(
                 fit: .fill,
-                image: CachedNetworkImageProvider(movie!.mediumCoverImage!),
+                image: isSuggestion
+                    ? NetworkImage(imageUrl)
+                    : CachedNetworkImageProvider(imageUrl),
               )
             : null,
       ),

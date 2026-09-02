@@ -163,29 +163,48 @@ Future<void> _loadSavedMovies() async {
               Expanded(
                 child: TabBarView(
                   children: [
-                    Container(
-  width: double.infinity,
-  color: AppColors.blackColor,
-  child: savedMovies.isEmpty
-      ? Center(child: Image.asset(AppAssets.emptyListImage))
-      : GridView.builder(
-          padding: EdgeInsets.symmetric(horizontal: width * 0.035, vertical: 12),
-          itemCount: savedMovies.length,
-          itemBuilder: (context, index) {
-            final movie = savedMovies[index];
-            return MovieCardItem(
-              movieImage: movie.mediumCoverImage ?? '',
-              movieRate: movie.rating ?? 0,
-            );
-          },
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 12,
-            crossAxisSpacing: 12,
-            childAspectRatio: 0.7,
-          ),
-        ),
-),
+                    StreamBuilder<List<Movie>>(
+                      stream: WatchListService.instance.watchSavedMovies(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Text(
+                              'Unable to load watch list',
+                              style: AppStyles.regular16White,
+                            ),
+                          );
+                        }
+                        final movies = snapshot.data ?? const <Movie>[];
+                        return Container(
+                          width: double.infinity,
+                          color: AppColors.blackColor,
+                          child: movies.isEmpty
+                              ? Center(child: Image.asset(AppAssets.emptyListImage))
+                              : GridView.builder(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: width * 0.035,
+                                    vertical: 12,
+                                  ),
+                                  itemCount: movies.length,
+                                  itemBuilder: (context, index) {
+                                    final movie = movies[index];
+                                    return MovieCardItem(
+                                      movieImage: movie.mediumCoverImage ?? '',
+                                      movieRate: movie.rating ?? 0,
+                                      isSuggestion: true,
+                                    );
+                                  },
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        mainAxisSpacing: 12,
+                                        crossAxisSpacing: 12,
+                                        childAspectRatio: 0.7,
+                                      ),
+                                ),
+                        );
+                      },
+                    ),
                     Container(
                       width: double.infinity,
                       color: AppColors.blackColor,

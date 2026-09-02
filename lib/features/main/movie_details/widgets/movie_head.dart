@@ -9,12 +9,15 @@ class MovieHead extends StatelessWidget {
   final int movieTime;
   final VoidCallback onSaveTab;
   final VoidCallback onIconWatchButton;
+  final VoidCallback onBookmarkButton;
+  final bool isSaved;
   const MovieHead({
     super.key,
     required this.movieName,
     required this.movieTime,
     required this.onIconWatchButton,
-    required this.onSaveTab,
+    required this.onBookmarkButton,
+    required this.isSaved,
   });
 
   @override
@@ -32,8 +35,13 @@ class MovieHead extends StatelessWidget {
               icon: Icon(Icons.arrow_back_ios_new_outlined, size: 30),
             ),
             IconButton(
-              onPressed: onSaveTab,
-              icon: Icon(Icons.bookmark_outlined, size: 30),
+              onPressed: onBookmarkButton,
+              tooltip: isSaved ? 'Remove from watch list' : 'Add to watch list',
+              icon: Icon(
+                isSaved ? Icons.bookmark : Icons.bookmark_border,
+                size: 30,
+                color: isSaved ? Colors.red : Colors.white,
+              ),
             ),
           ],
         ),

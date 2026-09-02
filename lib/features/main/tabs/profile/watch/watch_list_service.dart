@@ -65,14 +65,17 @@ class WatchListService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  CollectionReference<Map<String, dynamic>>? _favoritesReference() {
+  CollectionReference<Map<String, dynamic>>? _watchListReference() {
     final user = _auth.currentUser;
     if (user == null) return null;
-    return _firestore.collection('users').doc(user.uid).collection('favorites');
+    return _firestore
+        .collection('users')
+        .doc(user.uid)
+        .collection('watchlist');
   }
 
   Future<List<Movie>> loadSavedMovies() async {
-    final ref = _favoritesReference();
+    final ref = _watchListReference();
     if (ref == null) return [];
 
     final snapshot = await ref.get();
@@ -80,18 +83,25 @@ class WatchListService {
   }
 
   Stream<List<Movie>> watchSavedMovies() {
-    final ref = _favoritesReference();
-    if (ref == null) return Stream.value([]);
+    return _auth.authStateChanges().asyncExpand((user) {
+      if (user == null) return Stream.value(const <Movie>[]);
 
-    return ref.snapshots().map(
-      (snapshot) =>
-          snapshot.docs.map((doc) => Movie.fromJson(doc.data())).toList(),
-    );
+      return _firestore
+          .collection('users')
+          .doc(user.uid)
+          .collection('watchlist')
+          .snapshots()
+          .map(
+            (snapshot) => snapshot.docs
+                .map((doc) => Movie.fromJson(doc.data()))
+                .toList(),
+          );
+    });
   }
 
   Future<bool> isSaved(int? movieId) async {
     if (movieId == null) return false;
-    final ref = _favoritesReference();
+    final ref = _watchListReference();
     if (ref == null) return false;
     final user = FirebaseAuth.instance.currentUser;
     print('Current user: ${user?.uid}');
@@ -101,7 +111,7 @@ class WatchListService {
   }
 
   Future<bool> toggleSave(Movie movie) async {
-    final ref = _favoritesReference();
+    final ref = _watchListReference();
     if (ref == null || movie.id == null) return false;
 
     final docRef = ref.doc(movie.id.toString());
