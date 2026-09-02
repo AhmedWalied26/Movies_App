@@ -47,6 +47,7 @@ class _ProfileTabState extends State<ProfileTab>
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
     _historyFuture = MovieHistoryService.instance.loadHistory();
+    _watchListStream = WatchListService.instance.watchSavedMovies();
     _loadProfile();
     _loadSavedMovies();
   }
