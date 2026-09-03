@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -28,9 +30,10 @@ class _ProfileTabState extends State<ProfileTab>
   late final TabController _tabController;
   String profileName = 'John Safwat';
   String profileAvatar = AppAssets.profileImage8;
-  late Stream<List<Movie>> _watchListStream;
+  late StreamSubscription<List<Movie>> _watchListSubscription;
+  List<Movie> _watchListMovies = [];
+  Object? _watchListError;
   late Future<List<Movie>> _historyFuture;
-  List<Movie> savedMovies = [];
 
   Future<void> _signOut() async {
     await ProfileService.instance.signOut();
@@ -47,21 +50,27 @@ class _ProfileTabState extends State<ProfileTab>
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
     _historyFuture = MovieHistoryService.instance.loadHistory();
-    _watchListStream = WatchListService.instance.watchSavedMovies();
+    _watchListSubscription = WatchListService.instance.watchSavedMovies().listen(
+      (movies) {
+        if (!mounted) return;
+        setState(() {
+          _watchListMovies = movies;
+          _watchListError = null;
+        });
+      },
+      onError: (Object error) {
+        if (!mounted) return;
+        setState(() => _watchListError = error);
+      },
+    );
     _loadProfile();
-    _loadSavedMovies();
   }
 
   @override
   void dispose() {
+    _watchListSubscription.cancel();
     _tabController.dispose();
     super.dispose();
-  }
-
-  Future<void> _loadSavedMovies() async {
-    final movies = await WatchListService.instance.loadSavedMovies();
-    if (!mounted) return;
-    setState(() => savedMovies = movies);
   }
 
   void _reloadHistory() {
@@ -115,7 +124,17 @@ class _ProfileTabState extends State<ProfileTab>
                       Text(profileName, style: AppStyles.bold20White),
                     ],
                   ),
-                  CustomColumn(label_1: loc.watch_List, label_2: loc.history),
+                  FutureBuilder<List<Movie>>(
+                    future: _historyFuture,
+                    builder: (context, historySnapshot) {
+                      return CustomColumn(
+                        label_1: loc.watch_List,
+                        label_2: loc.history,
+                        count_1: _watchListMovies.length,
+                        count_2: historySnapshot.data?.length ?? 0,
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
@@ -175,10 +194,9 @@ class _ProfileTabState extends State<ProfileTab>
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  StreamBuilder<List<Movie>>(
-                    stream: _watchListStream,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) {
+                  Builder(
+                    builder: (context) {
+                      if (_watchListError != null) {
                         return Center(
                           child: Text(
                             'Unable to load watch list',
@@ -186,7 +204,7 @@ class _ProfileTabState extends State<ProfileTab>
                           ),
                         );
                       }
-                      final movies = snapshot.data ?? const <Movie>[];
+                      final movies = _watchListMovies;
                       return Container(
                         width: double.infinity,
                         color: AppColors.blackColor,
