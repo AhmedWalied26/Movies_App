@@ -65,7 +65,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get password => 'كلمة المرور';
 
   @override
-  String get forget_Password => 'نسيت كلمة المرور';
+  String get forget_Password => ' نسيت كلمة المرور ؟';
 
   @override
   String get login => 'تسجيل الدخول';
@@ -153,7 +153,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get watch_List => 'قائمة المشاهدة';
 
   @override
-  String get history => 'السجل';
+  String get history => 'تاريخي';
 
   @override
   String get pick_Avatar => 'اختر صورة شخصية';
@@ -243,17 +243,59 @@ class AppLocalizationsAr extends AppLocalizations {
   String get valid_user_name => 'من فضلك أدخل اسم مستخدم صحيح.';
 
   @override
-  String get similar => 'Similar';
+  String get similar => 'متشابة';
 
   @override
-  String get summary => 'Summary';
+  String get summary => 'الملخص';
 
   @override
-  String get screenshots => 'Screenshots';
+  String get screenshots => 'لقطات الشاشة';
 
   @override
-  String get genres => 'Genres';
+  String get genres => 'الانماط';
 
   @override
-  String get cast => 'Cast';
+  String get cast => 'الطاقم';
+
+  @override
+  String get all => 'الكل';
+
+  @override
+  String get animation => 'أنيميشن';
+
+  @override
+  String get biography => 'سيرة ذاتية';
+
+  @override
+  String get documentary => 'وثائقي';
+
+  @override
+  String get family => 'عائلي';
+
+  @override
+  String get music => 'موسيقى';
+
+  @override
+  String get musical => 'استعراضي';
+
+  @override
+  String get mystery => 'غموض';
+
+  @override
+  String get sport => 'رياضي';
+
+  @override
+  String get thriller => 'إثارة';
+
+  @override
+  String get war => 'حربي';
+
+  @override
+  String get film_noir => 'فيلم نوار';
+
+  @override
+  String get character => 'الشخصية';
+
+  @override
+  String get no_movies_found => 'لا توجد أفلام';
 }

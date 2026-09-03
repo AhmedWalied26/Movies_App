@@ -28,49 +28,65 @@ class CustomBottomNavbar extends StatelessWidget {
           clipBehavior: .antiAlias,
           decoration: BoxDecoration(borderRadius: .circular(16)),
           margin: .symmetric(horizontal: width * 0.026),
-          child: BottomNavigationBar(
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            backgroundColor: AppColors.darkGreyColor,
-            onTap: (index) {
-              onTap(index);
-            },
-            currentIndex: index,
-            type: .fixed,
-            items: [
-              BottomNavigationBarItem(
-                activeIcon: SvgPicture.asset(
-                  AppAssets.homeIcon,
-                  colorFilter: ColorFilter.mode(AppColors.primaryColor, .srcIn),
+          child: Directionality(
+            textDirection: TextDirection.ltr,
+
+            child: BottomNavigationBar(
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
+              backgroundColor: AppColors.darkGreyColor,
+              onTap: (index) {
+                onTap(index);
+              },
+              currentIndex: index,
+              type: .fixed,
+              items: [
+                BottomNavigationBarItem(
+                  activeIcon: SvgPicture.asset(
+                    AppAssets.homeIcon,
+                    colorFilter: ColorFilter.mode(
+                      AppColors.primaryColor,
+                      .srcIn,
+                    ),
+                  ),
+                  icon: SvgPicture.asset(AppAssets.homeIcon),
+                  label: '',
                 ),
-                icon: SvgPicture.asset(AppAssets.homeIcon),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                activeIcon: SvgPicture.asset(
-                  AppAssets.searchIcon,
-                  colorFilter: ColorFilter.mode(AppColors.primaryColor, .srcIn),
+                BottomNavigationBarItem(
+                  activeIcon: SvgPicture.asset(
+                    AppAssets.searchIcon,
+                    colorFilter: ColorFilter.mode(
+                      AppColors.primaryColor,
+                      .srcIn,
+                    ),
+                  ),
+                  icon: SvgPicture.asset(AppAssets.searchIcon),
+                  label: '',
                 ),
-                icon: SvgPicture.asset(AppAssets.searchIcon),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                activeIcon: SvgPicture.asset(
-                  AppAssets.exploreIcon,
-                  colorFilter: ColorFilter.mode(AppColors.primaryColor, .srcIn),
+                BottomNavigationBarItem(
+                  activeIcon: SvgPicture.asset(
+                    AppAssets.exploreIcon,
+                    colorFilter: ColorFilter.mode(
+                      AppColors.primaryColor,
+                      .srcIn,
+                    ),
+                  ),
+                  icon: SvgPicture.asset(AppAssets.exploreIcon),
+                  label: '',
                 ),
-                icon: SvgPicture.asset(AppAssets.exploreIcon),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                activeIcon: SvgPicture.asset(
-                  AppAssets.profileIcon,
-                  colorFilter: ColorFilter.mode(AppColors.primaryColor, .srcIn),
+                BottomNavigationBarItem(
+                  activeIcon: SvgPicture.asset(
+                    AppAssets.profileIcon,
+                    colorFilter: ColorFilter.mode(
+                      AppColors.primaryColor,
+                      .srcIn,
+                    ),
+                  ),
+                  icon: SvgPicture.asset(AppAssets.profileIcon),
+                  label: '',
                 ),
-                icon: SvgPicture.asset(AppAssets.profileIcon),
-                label: '',
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
