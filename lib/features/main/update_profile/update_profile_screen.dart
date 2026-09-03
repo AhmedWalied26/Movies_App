@@ -25,6 +25,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
   bool isLoading = true;
+  bool isDeleteLoading = false;
+  bool isUpadateLoading = false;
   bool isSaving = false;
 
   @override
@@ -50,20 +52,31 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   }
 
   Future<void> _updateProfile() async {
-    setState(() => isSaving = true);
+    setState(() {
+      isSaving = true;
+      isUpadateLoading = true;
+    });
     try {
       await ProfileService.instance.updateProfile(
         name: nameController.text.trim().isEmpty
-          ? nameHint
-          : nameController.text.trim(),
+            ? nameHint
+            : nameController.text.trim(),
         phone: phoneController.text.trim().isEmpty
-          ? phoneHint
-          : phoneController.text.trim(),
+            ? phoneHint
+            : phoneController.text.trim(),
         avatar: selectedAvatar,
       );
-      if (mounted) Navigator.pop(context, true);
+      if (mounted) {
+        setState(() {
+          isUpadateLoading = false;
+        });
+        Navigator.pop(context, true);
+      }
     } on FirebaseException catch (error) {
       if (mounted) {
+        setState(() {
+          isUpadateLoading = false;
+        });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(error.message ?? 'Unable to update profile')),
         );
@@ -75,12 +88,25 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
   Future<void> _deleteAccount() async {
     try {
+      setState(() {
+        isDeleteLoading = true;
+      });
       await ProfileService.instance.deleteAccount();
       if (mounted) {
-        Navigator.pushNamedAndRemoveUntil(context, AppRoutes.loginScreen, (route) => false);
+        setState(() {
+          isDeleteLoading = false;
+        });
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          AppRoutes.loginScreen,
+          (route) => false,
+        );
       }
     } on FirebaseException catch (error) {
       if (mounted) {
+        setState(() {
+          isDeleteLoading = false;
+        });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(error.message ?? 'Unable to delete account')),
         );
@@ -178,14 +204,13 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
             SizedBox(height: height * 0.01),
             TextButton(
-              onPressed: () => Navigator.pushNamed(
-                context,
-                AppRoutes.resetPasswordScreen,
-              ),
+              onPressed: () =>
+                  Navigator.pushNamed(context, AppRoutes.resetPasswordScreen),
               child: Text(l.reset_Password, style: AppStyles.bold16White),
             ),
             Spacer(),
             CustomElevatedButton(
+              isLoading: isDeleteLoading,
               bgColor: AppColors.redColor,
               onPressedButton2: _deleteAccount,
               title: l.delete_Account,
@@ -194,6 +219,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
             SizedBox(height: height * 0.019),
             CustomElevatedButton(
+              isLoading: isUpadateLoading,
               onPressedButton2: isLoading || isSaving ? () {} : _updateProfile,
               title: l.update_Data,
               style: AppStyles.regular20Black,

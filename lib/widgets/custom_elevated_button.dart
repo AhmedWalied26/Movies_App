@@ -36,8 +36,8 @@ class CustomElevatedButton extends StatelessWidget {
       onPressed: onPressedButton2,
       child: isLoading
           ? SizedBox(
-              height: 26,
-              width: 26,
+              height: 24,
+              width: 24,
               child: CircularProgressIndicator(color: AppColors.blackColor),
             )
           : Row(
