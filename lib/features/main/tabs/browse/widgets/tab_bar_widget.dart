@@ -3,6 +3,7 @@ import 'package:movies_app/api/model/movie_details_response/movie.dart';
 import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_styles.dart';
+import 'package:movies_app/utils/genre_localizer.dart';
 import 'package:movies_app/utils/size_utils.dart';
 import 'package:movies_app/widgets/movie_card_item.dart';
 
@@ -65,12 +66,18 @@ class TabBarWidget extends StatelessWidget {
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Center(
+                            // child: Text(
+                            //   genre,
+                            //   style: isSelected
+                            //       ? AppStyles.bold20DarkBlack
+                            //       : AppStyles.bold20Primary,
+                            // ),
                             child: Text(
-                              genre,
-                              style: isSelected
-                                  ? AppStyles.bold20DarkBlack
-                                  : AppStyles.bold20Primary,
-                            ),
+  GenreLocalizer.localize(context, genre),
+  style: isSelected
+      ? AppStyles.bold20DarkBlack
+      : AppStyles.bold20Primary,
+),
                           ),
                         ),
                       ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/features/auth/login/widgets/google_sign_in_button.dart';
+import 'package:movies_app/features/auth/login/widgets/language_switcher.dart';
+import 'package:movies_app/main.dart';
 import 'package:movies_app/services/firebase_service.dart';
 import 'package:movies_app/utils/app_validation.dart';
 import 'package:movies_app/widgets/app_overlay.dart';
@@ -104,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               );
                             },
                             child: Text(
-                              '${l10n.forget_Password} ?',
+                              l10n.forget_Password,
                               style: AppStyles.regular14Primary,
                             ),
                           ),
@@ -166,20 +168,31 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: height * 0.027),
                       GoogleSignInButton(),
                       SizedBox(height: height * 0.033),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: .circular(30),
-                          border: .all(color: AppColors.primaryColor, width: 3),
-                        ),
-                        child: Row(
-                          mainAxisSize: .min,
-                          spacing: width * 0.03,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(AppAssets.enIcon),
-                            SvgPicture.asset(AppAssets.arIcon),
-                          ],
-                        ),
+                      // Container(
+                      //   decoration: BoxDecoration(
+                      //     borderRadius: .circular(30),
+                      //     border: .all(color: AppColors.primaryColor, width: 3),
+                      //   ),
+                      //   child: Row(
+                      //     mainAxisSize: .min,
+                      //     spacing: width * 0.03,
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     children: [
+                      //       SvgPicture.asset(AppAssets.enIcon),
+                      //       SvgPicture.asset(AppAssets.arIcon),
+                      //     ],
+                      //   ),
+                      // ),
+                      ValueListenableBuilder<Locale>(
+                        valueListenable: LocaleController.instance,
+                        builder: (context, locale, _) {
+                          return LanguageSwitcher(
+                            selectedLocale: locale,
+                            onLanguageChanged: (newLocale) {
+                              LocaleController.instance.value = newLocale;
+                            },
+                          );
+                        },
                       ),
                     ],
                   ),

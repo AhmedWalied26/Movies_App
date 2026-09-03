@@ -3,6 +3,7 @@ import 'package:movies_app/api/model/movie_details_response/movie.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_styles.dart';
+import 'package:movies_app/utils/genre_localizer.dart';
 import 'package:movies_app/utils/size_utils.dart';
 
 class MovieGeners extends StatelessWidget {
@@ -41,8 +42,12 @@ class MovieGeners extends StatelessWidget {
                 borderRadius: .circular(12),
                 color: AppColors.darkGreyColor,
               ),
+              // child: Text(
+              //   movieDetails.genres![index],
+              //   style: AppStyles.regular16White,
+              // ),
               child: Text(
-                movieDetails.genres![index],
+                GenreLocalizer.localize(context, movieDetails.genres![index]),
                 style: AppStyles.regular16White,
               ),
             );

@@ -51,29 +51,45 @@ class MoviesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      // locale: Locale(languageProvider.appLanguage),
-      supportedLocales: AppLocalizations.supportedLocales,
-      debugShowCheckedModeBanner: false,
-      routes: {
-        AppRoutes.updateProfileScreen: (context) => UpdateProfileScreen(),
-        AppRoutes.resetPasswordScreen: (context) => const ResetPasswordScreen(),
-        AppRoutes.mainScreen: (context) => MainScreen(),
-        AppRoutes.exploreScreen: (context) => const ExploreScreen(),
-        AppRoutes.loginScreen: (context) => const LoginScreen(),
-        AppRoutes.registerScreen: (context) => const RegisterScreen(),
-        AppRoutes.forgotPasswordScreen: (context) =>
-            const ForgetPasswordScreen(),
-        AppRoutes.onboardingScreen: (context) => OnBoardingScreens(),
-        AppRoutes.movieDetailsScreen: (context) => MovieDetailsBlocBuilder(),
-        AppRoutes.browseScreen: (context) => BrowseTab(),
-        AppRoutes.profileScreen: (context) => ProfileTab(),
+    return ValueListenableBuilder<Locale>(
+      valueListenable: LocaleController.instance,
+
+      builder: (context, locale, _) {
+        return MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          locale: locale,
+          supportedLocales: AppLocalizations.supportedLocales,
+          debugShowCheckedModeBanner: false,
+          routes: {
+            AppRoutes.updateProfileScreen: (context) => UpdateProfileScreen(),
+            AppRoutes.resetPasswordScreen: (context) =>
+                const ResetPasswordScreen(),
+            AppRoutes.mainScreen: (context) => MainScreen(),
+            AppRoutes.exploreScreen: (context) => const ExploreScreen(),
+            AppRoutes.loginScreen: (context) => const LoginScreen(),
+            AppRoutes.registerScreen: (context) => const RegisterScreen(),
+            AppRoutes.forgotPasswordScreen: (context) =>
+                const ForgetPasswordScreen(),
+            AppRoutes.onboardingScreen: (context) => OnBoardingScreens(),
+            AppRoutes.movieDetailsScreen: (context) =>
+                MovieDetailsBlocBuilder(),
+            AppRoutes.browseScreen: (context) => BrowseTab(),
+            AppRoutes.profileScreen: (context) => ProfileTab(),
+          },
+          initialRoute: AppRoutes.loginScreen,
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: ThemeMode.dark,
+        );
       },
-      initialRoute: AppRoutes.loginScreen,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.dark,
     );
   }
+}
+
+class LocaleController {
+  LocaleController._();
+
+  static final ValueNotifier<Locale> instance = ValueNotifier<Locale>(
+    const Locale('en'),
+  );
 }
