@@ -18,6 +18,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final newPasswordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   bool isSaving = false;
+  bool isLoading = false;
 
   Future<void> _resetPassword() async {
     final currentPassword = currentPasswordController.text;
@@ -34,7 +35,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       return;
     }
 
-    setState(() => isSaving = true);
+    setState(() {
+      isSaving = true;
+      isLoading = true;
+    });
     try {
       final credential = EmailAuthProvider.credential(
         email: user!.email!,
@@ -43,11 +47,17 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       await user.reauthenticateWithCredential(credential);
       await user.updatePassword(newPassword);
       if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
         _showMessage('Password updated successfully.');
         Navigator.pop(context, true);
       }
     } on FirebaseAuthException catch (error) {
       if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
         _showMessage(error.message ?? 'Unable to update password.');
       }
     } finally {
@@ -56,7 +66,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   }
 
   void _showMessage(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
@@ -106,6 +118,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             ),
             const Spacer(),
             CustomElevatedButton(
+              isLoading: isLoading,
               onPressedButton2: isSaving ? () {} : _resetPassword,
               title: l.update_Data,
               style: AppStyles.regular20Black,

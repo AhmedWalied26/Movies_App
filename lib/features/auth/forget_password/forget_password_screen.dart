@@ -19,6 +19,7 @@ class ForgetPasswordScreen extends StatefulWidget {
 
 class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   final TextEditingController emailController = TextEditingController();
+  bool isLoading = false;
 
   Future<void> resetPassword() async {
     try {
@@ -29,9 +30,15 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         );
         return;
       }
+      setState(() {
+        isLoading = true;
+      });
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
 
       if (!mounted) return;
+      setState(() {
+        isLoading = false;
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Password reset link sent! Check your email.'),
@@ -107,6 +114,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 SizedBox(height: height * 0.02),
 
                 CustomElevatedButton(
+                  isLoading: isLoading,
                   onPressedButton2: resetPassword,
                   title: AppLocalizations.of(context)!.verify_Email,
                   style: AppStyles.regular20Black,
