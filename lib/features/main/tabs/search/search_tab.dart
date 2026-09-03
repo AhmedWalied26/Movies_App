@@ -5,6 +5,7 @@ import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/size_utils.dart';
 import 'package:movies_app/widgets/custom_text_field.dart';
+import 'package:movies_app/widgets/skeleton/movie_grid_skeleton.dart';
 import '../../../../utils/app_routes.dart';
 import '../../../../widgets/movie_card_item.dart';
 import 'cubit/search_cubit.dart';
@@ -18,7 +19,7 @@ class SearchTab extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = context.width;
     return BlocProvider(
-      create: (context) => SearchCubit()..getInitialMovies(),
+      create: (context) => SearchCubit(),
       child: Builder(
         builder: (context) {
           return SafeArea(
@@ -41,10 +42,10 @@ class SearchTab extends StatelessWidget {
                   Expanded(
                     child: BlocBuilder<SearchCubit, SearchState>(
                       builder: (context, state) {
-                        if (state is SearchLoadingState) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
+                        if (state is SearchInitialState) {
+                          return Image.asset(AppAssets.emptyListImage);
+                        } else if (state is SearchLoadingState) {
+                          return MovieGridSkeleton();
                         } else if (state is SearchErrorState) {
                           return Center(
                             child: Text(
@@ -62,43 +63,38 @@ class SearchTab extends StatelessWidget {
                               ),
                             );
                           }
-                          return controller.text.isEmpty
-                              ? Center(
-                                  child: Image.asset(AppAssets.emptyListImage),
-                                )
-                              : GridView.builder(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: width * 0.016,
-                                  ),
-                                  itemCount: movies.length,
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        mainAxisSpacing: 12,
-                                        crossAxisSpacing: 12,
-                                        childAspectRatio: 0.7,
-                                      ),
-                                  itemBuilder: (context, index) {
-                                    var movie = movies[index];
-                                    return InkWell(
-                                      onTap: () {
-                                        Navigator.pushNamed(
-                                          context,
-                                          AppRoutes.movieDetailsScreen,
-                                          arguments: movies[index].id,
-                                        );
-                                      },
-                                      child: MovieCardItem(
-                                        movie: movie,
-                                        movieImage: movie.mediumCoverImage,
-                                        movieRate:
-                                            movie.rating?.toDouble() ?? 0.0,
-                                      ),
-                                    );
-                                  },
-                                );
+                          return GridView.builder(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: width * 0.016,
+                            ),
+                            itemCount: movies.length,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 12,
+                                  crossAxisSpacing: 12,
+                                  childAspectRatio: 0.7,
+                                ),
+                            itemBuilder: (context, index) {
+                              var movie = movies[index];
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    AppRoutes.movieDetailsScreen,
+                                    arguments: movies[index].id,
+                                  );
+                                },
+                                child: MovieCardItem(
+                                  movie: movie,
+                                  movieImage: movie.mediumCoverImage,
+                                  movieRate: movie.rating?.toDouble() ?? 0.0,
+                                ),
+                              );
+                            },
+                          );
                         }
-                        return const SizedBox();
+                        return SizedBox();
                       },
                     ),
                   ),

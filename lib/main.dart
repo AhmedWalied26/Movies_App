@@ -1,6 +1,4 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/services/movie_history_service.dart';
@@ -32,9 +30,6 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider<MovieDetailsViewModel>(
-          create: (context) => MovieDetailsViewModel(),
-        ),
         BlocProvider<MovieSuggestionViewModel>(
           create: (context) => MovieSuggestionViewModel(),
         ),
@@ -43,10 +38,7 @@ void main() async {
         ),
         BlocProvider<HomeGeneralCubit>(create: (context) => HomeGeneralCubit()),
       ],
-      child: DevicePreview(
-        enabled: !kReleaseMode,
-        builder: (context) => const MoviesApp(),
-      ),
+      child: const MoviesApp(),
     ),
   );
 }
@@ -57,9 +49,6 @@ class MoviesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      useInheritedMediaQuery: true,
-      locale: DevicePreview.locale(context),
-      builder: DevicePreview.appBuilder,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       // locale: Locale(languageProvider.appLanguage),
       supportedLocales: AppLocalizations.supportedLocales,
@@ -74,7 +63,10 @@ class MoviesApp extends StatelessWidget {
         AppRoutes.forgotPasswordScreen: (context) =>
             const ForgetPasswordScreen(),
         AppRoutes.onboardingScreen: (context) => OnBoardingScreens(),
-        AppRoutes.movieDetailsScreen: (context) => MovieDetailsBlocBuilder(),
+        AppRoutes.movieDetailsScreen: (context) => BlocProvider(
+          create: (context) => MovieDetailsViewModel(),
+          child: MovieDetailsBlocBuilder(),
+        ),
         AppRoutes.browseScreen: (context) => BrowseTab(),
         AppRoutes.profileScreen: (context) => ProfileTab(),
       },

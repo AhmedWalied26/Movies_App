@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/utils/size_utils.dart';
 import 'package:movies_app/widgets/main_error.dart';
+import 'package:movies_app/widgets/skeleton/movie_list_skeleton.dart';
 import '../../../../../utils/app_routes.dart';
 import '../../../../../widgets/movie_card_item.dart';
-import '../../../../../widgets/main_loading_widget.dart';
 import '../cubit/home_genre_cubit.dart';
 import '../cubit/home_genre_state.dart';
 
@@ -39,7 +39,7 @@ class _HomeTabWidgetByGenreState extends State<HomeTabWidgetByGenre> {
       child: BlocBuilder<HomeGenreCubit, HomeGenreState>(
         builder: (context, state) {
           if (state is HomeGenreLoadingState) {
-            return const MainLoadingwidget();
+            return const MovieListSkeleton();
           } else if (state is HomeGenreErrorState) {
             return MainError(
               errorMessage: state.errorMessage,

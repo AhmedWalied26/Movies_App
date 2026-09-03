@@ -218,7 +218,7 @@ class _ProfileTabState extends State<ProfileTab>
                             : GridView.builder(
                                 padding: EdgeInsets.symmetric(
                                   horizontal: width * 0.035,
-                                  vertical: 12,
+                                  vertical: height * 0.012,
                                 ),
                                 itemCount: movies.length,
                                 itemBuilder: (context, index) {
