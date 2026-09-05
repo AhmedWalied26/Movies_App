@@ -9,8 +9,10 @@ class SearchCubit extends Cubit<SearchState> {
     emit(SearchLoadingState());
     try {
       var result = await ApiManager.getMoviesByGenre("");
+      if (isClosed) return;
       emit(SearchSuccessState(result.data?.movies ?? []));
     } catch (e) {
+      if (isClosed) return;
       emit(SearchErrorState(e.toString()));
     }
   }
@@ -23,8 +25,10 @@ class SearchCubit extends Cubit<SearchState> {
     emit(SearchLoadingState());
     try {
       var result = await ApiManager.searchMovies(query);
+      if (isClosed) return;
       emit(SearchSuccessState(result.data?.movies ?? []));
     } catch (e) {
+      if (isClosed) return;
       emit(SearchErrorState(e.toString()));
     }
   }

@@ -17,25 +17,11 @@ class HomeTabWidgetByGenre extends StatefulWidget {
 }
 
 class _HomeTabWidgetByGenreState extends State<HomeTabWidgetByGenre> {
-  late HomeGenreCubit cubit;
-
-  @override
-  void initState() {
-    super.initState();
-    cubit = HomeGenreCubit()..getMoviesByGenre(widget.genre!);
-  }
-
-  @override
-  void dispose() {
-    cubit.close();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     var width = context.width;
     return BlocProvider(
-      create: (context) => HomeGenreCubit()..getMoviesByGenre("Horror"),
+      create: (context) => HomeGenreCubit()..getMoviesByGenre(widget.genre!),
       child: BlocBuilder<HomeGenreCubit, HomeGenreState>(
         builder: (context, state) {
           if (state is HomeGenreLoadingState) {
@@ -44,10 +30,10 @@ class _HomeTabWidgetByGenreState extends State<HomeTabWidgetByGenre> {
             return MainError(
               errorMessage: state.errorMessage,
               onPressed: () {
-                context.read<HomeGenreCubit>().getMoviesByGenre("Horror");
+                context.read<HomeGenreCubit>().getMoviesByGenre(widget.genre!);
               },
               onTap: () {
-                context.read<HomeGenreCubit>().getMoviesByGenre("Horror");
+                context.read<HomeGenreCubit>().getMoviesByGenre(widget.genre!);
               },
             );
           } else if (state is HomeGenreSuccessState) {

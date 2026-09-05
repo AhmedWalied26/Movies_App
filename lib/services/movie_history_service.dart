@@ -14,10 +14,19 @@ class MovieHistoryService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   late Box<Map> _box;
+  Future<void>? _initialization;
 
-  Future<void> initialize() async {
-    await Hive.initFlutter();
-    _box = await Hive.openBox<Map>(_boxName);
+  Future<void> initialize() {
+    return _initialization ??= _openBox();
+  }
+
+  Future<void> _openBox() async {
+    if (!Hive.isBoxOpen(_boxName)) {
+      await Hive.initFlutter();
+    }
+    _box = Hive.isBoxOpen(_boxName)
+        ? Hive.box<Map>(_boxName)
+        : await Hive.openBox<Map>(_boxName);
   }
 
   String _localKey(int movieId) {
@@ -35,6 +44,7 @@ class MovieHistoryService {
     final movieId = movie.id;
     if (movieId == null) return;
 
+    await initialize();
     await _box.put(_localKey(movieId), {
       'movie': movie.toJson(),
       'viewedAt': DateTime.now().millisecondsSinceEpoch,
@@ -63,6 +73,7 @@ class MovieHistoryService {
   Future<List<Movie>> loadHistory() async {
     if (_auth.currentUser == null) return [];
 
+    await initialize();
     final localMovies = _readLocalHistory();
     final historyReference = _historyReference();
     if (historyReference == null) return localMovies;
@@ -71,11 +82,14 @@ class MovieHistoryService {
       final snapshot = await historyReference
           .orderBy('viewedAt', descending: true)
           .limit(maxHistoryItems)
-          .get();
+          .get(const GetOptions(source: Source.server));
       final remoteMovies = snapshot.docs
           .map((document) => Movie.fromJson(document.data()))
           .where((movie) => movie.id != null)
           .toList();
+      if (remoteMovies.isEmpty && localMovies.isNotEmpty) {
+        return localMovies;
+      }
       await _replaceLocalHistory(remoteMovies);
       return remoteMovies;
     } catch (_) {

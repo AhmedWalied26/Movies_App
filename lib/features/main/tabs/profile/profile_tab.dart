@@ -83,7 +83,12 @@ class _ProfileTabState extends State<ProfileTab>
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
 
-    final profile = await ProfileService.instance.loadProfile();
+    Map<String, dynamic> profile;
+    try {
+      profile = await ProfileService.instance.loadProfile();
+    } catch (_) {
+      return;
+    }
     if (!mounted) return;
     setState(() {
       profileName =
