@@ -53,7 +53,6 @@ class TabBarWidget extends StatelessWidget {
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(
-                            vertical: height * 0.008,
                             horizontal: width * 0.035,
                           ),
                           decoration: BoxDecoration(
@@ -113,7 +112,6 @@ class TabBarWidget extends StatelessWidget {
                     },
                     child: MovieCardItem(
                       movie: movie,
-                      // تم تعديل الترتيب هنا لتبدأ بالبوستر الطولي الواضح أولاً
                       movieImage: movie.mediumCoverImage ?? movie.largeCoverImage ?? movie.backgroundImage ?? '',
                       movieRate: movie.rating != null ? double.parse(movie.rating.toString()) : 0.0,
                     ),

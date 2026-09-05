@@ -65,9 +65,7 @@ class MovieHistoryService {
       for (final document in snapshot.docs.skip(maxHistoryItems)) {
         await document.reference.delete();
       }
-    } catch (_) {
-      // Hive remains available when Firestore cannot be reached.
-    }
+    } catch (_) {}
   }
 
   Future<List<Movie>> loadHistory() async {

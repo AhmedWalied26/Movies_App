@@ -19,7 +19,6 @@ class LanguageSwitcher extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        // padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: isSelected ? AppColors.primaryColor : Colors.transparent,
