@@ -22,6 +22,33 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
+  late String currentSectionGenre;
+
+  // لستة التصنيفات الكاملة كما طلبتها
+  final List<String> availableGenres = [
+    "all",
+    "crime",
+    "mystery",
+    "thriller",
+    "drama",
+    "comedy",
+    "romance",
+    "action",
+    "family",
+    "sci_fi",
+    "documentary",
+    "horror",
+    "musical"
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    // اختيار تصنيف عشوائي عند فتح الصفحة لتتغير الاسم والأفلام تلقائياً
+    availableGenres.shuffle();
+    currentSectionGenre = availableGenres.first;
+  }
+
   @override
   Widget build(BuildContext context) {
     var width = context.width;
@@ -45,15 +72,15 @@ class _HomeTabState extends State<HomeTab> {
               height: height * 0.65,
               child: (bgImage != null && bgImage.isNotEmpty)
                   ? Image.network(
-                      bgImage,
-                      fit: BoxFit.cover,
-                      alignment: Alignment.topCenter,
-                    )
+                bgImage,
+                fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
+              )
                   : Image.asset(
-                      AppAssets.onBoardingImage6,
-                      fit: BoxFit.cover,
-                      alignment: Alignment.topCenter,
-                    ),
+                AppAssets.onBoardingImage6,
+                fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
+              ),
             ),
             Positioned.fill(
               child: Container(
@@ -94,40 +121,40 @@ class _HomeTabState extends State<HomeTab> {
                       },
                     )
                   else if (state is HomeGeneralSuccessState)
-                    SizedBox(
-                      height: height * 0.36,
-                      child: CarouselSlider.builder(
-                        itemCount: state.moviesList.length,
-                        itemBuilder: (context, index, realIndex) {
-                          return SizedBox(
-                            width: width * 0.5,
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  AppRoutes.movieDetailsScreen,
-                                  arguments: state.moviesList[index].id,
-                                );
-                              },
-                              child: MovieCardItem(
-                                movie: state.moviesList[index] as dynamic,
+                      SizedBox(
+                        height: height * 0.36,
+                        child: CarouselSlider.builder(
+                          itemCount: state.moviesList.length,
+                          itemBuilder: (context, index, realIndex) {
+                            return SizedBox(
+                              width: width * 0.5,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    AppRoutes.movieDetailsScreen,
+                                    arguments: state.moviesList[index].id,
+                                  );
+                                },
+                                child: MovieCardItem(
+                                  movie: state.moviesList[index] as dynamic,
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                        options: CarouselOptions(
-                          autoPlay: true,
-                          height: height * 0.36,
-                          enlargeCenterPage: true,
-                          viewportFraction: 0.5,
-                          onPageChanged: (index, reason) {
-                            context
-                                .read<HomeGeneralCubit>()
-                                .changeSelectedMovie(index);
+                            );
                           },
+                          options: CarouselOptions(
+                            autoPlay: true,
+                            height: height * 0.36,
+                            enlargeCenterPage: true,
+                            viewportFraction: 0.5,
+                            onPageChanged: (index, reason) {
+                              context
+                                  .read<HomeGeneralCubit>()
+                                  .changeSelectedMovie(index);
+                            },
+                          ),
                         ),
                       ),
-                    ),
                   Image.asset(AppAssets.watchNowImage),
                   Padding(
                     padding: EdgeInsetsDirectional.only(start: width * 0.035),
@@ -135,7 +162,7 @@ class _HomeTabState extends State<HomeTab> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          AppLocalizations.of(context)!.horror,
+                          currentSectionGenre, // هنا العرض هيتغير تلقائياً حسب التصنيف العشوائي
                           style: AppStyles.regular20White,
                         ),
                         TextButton(
@@ -164,7 +191,7 @@ class _HomeTabState extends State<HomeTab> {
                   ),
                   SizedBox(
                     height: height * 0.22,
-                    child: const HomeTabWidgetByGenre(genre: "Horror"),
+                    child: HomeTabWidgetByGenre(genre: currentSectionGenre), // وهنا الأفلام هتيجي بناءً على نفس التصنيف
                   ),
                 ],
               ),

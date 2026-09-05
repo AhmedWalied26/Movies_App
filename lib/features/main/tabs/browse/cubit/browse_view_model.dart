@@ -6,23 +6,21 @@ import 'browse_state.dart';
 class BrowseViewModel extends Cubit<BrowseState> {
   BrowseViewModel() : super(BrowseInitialState());
 
-  List<Movie> allMovies = [];
+  List<Movie> filteredMovies = [];
   Set<String> uniqueGenres = {'All'};
   List<String> genresList = [];
   String selectedGenre = 'All';
-  List<Movie> filteredMovies = [];
 
+  // أول ما الصفحة تفتح تجيب كل الأفلام وتستخرج التصنيفات ديناميكياً
   void getAllMoviesAndGenres() async {
     emit(BrowseLoadingState());
     try {
       var response = await ApiManager.getAllMovie();
-
       var rawList = response.data?.movies ?? [];
 
-      allMovies =
-          (rawList as List<dynamic>?)
-              ?.map((e) => e is Movie ? e : Movie.fromJson(e.toJson()))
-              .toList() ??
+      var allMovies = (rawList as List<dynamic>?)
+          ?.map((e) => e is Movie ? e : Movie.fromJson(e.toJson()))
+          .toList() ??
           [];
 
       uniqueGenres = {'All'};
@@ -43,15 +41,28 @@ class BrowseViewModel extends Cubit<BrowseState> {
     }
   }
 
-  void filterMoviesByGenre(String genre) {
+  // لما المستخدم يختار تصنيف معين، نستخدم الـ Query Parameter من الـ API
+  void filterMoviesByGenre(String genre) async {
     selectedGenre = genre;
-    if (genre == 'All') {
-      filteredMovies = allMovies;
-    } else {
-      filteredMovies = allMovies.where((movie) {
-        return movie.genres != null && movie.genres!.contains(genre);
-      }).toList();
+    emit(BrowseLoadingState());
+    try {
+      var response;
+      if (genre == 'All') {
+        response = await ApiManager.getAllMovie();
+      } else {
+        response = await ApiManager.getMoviesByGenre(genre);
+      }
+
+      var rawList = response.data?.movies ?? [];
+
+      filteredMovies = (rawList as List<dynamic>?)
+          ?.map((e) => e is Movie ? e : Movie.fromJson(e.toJson()))
+          .toList() ??
+          [];
+
+      emit(BrowseSuccessState());
+    } catch (e) {
+      emit(BrowseErrorState(statusMessage: e.toString()));
     }
-    emit(BrowseFilterChangedState());
   }
 }
