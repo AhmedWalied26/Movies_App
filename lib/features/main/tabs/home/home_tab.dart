@@ -149,40 +149,40 @@ class HomeTabState extends State<HomeTab> {
                       },
                     )
                   else if (state is HomeGeneralSuccessState)
-                    SizedBox(
-                      height: height * 0.36,
-                      child: CarouselSlider.builder(
-                        itemCount: state.moviesList.length,
-                        itemBuilder: (context, index, realIndex) {
-                          return SizedBox(
-                            width: width * 0.5,
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  AppRoutes.movieDetailsScreen,
-                                  arguments: state.moviesList[index].id,
-                                );
-                              },
-                              child: MovieCardItem(
-                                movie: state.moviesList[index] as dynamic,
+                      SizedBox(
+                        height: height * 0.36,
+                        child: CarouselSlider.builder(
+                          itemCount: state.moviesList.length,
+                          itemBuilder: (context, index, realIndex) {
+                            return SizedBox(
+                              width: width * 0.5,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    AppRoutes.movieDetailsScreen,
+                                    arguments: state.moviesList[index].id,
+                                  );
+                                },
+                                child: MovieCardItem(
+                                  movie: state.moviesList[index] as dynamic,
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                        options: CarouselOptions(
-                          autoPlay: true,
-                          height: height * 0.36,
-                          enlargeCenterPage: true,
-                          viewportFraction: 0.5,
-                          onPageChanged: (index, reason) {
-                            context
-                                .read<HomeGeneralCubit>()
-                                .changeSelectedMovie(index);
+                            );
                           },
+                          options: CarouselOptions(
+                            autoPlay: true,
+                            height: height * 0.36,
+                            enlargeCenterPage: true,
+                            viewportFraction: 0.5,
+                            onPageChanged: (index, reason) {
+                              context
+                                  .read<HomeGeneralCubit>()
+                                  .changeSelectedMovie(index);
+                            },
+                          ),
                         ),
                       ),
-                    ),
                   Image.asset(AppAssets.watchNowImage),
                   if (selectedGenre.isNotEmpty) ...[
                     Padding(
