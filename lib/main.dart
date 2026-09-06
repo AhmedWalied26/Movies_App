@@ -69,7 +69,16 @@ class MoviesApp extends StatelessWidget {
       routes: {
         AppRoutes.updateProfileScreen: (context) => UpdateProfileScreen(),
         AppRoutes.resetPasswordScreen: (context) => const ResetPasswordScreen(),
-        AppRoutes.mainScreen: (context) => MainScreen(),
+        AppRoutes.mainScreen: (context) {
+          final arguments = ModalRoute.of(context)?.settings.arguments;
+          if (arguments is Map<String, dynamic>) {
+            return MainScreen(
+              initialIndex: arguments['initialIndex'] as int? ?? 0,
+              browseGenre: arguments['browseGenre'] as String?,
+            );
+          }
+          return const MainScreen();
+        },
         AppRoutes.exploreScreen: (context) => const ExploreScreen(),
         AppRoutes.loginScreen: (context) => const LoginScreen(),
         AppRoutes.registerScreen: (context) => const RegisterScreen(),

@@ -6,20 +6,23 @@ import 'package:movies_app/features/main/tabs/search/search_tab.dart';
 import 'package:movies_app/features/main/widgets/custom_bottom_navbar.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  final int initialIndex;
+  final String? browseGenre;
+
+  const MainScreen({super.key, this.initialIndex = 0, this.browseGenre});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int currentIndex = 0;
+  late int currentIndex = widget.initialIndex;
   final homeKey = GlobalKey<HomeTabState>();
 
   late final tabs = [
     HomeTab(key: homeKey),
     SearchTab(),
-    BrowseTab(),
+    BrowseTab(initialGenre: widget.browseGenre),
     ProfileTab(),
   ];
 
@@ -33,6 +36,9 @@ class _MainScreenState extends State<MainScreen> {
         onTap: (index) {
           if (index == 0) {
             homeKey.currentState?.refreshGenre();
+          }
+          if (index == 2) {
+            tabs[2] = const BrowseTab();
           }
           currentIndex = index;
           setState(() {});

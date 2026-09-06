@@ -195,7 +195,11 @@ class HomeTabState extends State<HomeTab> {
                             onPressed: () {
                               Navigator.pushNamed(
                                 context,
-                                AppRoutes.browseScreen,
+                                AppRoutes.mainScreen,
+                                arguments: {
+                                  'initialIndex': 2,
+                                  'browseGenre': selectedGenre,
+                                },
                               );
                             },
                             child: Row(

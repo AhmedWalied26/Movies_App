@@ -4,7 +4,9 @@ import 'package:movies_app/api/model/movie_details_response/movie.dart';
 import 'browse_state.dart';
 
 class BrowseViewModel extends Cubit<BrowseState> {
-  BrowseViewModel() : super(BrowseInitialState());
+  final String? initialGenre;
+
+  BrowseViewModel({this.initialGenre}) : super(BrowseInitialState());
 
   List<Movie> filteredMovies = [];
   Set<String> uniqueGenres = {'All'};
@@ -32,7 +34,14 @@ class BrowseViewModel extends Cubit<BrowseState> {
         }
       }
       genresList = uniqueGenres.toList();
-      filteredMovies = allMovies;
+      if (initialGenre != null && uniqueGenres.contains(initialGenre)) {
+        selectedGenre = initialGenre!;
+        filteredMovies = allMovies
+            .where((movie) => movie.genres?.contains(initialGenre) ?? false)
+            .toList();
+      } else {
+        filteredMovies = allMovies;
+      }
 
       emit(BrowseSuccessState());
     } catch (e) {
@@ -45,7 +54,7 @@ class BrowseViewModel extends Cubit<BrowseState> {
     selectedGenre = genre;
     emit(BrowseLoadingState());
     try {
-      var response;
+      dynamic response;
       if (genre == 'All') {
         response = await ApiManager.getAllMovie();
       } else {
