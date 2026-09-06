@@ -27,28 +27,30 @@ class _ExploreScreenState extends State<ExploreScreen> {
             height: MediaQuery.of(context).size.height,
             fit: BoxFit.fill,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: height * 0.026,
-              horizontal: width * 0.04,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: width * 0.01),
+                child: Text(
                   textAlign: .center,
                   AppLocalizations.of(context)!.find_Your_Next,
                   style: AppStyles.medium36White,
                 ),
-                SizedBox(height: height * 0.02),
-                Text(
-                  AppLocalizations.of(context)!.get_access_to_a_huge,
-                  style: AppStyles.regular20White,
+              ),
+              SizedBox(height: height * 0.02),
+              Text(
+                textAlign: .center,
+                AppLocalizations.of(context)!.get_access_to_a_huge,
+                style: AppStyles.regular20White,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: height * 0.02,
+                  horizontal: width * 0.04,
                 ),
-                SizedBox(height: height * 0.03),
-
-                CustomElevatedButton(
+                child: CustomElevatedButton(
                   onPressedButton2: () {
                     Navigator.pushReplacementNamed(
                       context,
@@ -58,8 +60,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   title: AppLocalizations.of(context)!.explore_Now,
                   style: AppStyles.semi20Black,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),

@@ -20,6 +20,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final newPasswordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   bool isSaving = false;
+  bool isLoading = false;
 
   Future<void> _resetPassword() async {
     final currentPassword = currentPasswordController.text;
@@ -36,7 +37,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       return;
     }
 
-    setState(() => isSaving = true);
+    setState(() {
+      isSaving = true;
+      isLoading = true;
+    });
     try {
       final credential = EmailAuthProvider.credential(
         email: user!.email!,
@@ -45,14 +49,20 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       await user.reauthenticateWithCredential(credential);
       await user.updatePassword(newPassword);
       if (mounted) {
-        _showMessage(
+  setState(() {
+          isLoading = false;
+        });     
+  _showMessage(
           AppLocalizations.of(context)!.password_Updated_Successfully,
         );
         Navigator.pop(context, true);
       }
     } on FirebaseAuthException catch (error) {
       if (mounted) {
-        _showMessage(
+        setState(() {
+          isLoading = false;
+        });
+       _showMessage(
           error.message ??
               AppLocalizations.of(context)!.unable_To_Update_Password,
         );
@@ -119,6 +129,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             ),
             const Spacer(),
             CustomElevatedButton(
+              isLoading: isLoading,
               onPressedButton2: isSaving ? () {} : _resetPassword,
               title: l.update_Data,
               style: AppStyles.regular20Black,

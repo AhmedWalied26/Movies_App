@@ -13,7 +13,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get get_access_to_a_huge =>
-      'احصل على إمكانية الوصول إلى مكتبة ضخمة من الأفلام\nتناسب جميع الأذواق. بالتأكيد ستجد ما يعجبك.';
+      'احصل على إمكانية الوصول إلى مكتبة ضخمة من الأفلام تناسب جميع الأذواق. بالتأكيد ستجد ما يعجبك.';
 
   @override
   String get explore_Now => 'استكشف الآن';
@@ -23,7 +23,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get explore_a_vast_collection =>
-      'استكشف مجموعة ضخمة من الأفلام بجميع\nالجودات والأنواع. اعثر على فيلمك المفضل\nالقادم بسهولة.';
+      'استكشف مجموعة ضخمة من الأفلام بجميع والأنواع. اعثر على فيلمك المفضل بسهولة.';
 
   @override
   String get next => 'التالي';
@@ -33,7 +33,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get discover_movies_from_every_genre =>
-      'اكتشف أفلامًا من جميع الأنواع، وبجميع\nالجودات المتاحة. اكتشف شيئًا جديدًا\nوممتعًا لمشاهدته كل يوم.';
+      'اكتشف أفلامًا من جميع الأنواع، وبجميع المتاحة. اكتشف شيئًا جديدًا لمشاهدته كل يوم.';
 
   @override
   String get back => 'رجوع';
@@ -43,14 +43,14 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get save_movies_to_your_watchlist =>
-      'احفظ الأفلام في قائمة المشاهدة الخاصة بك\nلتتبع ما تريد مشاهدته لاحقًا.\nاستمتع بالأفلام بجودات وأنواع مختلفة.';
+      'احفظ الأفلام في قائمة المشاهدة الخاصة بك لتتبع ما تريد مشاهدته لاحقًا. بالأفلام بجودات وأنواع مختلفة.';
 
   @override
   String get rate_Review => 'قيّم، راجع، وتعلّم';
 
   @override
   String get share_your_thoughts =>
-      'شارك أفكارك حول الأفلام التي شاهدتها.\nتعمق في تفاصيل الأفلام وساعد الآخرين\nعلى اكتشاف أفلام رائعة من خلال مراجعاتك.';
+      'شارك أفكارك حول الأفلام التي شاهدتها. في تفاصيل الأفلام وساعد الآخرين اكتشاف أفلام رائعة من خلال مراجعاتك.';
 
   @override
   String get start_Watching_Now => 'ابدأ المشاهدة الآن';

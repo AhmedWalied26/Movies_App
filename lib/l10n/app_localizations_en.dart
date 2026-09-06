@@ -9,11 +9,11 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get find_Your_Next => 'Find Your Next \n Favorite Movie Here';
+  String get find_Your_Next => 'Find Your Next\nFavorite Movie Here';
 
   @override
   String get get_access_to_a_huge =>
-      'Get access to a huge library of movies \n to suit all tastes. You will surely like it.';
+      'Get access to a huge library of movies to suit all tastes. You will surely like it.';
 
   @override
   String get explore_Now => 'Explore Now';
@@ -23,7 +23,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get explore_a_vast_collection =>
-      'Explore a vast collection of movies in all \n qualities and genres. Find your next \n favorite film with ease.';
+      'Explore a vast collection of movies in all qualities and genres. Find your next favorite film with ease.';
 
   @override
   String get next => 'Next';
@@ -33,7 +33,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get discover_movies_from_every_genre =>
-      'Discover movies from every genre, in all \n available qualities. Find something new \n and exciting to watch every day.';
+      'Discover movies from every genre, in all available qualities. Find something new and exciting to watch every day.';
 
   @override
   String get back => 'Back';
@@ -43,14 +43,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get save_movies_to_your_watchlist =>
-      'Save movies to your watchlist to keep \n track of what you want to watch next. \n Enjoy films in various qualities and \n genres.';
+      'Save movies to your watchlist to keep track of what you want to watch next. Enjoy films in various qualities and genres.';
 
   @override
   String get rate_Review => 'Rate, Review, and Learn';
 
   @override
   String get share_your_thoughts =>
-      'Share your thoughts on the movies \n you\'ve watched. Dive deep into film \n details and help others discover great \n movies with your reviews.';
+      'Share your thoughts on the movies you\'ve watched. Dive deep into film details and help others discover great movies with your reviews.';
 
   @override
   String get start_Watching_Now => 'Start Watching Now';

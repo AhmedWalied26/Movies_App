@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/size_utils.dart';
+import 'package:movies_app/utils/app_colors.dart';
 
 class CustomBottomNavbar extends StatelessWidget {
   final int index;
@@ -26,38 +27,26 @@ class CustomBottomNavbar extends StatelessWidget {
         highlightColor: Colors.transparent,
       ),
       child: SafeArea(
+        top: false,
         child: Container(
-          height: height * 0.066,
-          clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          margin: EdgeInsets.symmetric(
-            horizontal: width * 0.026,
-          ),
-          child: Directionality(
-            textDirection: TextDirection.ltr,
-            child: BottomNavigationBar(
-              showSelectedLabels: false,
-              showUnselectedLabels: false,
-
-              onTap: onTap,
-              currentIndex: index,
-              type: BottomNavigationBarType.fixed,
-
-              items: [
-                BottomNavigationBarItem(
-                  activeIcon: SvgPicture.asset(
-                    isDark
-                        ? AppAssets.selectedhomeDarkIcon
-                        : AppAssets.homeIcon,
-                  ),
-                  icon: SvgPicture.asset(
-                    isDark
-                        ? AppAssets.homeIcon
-                        : AppAssets.unhomeIconLight,
-                  ),
-                  label: '',
+          height: kBottomNavigationBarHeight + 4,
+          clipBehavior: .antiAlias,
+          decoration: BoxDecoration(borderRadius: .circular(16)),
+          margin: const .symmetric(horizontal: 12),
+          child: BottomNavigationBar(
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            backgroundColor: AppColors.darkGreyColor,
+            onTap: (index) {
+              onTap(index);
+            },
+            currentIndex: index,
+            type: .fixed,
+            items: [
+              BottomNavigationBarItem(
+                activeIcon: SvgPicture.asset(
+                  AppAssets.homeIcon,
+                  colorFilter: ColorFilter.mode(AppColors.primaryColor, .srcIn),
                 ),
 
                 BottomNavigationBarItem(

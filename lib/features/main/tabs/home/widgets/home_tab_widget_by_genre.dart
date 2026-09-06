@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/utils/size_utils.dart';
 import 'package:movies_app/widgets/main_error.dart';
+import 'package:movies_app/widgets/skeleton/movie_list_skeleton.dart';
 import '../../../../../utils/app_routes.dart';
 import '../../../../../widgets/movie_card_item.dart';
-import '../../../../../widgets/main_loading_widget.dart';
 import '../cubit/home_genre_cubit.dart';
 import '../cubit/home_genre_state.dart';
 
@@ -17,37 +17,23 @@ class HomeTabWidgetByGenre extends StatefulWidget {
 }
 
 class _HomeTabWidgetByGenreState extends State<HomeTabWidgetByGenre> {
-  late HomeGenreCubit cubit;
-
-  @override
-  void initState() {
-    super.initState();
-    cubit = HomeGenreCubit()..getMoviesByGenre(widget.genre!);
-  }
-
-  @override
-  void dispose() {
-    cubit.close();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     var width = context.width;
     return BlocProvider(
-      create: (context) => HomeGenreCubit()..getMoviesByGenre("Horror"),
+      create: (context) => HomeGenreCubit()..getMoviesByGenre(widget.genre!),
       child: BlocBuilder<HomeGenreCubit, HomeGenreState>(
         builder: (context, state) {
           if (state is HomeGenreLoadingState) {
-            return const MainLoadingwidget();
+            return const MovieListSkeleton();
           } else if (state is HomeGenreErrorState) {
             return MainError(
               errorMessage: state.errorMessage,
               onPressed: () {
-                context.read<HomeGenreCubit>().getMoviesByGenre("Horror");
+                context.read<HomeGenreCubit>().getMoviesByGenre(widget.genre!);
               },
               onTap: () {
-                context.read<HomeGenreCubit>().getMoviesByGenre("Horror");
+                context.read<HomeGenreCubit>().getMoviesByGenre(widget.genre!);
               },
             );
           } else if (state is HomeGenreSuccessState) {

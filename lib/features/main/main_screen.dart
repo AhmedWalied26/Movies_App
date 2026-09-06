@@ -14,7 +14,14 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
-  final tabs = [HomeTab(), SearchTab(), BrowseTab(), ProfileTab()];
+  final homeKey = GlobalKey<HomeTabState>();
+
+  late final tabs = [
+    HomeTab(key: homeKey),
+    SearchTab(),
+    BrowseTab(),
+    ProfileTab(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +31,9 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: CustomBottomNavbar(
         index: currentIndex,
         onTap: (index) {
+          if (index == 0) {
+            homeKey.currentState?.refreshGenre();
+          }
           currentIndex = index;
           setState(() {});
         },

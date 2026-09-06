@@ -71,8 +71,8 @@ class MovieCardItem extends StatelessWidget {
               width: width * 0.034,
               height: height * 0.015,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

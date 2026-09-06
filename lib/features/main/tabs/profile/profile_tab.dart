@@ -85,7 +85,12 @@ class _ProfileTabState extends State<ProfileTab>
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
 
-    final profile = await ProfileService.instance.loadProfile();
+    Map<String, dynamic> profile;
+    try {
+      profile = await ProfileService.instance.loadProfile();
+    } catch (_) {
+      return;
+    }
     if (!mounted) return;
     setState(() {
       profileName =
@@ -110,17 +115,18 @@ class _ProfileTabState extends State<ProfileTab>
             Padding(
               padding: EdgeInsets.all(width * 0.035),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(40),
-                        child: Image.asset(
-                          profileAvatar,
-                          height: height * 0.118,
-                          fit: BoxFit.cover,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(40),
+                          child: Image.asset(
+                            profileAvatar,
+                            height: height * 0.118,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -248,19 +254,20 @@ class _ProfileTabState extends State<ProfileTab>
                             : GridView.builder(
                                 padding: EdgeInsets.symmetric(
                                   horizontal: width * 0.035,
-                                  vertical: 12,
+                                  vertical: height * 0.012,
                                 ),
                                 itemCount: movies.length,
                                 itemBuilder: (context, index) {
                                   final movie = movies[index];
                                   return InkWell(
-                                    onTap: () {
+                                    onTap: () async {
                                       if (movie.id == null) return;
-                                      Navigator.pushNamed(
+                                      await Navigator.pushNamed(
                                         context,
                                         AppRoutes.movieDetailsScreen,
                                         arguments: movie.id,
                                       );
+                                      if (mounted) _reloadHistory();
                                     },
                                     child: MovieCardItem(
                                       movieImage: movie.mediumCoverImage ?? '',

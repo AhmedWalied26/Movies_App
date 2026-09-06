@@ -34,16 +34,16 @@ class TabBarWidget extends StatelessWidget {
             ? AppColors.darkBlackColor
             : AppColors.whiteColor,
         body: SingleChildScrollView(
-          padding: EdgeInsets.only(bottom: context.height * 0.1),
+          padding: EdgeInsets.only(bottom: height * 0.1),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: height * 0.012),
-
               SizedBox(
-                height: 50,
+                height: 55,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  padding: EdgeInsets.symmetric(horizontal: width * 0.016),
+                  padding: EdgeInsets.symmetric(horizontal: width * 0.02),
                   itemCount: genres.length,
                   itemBuilder: (context, index) {
                     var genre = genres[index];
@@ -56,8 +56,8 @@ class TabBarWidget extends StatelessWidget {
                           onGenreSelected(genre);
                         },
                         child: Container(
+                          alignment: Alignment.center,
                           padding: EdgeInsets.symmetric(
-                            vertical: height * 0.008,
                             horizontal: width * 0.035,
                           ),
                           decoration: BoxDecoration(
@@ -90,7 +90,6 @@ class TabBarWidget extends StatelessWidget {
                   },
                 ),
               ),
-
               SizedBox(height: SizeConfig.height(context) * 0.025),
               movies.isEmpty
                   ? const Padding(

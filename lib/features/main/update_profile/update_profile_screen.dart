@@ -28,6 +28,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
   bool isLoading = true;
+  bool isDeleteLoading = false;
+  bool isUpadateLoading = false;
   bool isSaving = false;
 
   @override
@@ -53,7 +55,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   }
 
   Future<void> _updateProfile() async {
-    setState(() => isSaving = true);
+    setState(() {
+      isSaving = true;
+      isUpadateLoading = true;
+    });
     try {
       await ProfileService.instance.updateProfile(
         name: nameController.text.trim().isEmpty
@@ -64,9 +69,17 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             : phoneController.text.trim(),
         avatar: selectedAvatar,
       );
-      if (mounted) Navigator.pop(context, true);
+      if (mounted) {
+        setState(() {
+          isUpadateLoading = false;
+        });
+        Navigator.pop(context, true);
+      }
     } on FirebaseException catch (error) {
       if (mounted) {
+        setState(() {
+          isUpadateLoading = false;
+        });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(error.message ?? 'Unable to update profile')),
         );
@@ -78,8 +91,14 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
   Future<void> _deleteAccount() async {
     try {
+      setState(() {
+        isDeleteLoading = true;
+      });
       await ProfileService.instance.deleteAccount();
       if (mounted) {
+        setState(() {
+          isDeleteLoading = false;
+        });
         Navigator.pushNamedAndRemoveUntil(
           context,
           AppRoutes.loginScreen,
@@ -88,6 +107,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
       }
     } on FirebaseException catch (error) {
       if (mounted) {
+        setState(() {
+          isDeleteLoading = false;
+        });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(error.message ?? 'Unable to delete account')),
         );
@@ -229,6 +251,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             Spacer(),
             CustomElevatedButton(
               bgColor: isDark ? AppColors.redColor : AppColors.lightRedColor,
+               isLoading: isDeleteLoading,
               onPressedButton2: _deleteAccount,
               title: l.delete_Account,
               style: AppStyles.regular20White,
@@ -236,6 +259,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
             SizedBox(height: height * 0.019),
             CustomElevatedButton(
+              isLoading: isUpadateLoading,
               onPressedButton2: isLoading || isSaving ? () {} : _updateProfile,
               title: l.update_Data,
               style: AppStyles.regular20Black,

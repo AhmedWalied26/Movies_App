@@ -1,7 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/services/movie_history_service.dart';
+import 'package:movies_app/services/profile_service.dart';
+import 'package:movies_app/features/main/tabs/profile/watch/watch_list_service.dart';
 import 'package:movies_app/features/auth/login/cubit/auth_view_model.dart';
 import 'package:movies_app/services/firebase_service.dart';
 import 'features/main/tabs/home/cubit/home_general_cubit.dart';
@@ -27,12 +30,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await MovieHistoryService.instance.initialize();
+  await WatchListService.instance.initialize();
+  await ProfileService.instance.initialize();
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider<MovieDetailsViewModel>(
-          create: (context) => MovieDetailsViewModel(),
-        ),
         BlocProvider<MovieSuggestionViewModel>(
           create: (context) => MovieSuggestionViewModel(),
         ),
@@ -74,8 +76,10 @@ class MoviesApp extends StatelessWidget {
             AppRoutes.forgotPasswordScreen: (context) =>
                 const ForgetPasswordScreen(),
             AppRoutes.onboardingScreen: (context) => OnBoardingScreens(),
-            AppRoutes.movieDetailsScreen: (context) =>
-                MovieDetailsBlocBuilder(),
+            AppRoutes.movieDetailsScreen: (context) => BlocProvider(
+          create: (context) => MovieDetailsViewModel(),
+          child: MovieDetailsBlocBuilder(),
+        ),
             AppRoutes.browseScreen: (context) => BrowseTab(),
             AppRoutes.profileScreen: (context) => ProfileTab(),
           },

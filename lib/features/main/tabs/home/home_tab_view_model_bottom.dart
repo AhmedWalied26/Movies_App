@@ -4,7 +4,6 @@ import 'package:movies_app/api/api_manager.dart';
 import 'package:movies_app/api/model/movie_list/movies.dart';
 
 class HomeTabViewModelBottom extends ChangeNotifier {
-  // todo : hold data // handle logic ;
   List<Movies>? actionMoviesList;
   String selectedGenre = "Action";
   String? errorMessage;
