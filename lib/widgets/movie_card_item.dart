@@ -24,52 +24,54 @@ class MovieCardItem extends StatelessWidget {
   Widget build(BuildContext context) {
     var height = context.height;
     var width = context.width;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
     final imageUrl = isSuggestion ? movieImage : movie?.mediumCoverImage;
-    return Container(
-      padding: EdgeInsetsDirectional.only(
-        start: width * 0.02,
-        top: width * 0.03,
-      ),
-      alignment: AlignmentDirectional.topStart,
-      decoration: BoxDecoration(
-        borderRadius: .circular(20),
-        image: imageUrl != null && imageUrl.isNotEmpty
-            ? DecorationImage(
-                fit: .fill,
-                image: isSuggestion
-                    ? NetworkImage(imageUrl)
-                    : CachedNetworkImageProvider(imageUrl),
-              )
-            : null,
-      ),
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: width * 0.02,
-          vertical: height * 0.005,
-        ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: isDark
-              ? AppColors.blackColor.withValues(alpha: 0.71)
-              : AppColors.whiteColor.withValues(alpha: 0.71),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              isSuggestion
-                  ? movieRate.toString()
-                  : (movie?.rating ?? '0.0').toString(),
-              // style: AppStyles.regular16White,
-              style: Theme.of(context).textTheme.bodyLarge!,
-            ),
-            SizedBox(width: width * 0.01),
-            SvgPicture.asset(
-              AppAssets.rateIcon,
-              width: width * 0.034,
-              height: height * 0.015,
+    final hasImage = imageUrl != null && imageUrl.isNotEmpty;
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          hasImage
+              ? CachedNetworkImage(
+                  imageUrl: imageUrl,
+                  fit: BoxFit.cover,
+                  errorWidget: (context, url, error) =>
+                      Image.asset(AppAssets.movieImage, fit: BoxFit.cover),
+                )
+              : Image.asset(AppAssets.movieImage, fit: BoxFit.cover),
+          Align(
+            alignment: AlignmentDirectional.topStart,
+            child: Container(
+              margin: EdgeInsetsDirectional.only(
+                start: width * 0.02,
+                top: width * 0.03,
+              ),
+              padding: EdgeInsets.symmetric(
+                horizontal: width * 0.02,
+                vertical: height * 0.005,
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: AppColors.blackColor.withValues(alpha: 0.71),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    isSuggestion
+                        ? movieRate.toString()
+                        : (movie?.rating ?? '0.0').toString(),
+                    style: AppStyles.regular16White,
+                  ),
+                  SizedBox(width: width * 0.01),
+                  SvgPicture.asset(
+                    AppAssets.rateIcon,
+                    width: width * 0.034,
+                    height: height * 0.015,
+                  ),
+                ],
+              ),
             ),
           ),
         ],

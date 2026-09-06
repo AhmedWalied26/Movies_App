@@ -203,7 +203,7 @@ abstract class AppLocalizations {
   /// No description provided for @forget_Password.
   ///
   /// In en, this message translates to:
-  /// **'Forget Password ?'**
+  /// **'Forget Password'**
   String get forget_Password;
 
   /// No description provided for @login.
@@ -455,7 +455,7 @@ abstract class AppLocalizations {
   /// No description provided for @wish_list.
   ///
   /// In en, this message translates to:
-  /// **'Wish List'**
+  /// **'wish List'**
   String get wish_list;
 
   /// No description provided for @favorite_Movie_Here.
@@ -577,144 +577,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cast'**
   String get cast;
-
-  /// No description provided for @all.
-  ///
-  /// In en, this message translates to:
-  /// **'All'**
-  String get all;
-
-  /// No description provided for @animation.
-  ///
-  /// In en, this message translates to:
-  /// **'Animation'**
-  String get animation;
-
-  /// No description provided for @biography.
-  ///
-  /// In en, this message translates to:
-  /// **'Biography'**
-  String get biography;
-
-  /// No description provided for @documentary.
-  ///
-  /// In en, this message translates to:
-  /// **'Documentary'**
-  String get documentary;
-
-  /// No description provided for @family.
-  ///
-  /// In en, this message translates to:
-  /// **'Family'**
-  String get family;
-
-  /// No description provided for @music.
-  ///
-  /// In en, this message translates to:
-  /// **'Music'**
-  String get music;
-
-  /// No description provided for @musical.
-  ///
-  /// In en, this message translates to:
-  /// **'Musical'**
-  String get musical;
-
-  /// No description provided for @mystery.
-  ///
-  /// In en, this message translates to:
-  /// **'Mystery'**
-  String get mystery;
-
-  /// No description provided for @sport.
-  ///
-  /// In en, this message translates to:
-  /// **'Sport'**
-  String get sport;
-
-  /// No description provided for @thriller.
-  ///
-  /// In en, this message translates to:
-  /// **'Thriller'**
-  String get thriller;
-
-  /// No description provided for @war.
-  ///
-  /// In en, this message translates to:
-  /// **'War'**
-  String get war;
-
-  /// No description provided for @film_noir.
-  ///
-  /// In en, this message translates to:
-  /// **'Film-Noir'**
-  String get film_noir;
-
-  /// No description provided for @character.
-  ///
-  /// In en, this message translates to:
-  /// **'Character'**
-  String get character;
-
-  /// No description provided for @no_movies_found.
-  ///
-  /// In en, this message translates to:
-  /// **'No movies found'**
-  String get no_movies_found;
-
-  /// No description provided for @removeFromWatchList.
-  ///
-  /// In en, this message translates to:
-  /// **'Remove from watch list'**
-  String get removeFromWatchList;
-
-  /// No description provided for @addToWatchList.
-  ///
-  /// In en, this message translates to:
-  /// **'Add to watch list'**
-  String get addToWatchList;
-
-  /// No description provided for @current_Password.
-  ///
-  /// In en, this message translates to:
-  /// **'Current password'**
-  String get current_Password;
-
-  /// No description provided for @fill_All_Password_Fields.
-  ///
-  /// In en, this message translates to:
-  /// **'Please fill in all password fields.'**
-  String get fill_All_Password_Fields;
-
-  /// No description provided for @passwords_Do_Not_Match.
-  ///
-  /// In en, this message translates to:
-  /// **'New passwords do not match.'**
-  String get passwords_Do_Not_Match;
-
-  /// No description provided for @password_Updated_Successfully.
-  ///
-  /// In en, this message translates to:
-  /// **'Password updated successfully.'**
-  String get password_Updated_Successfully;
-
-  /// No description provided for @unable_To_Update_Password.
-  ///
-  /// In en, this message translates to:
-  /// **'Unable to update password.'**
-  String get unable_To_Update_Password;
-
-  /// No description provided for @unable_To_Load_Watch_List.
-  ///
-  /// In en, this message translates to:
-  /// **'Unable to load watch list'**
-  String get unable_To_Load_Watch_List;
-
-  /// No description provided for @unknown_Error.
-  ///
-  /// In en, this message translates to:
-  /// **'Unknown Error'**
-  String get unknown_Error;
 }
 
 class _AppLocalizationsDelegate

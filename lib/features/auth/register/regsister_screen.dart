@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:movies_app/features/auth/login/widgets/language_switcher.dart';
 import 'package:movies_app/features/auth/register/widgets/customized_avatar.dart';
-import 'package:movies_app/main.dart';
 import 'package:movies_app/services/profile_service.dart';
 import 'package:movies_app/services/firebase_service.dart';
 import 'package:movies_app/utils/app_validation.dart';
@@ -82,10 +80,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
     var height = context.height;
     var width = context.width;
     final l10n = AppLocalizations.of(context)!;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
       appBar: AppBar(
-        // backgroundColor: AppColors.blackColor,
+        backgroundColor: AppColors.blackColor,
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
@@ -97,7 +95,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         title: Text(l10n.register, style: AppStyles.regular16Primary),
       ),
 
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: AppColors.blackColor,
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -120,7 +118,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         return Center(
                           child: CustomizedAvatar(
                             imagePath: avatarImages[index],
-                            size: isSelected ? 100 : 62,
+                            size: isSelected ? 100 : 72,
                             isSelected: isSelected,
                             onTap: () {
                               _avatarPageController.animateToPage(
@@ -139,9 +137,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   SizedBox(height: height * 0.010),
                   CustomTextField(
                     title: l10n.name,
-                    prefix: SvgPicture.asset(
-                      isDark ? AppAssets.nameIcon : AppAssets.nameIconLight,
-                    ),
+                    prefix: SvgPicture.asset(AppAssets.nameIcon),
                     controller: nameController,
                     validation: (text) {
                       return AppValidation.validateUserName(context, text);
@@ -152,9 +148,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   CustomTextField(
                     type: TextInputType.emailAddress,
                     title: l10n.email,
-                    prefix: SvgPicture.asset(
-                      isDark ? AppAssets.emailIcon : AppAssets.emailIconLight,
-                    ),
+                    prefix: SvgPicture.asset(AppAssets.emailIcon),
                     controller: emailController,
                     validation: (text) {
                       return AppValidation.validateEmail(context, text);
@@ -165,11 +159,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   CustomTextField(
                     type: TextInputType.visiblePassword,
                     title: l10n.password,
-                    prefix: SvgPicture.asset(
-                      isDark
-                          ? AppAssets.passwordIcon
-                          : AppAssets.passwordIconLight,
-                    ),
+                    prefix: SvgPicture.asset(AppAssets.passwordIcon),
                     suffix: IconButton(
                       onPressed: () {
                         setState(() {
@@ -193,11 +183,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   CustomTextField(
                     type: TextInputType.visiblePassword,
                     title: l10n.confirm_Password,
-                    prefix: SvgPicture.asset(
-                      isDark
-                          ? AppAssets.passwordIcon
-                          : AppAssets.passwordIconLight,
-                    ),
+                    prefix: SvgPicture.asset(AppAssets.passwordIcon),
                     suffix: IconButton(
                       onPressed: () {
                         setState(() {
@@ -225,9 +211,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   CustomTextField(
                     type: TextInputType.phone,
                     title: l10n.phone_Number,
-                    prefix: SvgPicture.asset(
-                      isDark ? AppAssets.phoneIcon : AppAssets.phoneIconLight,
-                    ),
+                    prefix: SvgPicture.asset(AppAssets.phoneIcon),
                     controller: phoneController,
                     validation: (text) {
                       return AppValidation.validatePhone(context, text);
@@ -240,7 +224,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       register(context);
                     },
                     title: l10n.create_Account,
-                    style: Theme.of(context).textTheme.displayMedium!,
+                    style: AppStyles.regular20Black,
                   ),
                   SizedBox(height: height * 0.017),
 
@@ -249,7 +233,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     children: [
                       Text(
                         '${l10n.already_Have_Account} ? ',
-                        style: Theme.of(context).textTheme.displaySmall!,
+                        style: AppStyles.regular14White,
                       ),
 
                       GestureDetector(
@@ -269,31 +253,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ],
                   ),
                   SizedBox(height: height * 0.018),
-                  // Container(
-                  //   decoration: BoxDecoration(
-                  //     borderRadius: .circular(30),
-                  //     border: .all(color: AppColors.primaryColor, width: 3),
-                  //   ),
-                  //   child: Row(
-                  //     mainAxisSize: .min,
-                  //     spacing: width * 0.03,
-                  //     mainAxisAlignment: MainAxisAlignment.center,
-                  //     children: [
-                  //       SvgPicture.asset(AppAssets.enIcon),
-                  //       SvgPicture.asset(AppAssets.arIcon),
-                  //     ],
-                  //   ),
-                  // ),
-                  ValueListenableBuilder<Locale>(
-                    valueListenable: LocaleController.instance,
-                    builder: (context, locale, _) {
-                      return LanguageSwitcher(
-                        selectedLocale: locale,
-                        onLanguageChanged: (newLocale) {
-                          LocaleController.instance.value = newLocale;
-                        },
-                      );
-                    },
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: .circular(30),
+                      border: .all(color: AppColors.primaryColor, width: 3),
+                    ),
+                    child: Row(
+                      mainAxisSize: .min,
+                      spacing: width * 0.03,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(AppAssets.enIcon),
+                        SvgPicture.asset(AppAssets.arIcon),
+                      ],
+                    ),
                   ),
                 ],
               ),

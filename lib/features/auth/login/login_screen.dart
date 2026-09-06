@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/features/auth/login/widgets/google_sign_in_button.dart';
-import 'package:movies_app/features/auth/login/widgets/language_switcher.dart';
-import 'package:movies_app/features/auth/login/widgets/mode_switcher.dart';
-import 'package:movies_app/main.dart';
 import 'package:movies_app/services/firebase_service.dart';
 import 'package:movies_app/utils/app_validation.dart';
 import 'package:movies_app/widgets/app_overlay.dart';
@@ -46,11 +43,9 @@ class _LoginScreenState extends State<LoginScreen> {
     final l10n = AppLocalizations.of(context)!;
     var height = context.height;
     var width = context.width;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      // backgroundColor: AppColors.blackColor,
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: AppColors.blackColor,
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -67,11 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       CustomTextField(
                         type: TextInputType.emailAddress,
                         title: l10n.email,
-                        prefix: SvgPicture.asset(
-                          isDark
-                              ? AppAssets.emailIcon
-                              : AppAssets.emailIconLight,
-                        ),
+                        prefix: SvgPicture.asset(AppAssets.emailIcon),
                         controller: emailController,
                         validation: (text) {
                           return AppValidation.validateEmail(context, text);
@@ -81,11 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       CustomTextField(
                         type: TextInputType.visiblePassword,
                         title: l10n.password,
-                        prefix: SvgPicture.asset(
-                          isDark
-                              ? AppAssets.passwordIcon
-                              : AppAssets.passwordIconLight,
-                        ),
+                        prefix: SvgPicture.asset(AppAssets.passwordIcon),
                         suffix: IconButton(
                           onPressed: () {
                             setState(() {
@@ -117,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               );
                             },
                             child: Text(
-                              l10n.forget_Password,
+                              '${l10n.forget_Password} ?',
                               style: AppStyles.regular14Primary,
                             ),
                           ),
@@ -130,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           login(context);
                         },
                         title: l10n.login,
-                        style: Theme.of(context).textTheme.displayMedium!,
+                        style: AppStyles.regular20Black,
                       ),
                       SizedBox(height: height * 0.022),
                       Row(
@@ -138,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           Text(
                             '${l10n.dont_Have_Account} ? ',
-                            style: Theme.of(context).textTheme.displaySmall!,
+                            style: AppStyles.regular14White,
                           ),
                           GestureDetector(
                             onTap: () {
@@ -150,8 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Text(
                               l10n.create_One,
                               style: AppStyles.bold14Primary.copyWith(
-                                // color: AppColors.primaryColor,
-                                color: Theme.of(context).colorScheme.primary,
+                                color: AppColors.primaryColor,
                               ),
                             ),
                           ),
@@ -180,32 +166,20 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: height * 0.027),
                       GoogleSignInButton(),
                       SizedBox(height: height * 0.033),
-                      Row(
-                        spacing: 10,
-                        children: [
-                          ValueListenableBuilder<ThemeMode>(
-                            valueListenable: ThemeController.instance,
-                            builder: (context, themeMode, _) {
-                              return AppModeSwitcher(
-                                selectedMode: themeMode,
-                                onModeChanged: (mode) {
-                                  ThemeController.instance.value = mode;
-                                },
-                              );
-                            },
-                          ),
-                          ValueListenableBuilder<Locale>(
-                            valueListenable: LocaleController.instance,
-                            builder: (context, locale, _) {
-                              return LanguageSwitcher(
-                                selectedLocale: locale,
-                                onLanguageChanged: (newLocale) {
-                                  LocaleController.instance.value = newLocale;
-                                },
-                              );
-                            },
-                          ),
-                        ],
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: .circular(30),
+                          border: .all(color: AppColors.primaryColor, width: 3),
+                        ),
+                        child: Row(
+                          mainAxisSize: .min,
+                          spacing: width * 0.03,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(AppAssets.enIcon),
+                            SvgPicture.asset(AppAssets.arIcon),
+                          ],
+                        ),
                       ),
                     ],
                   ),

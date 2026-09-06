@@ -65,7 +65,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get password => 'Password';
 
   @override
-  String get forget_Password => 'Forget Password ?';
+  String get forget_Password => 'Forget Password';
 
   @override
   String get login => 'Login';
@@ -192,7 +192,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adventure => 'Adventure';
 
   @override
-  String get wish_list => 'Wish List';
+  String get wish_list => 'wish List';
 
   @override
   String get favorite_Movie_Here => 'Favorite Movie Here';
@@ -256,73 +256,4 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cast => 'Cast';
-
-  @override
-  String get all => 'All';
-
-  @override
-  String get animation => 'Animation';
-
-  @override
-  String get biography => 'Biography';
-
-  @override
-  String get documentary => 'Documentary';
-
-  @override
-  String get family => 'Family';
-
-  @override
-  String get music => 'Music';
-
-  @override
-  String get musical => 'Musical';
-
-  @override
-  String get mystery => 'Mystery';
-
-  @override
-  String get sport => 'Sport';
-
-  @override
-  String get thriller => 'Thriller';
-
-  @override
-  String get war => 'War';
-
-  @override
-  String get film_noir => 'Film-Noir';
-
-  @override
-  String get character => 'Character';
-
-  @override
-  String get no_movies_found => 'No movies found';
-
-  @override
-  String get removeFromWatchList => 'Remove from watch list';
-
-  @override
-  String get addToWatchList => 'Add to watch list';
-
-  @override
-  String get current_Password => 'Current password';
-
-  @override
-  String get fill_All_Password_Fields => 'Please fill in all password fields.';
-
-  @override
-  String get passwords_Do_Not_Match => 'New passwords do not match.';
-
-  @override
-  String get password_Updated_Successfully => 'Password updated successfully.';
-
-  @override
-  String get unable_To_Update_Password => 'Unable to update password.';
-
-  @override
-  String get unable_To_Load_Watch_List => 'Unable to load watch list';
-
-  @override
-  String get unknown_Error => 'Unknown Error';
 }
