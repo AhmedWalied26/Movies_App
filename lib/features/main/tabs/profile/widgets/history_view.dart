@@ -17,9 +17,10 @@ class HistoryView extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = context.width;
     final height = context.height;
+    final moviesWithIds = movies.where((movie) => movie.id != null).toList();
     return GridView.builder(
       padding: EdgeInsets.all(width * 0.035),
-      itemCount: movies.length,
+      itemCount: moviesWithIds.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: width * 0.04,
@@ -27,7 +28,7 @@ class HistoryView extends StatelessWidget {
         childAspectRatio: 189 / 279,
       ),
       itemBuilder: (context, index) {
-        final movie = movies[index];
+        final movie = moviesWithIds[index];
         return InkWell(
           onTap: () => onMovieTap(movie.id!),
           borderRadius: BorderRadius.circular(20),
