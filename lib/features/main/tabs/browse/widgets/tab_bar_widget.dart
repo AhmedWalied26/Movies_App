@@ -32,10 +32,11 @@ class TabBarWidget extends StatelessWidget {
         body: SingleChildScrollView(
           padding: EdgeInsets.only(bottom: height * 0.1),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: height * 0.012),
               SizedBox(
-                height: 50,
+                height: 55,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   padding: EdgeInsets.symmetric(horizontal: width * 0.02),
@@ -51,6 +52,7 @@ class TabBarWidget extends StatelessWidget {
                           onGenreSelected(genre);
                         },
                         child: Container(
+                          alignment: Alignment.center,
                           padding: EdgeInsets.symmetric(
                             horizontal: width * 0.035,
                           ),
@@ -64,13 +66,11 @@ class TabBarWidget extends StatelessWidget {
                             ),
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          child: Center(
-                            child: Text(
-                              genre,
-                              style: isSelected
-                                  ? AppStyles.bold20DarkBlack
-                                  : AppStyles.bold20Primary,
-                            ),
+                          child: Text(
+                            genre,
+                            style: isSelected
+                                ? AppStyles.bold20DarkBlack
+                                : AppStyles.bold20Primary,
                           ),
                         ),
                       ),
@@ -80,6 +80,39 @@ class TabBarWidget extends StatelessWidget {
               ),
 
               SizedBox(height: SizeConfig.height(context) * 0.025),
+
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: width * 0.025, vertical: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      selectedGenre,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        // See More action
+                      },
+                      child: const Text(
+                        'See More',
+                        style: TextStyle(
+                          color: AppColors.primaryColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              SizedBox(height: SizeConfig.height(context) * 0.01),
+
               movies.isEmpty
                   ? const Padding(
                       padding: EdgeInsets.only(top: 100),
