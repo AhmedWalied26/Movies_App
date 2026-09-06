@@ -34,9 +34,6 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider<MovieDetailsViewModel>(
-          create: (context) => MovieDetailsViewModel(),
-        ),
         BlocProvider<MovieSuggestionViewModel>(
           create: (context) => MovieSuggestionViewModel(),
         ),
@@ -69,7 +66,10 @@ class MoviesApp extends StatelessWidget {
         AppRoutes.forgotPasswordScreen: (context) =>
             const ForgetPasswordScreen(),
         AppRoutes.onboardingScreen: (context) => OnBoardingScreens(),
-        AppRoutes.movieDetailsScreen: (context) => MovieDetailsBlocBuilder(),
+        AppRoutes.movieDetailsScreen: (context) => BlocProvider(
+          create: (context) => MovieDetailsViewModel(),
+          child: MovieDetailsBlocBuilder(),
+        ),
         AppRoutes.browseScreen: (context) => BrowseTab(),
         AppRoutes.profileScreen: (context) => ProfileTab(),
       },

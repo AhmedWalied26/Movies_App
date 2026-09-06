@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'dart:math';
 
 import 'package:carousel_slider/carousel_slider.dart';
@@ -8,12 +9,12 @@ import 'package:movies_app/features/main/tabs/home/cubit/home_general_state.dart
 import 'package:movies_app/features/main/tabs/home/widgets/home_tab_widget_by_genre.dart';
 import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/widgets/main_error.dart';
+import 'package:movies_app/widgets/skeleton/movie_carousel_skeleton.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../utils/app_assets.dart';
 import '../../../../utils/app_colors.dart';
 import '../../../../utils/app_styles.dart';
 import '../../../../utils/size_utils.dart';
-import '../../../../widgets/main_loading_widget.dart';
 import '../../../../widgets/movie_card_item.dart';
 
 class HomeTab extends StatefulWidget {
@@ -100,22 +101,11 @@ class HomeTabState extends State<HomeTab> {
               left: 0,
               right: 0,
               height: height * 0.65,
-              child: (bgImage != null && bgImage.isNotEmpty)
-                  ? Image.network(
-                      bgImage,
-                      fit: BoxFit.cover,
-                      alignment: Alignment.topCenter,
-                      errorBuilder: (context, error, stackTrace) => Image.asset(
-                        AppAssets.onBoardingImage6,
-                        fit: BoxFit.cover,
-                        alignment: Alignment.topCenter,
-                      ),
-                    )
-                  : Image.asset(
-                      AppAssets.onBoardingImage6,
-                      fit: BoxFit.cover,
-                      alignment: Alignment.topCenter,
-                    ),
+              child: CachedNetworkImage(
+                imageUrl: bgImage!,
+                fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
+              ),
             ),
             Positioned.fill(
               child: Container(
@@ -144,7 +134,7 @@ class HomeTabState extends State<HomeTab> {
                   SizedBox(height: height * 0.02),
                   if (state is HomeGeneralLoadingState ||
                       state is HomeGeneralInitialState)
-                    const MainLoadingwidget()
+                    const MovieCarouselSkeleton()
                   else if (state is HomeGeneralErrorState)
                     MainError(
                       errorMessage: state.errorMessage,

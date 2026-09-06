@@ -19,7 +19,8 @@ class SearchCubit extends Cubit<SearchState> {
 
   void searchMovies(String query) async {
     if (query.trim().isEmpty) {
-      getInitialMovies();
+      // getInitialMovies();
+      emit(SearchInitialState());
       return;
     }
     emit(SearchLoadingState());

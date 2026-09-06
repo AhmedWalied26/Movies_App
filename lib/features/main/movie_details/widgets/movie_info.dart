@@ -24,7 +24,7 @@ class MovieInfo extends StatelessWidget {
         mainAxisSize: .min,
         children: [
           SvgPicture.asset(icon),
-          Text(text.toString(), style: AppStyles.bold24White),
+          Text(text.toString(), style: AppStyles.bold22White),
         ],
       ),
     );

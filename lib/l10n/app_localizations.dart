@@ -101,13 +101,13 @@ abstract class AppLocalizations {
   /// No description provided for @find_Your_Next.
   ///
   /// In en, this message translates to:
-  /// **'Find Your Next \n Favorite Movie Here'**
+  /// **'Find Your Next\nFavorite Movie Here'**
   String get find_Your_Next;
 
   /// No description provided for @get_access_to_a_huge.
   ///
   /// In en, this message translates to:
-  /// **'Get access to a huge library of movies \n to suit all tastes. You will surely like it.'**
+  /// **'Get access to a huge library of movies to suit all tastes. You will surely like it.'**
   String get get_access_to_a_huge;
 
   /// No description provided for @explore_Now.
@@ -125,7 +125,7 @@ abstract class AppLocalizations {
   /// No description provided for @explore_a_vast_collection.
   ///
   /// In en, this message translates to:
-  /// **'Explore a vast collection of movies in all \n qualities and genres. Find your next \n favorite film with ease.'**
+  /// **'Explore a vast collection of movies in all qualities and genres. Find your next favorite film with ease.'**
   String get explore_a_vast_collection;
 
   /// No description provided for @next.
@@ -143,7 +143,7 @@ abstract class AppLocalizations {
   /// No description provided for @discover_movies_from_every_genre.
   ///
   /// In en, this message translates to:
-  /// **'Discover movies from every genre, in all \n available qualities. Find something new \n and exciting to watch every day.'**
+  /// **'Discover movies from every genre, in all available qualities. Find something new and exciting to watch every day.'**
   String get discover_movies_from_every_genre;
 
   /// No description provided for @back.
@@ -161,7 +161,7 @@ abstract class AppLocalizations {
   /// No description provided for @save_movies_to_your_watchlist.
   ///
   /// In en, this message translates to:
-  /// **'Save movies to your watchlist to keep \n track of what you want to watch next. \n Enjoy films in various qualities and \n genres.'**
+  /// **'Save movies to your watchlist to keep track of what you want to watch next. Enjoy films in various qualities and genres.'**
   String get save_movies_to_your_watchlist;
 
   /// No description provided for @rate_Review.
@@ -173,7 +173,7 @@ abstract class AppLocalizations {
   /// No description provided for @share_your_thoughts.
   ///
   /// In en, this message translates to:
-  /// **'Share your thoughts on the movies \n you\'ve watched. Dive deep into film \n details and help others discover great \n movies with your reviews.'**
+  /// **'Share your thoughts on the movies you\'ve watched. Dive deep into film details and help others discover great movies with your reviews.'**
   String get share_your_thoughts;
 
   /// No description provided for @start_Watching_Now.

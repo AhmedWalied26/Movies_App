@@ -50,19 +50,21 @@ class _ProfileTabState extends State<ProfileTab>
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
     _historyFuture = MovieHistoryService.instance.loadHistory();
-    _watchListSubscription = WatchListService.instance.watchSavedMovies().listen(
-      (movies) {
-        if (!mounted) return;
-        setState(() {
-          _watchListMovies = movies;
-          _watchListError = null;
-        });
-      },
-      onError: (Object error) {
-        if (!mounted) return;
-        setState(() => _watchListError = error);
-      },
-    );
+    _watchListSubscription = WatchListService.instance
+        .watchSavedMovies()
+        .listen(
+          (movies) {
+            if (!mounted) return;
+            setState(() {
+              _watchListMovies = movies;
+              _watchListError = null;
+            });
+          },
+          onError: (Object error) {
+            if (!mounted) return;
+            setState(() => _watchListError = error);
+          },
+        );
     _loadProfile();
   }
 
@@ -112,22 +114,23 @@ class _ProfileTabState extends State<ProfileTab>
             Padding(
               padding: EdgeInsets.all(width * 0.035),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(40),
-                        child: Image.asset(
-                          profileAvatar,
-                          height: height * 0.118,
-                          fit: BoxFit.cover,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(40),
+                          child: Image.asset(
+                            profileAvatar,
+                            height: height * 0.118,
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(profileName, style: AppStyles.bold20White),
-                    ],
+                        const SizedBox(height: 8),
+                        Text(profileName, style: AppStyles.bold20White),
+                      ],
+                    ),
                   ),
                   FutureBuilder<List<Movie>>(
                     future: _historyFuture,
@@ -220,7 +223,7 @@ class _ProfileTabState extends State<ProfileTab>
                             : GridView.builder(
                                 padding: EdgeInsets.symmetric(
                                   horizontal: width * 0.035,
-                                  vertical: 12,
+                                  vertical: height * 0.012,
                                 ),
                                 itemCount: movies.length,
                                 itemBuilder: (context, index) {
