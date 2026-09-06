@@ -102,7 +102,10 @@ class HomeTabState extends State<HomeTab> {
               right: 0,
               height: height * 0.65,
               child: CachedNetworkImage(
-                imageUrl: bgImage!,
+                imageUrl: bgImage ?? '',
+                errorWidget: (context, url, error) {
+                  return Icon(Icons.error);
+                },
                 fit: BoxFit.cover,
                 alignment: Alignment.topCenter,
               ),
@@ -187,10 +190,7 @@ class HomeTabState extends State<HomeTab> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            selectedGenre,
-                            style: AppStyles.regular20White,
-                          ),
+                          Text(selectedGenre, style: AppStyles.regular20White),
                           TextButton(
                             onPressed: () {
                               Navigator.pushNamed(
