@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/services/movie_history_service.dart';
@@ -73,7 +74,9 @@ class MoviesApp extends StatelessWidget {
         AppRoutes.browseScreen: (context) => BrowseTab(),
         AppRoutes.profileScreen: (context) => ProfileTab(),
       },
-      initialRoute: AppRoutes.exploreScreen,
+        initialRoute: FirebaseAuth.instance.currentUser != null
+          ? AppRoutes.mainScreen
+          : AppRoutes.exploreScreen,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.dark,

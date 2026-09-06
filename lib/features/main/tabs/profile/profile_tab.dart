@@ -229,13 +229,14 @@ class _ProfileTabState extends State<ProfileTab>
                                 itemBuilder: (context, index) {
                                   final movie = movies[index];
                                   return InkWell(
-                                    onTap: () {
+                                    onTap: () async {
                                       if (movie.id == null) return;
-                                      Navigator.pushNamed(
+                                      await Navigator.pushNamed(
                                         context,
                                         AppRoutes.movieDetailsScreen,
                                         arguments: movie.id,
                                       );
+                                      if (mounted) _reloadHistory();
                                     },
                                     child: MovieCardItem(
                                       movieImage: movie.mediumCoverImage ?? '',
