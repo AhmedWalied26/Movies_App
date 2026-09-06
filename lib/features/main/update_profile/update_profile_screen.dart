@@ -178,32 +178,36 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
-              spacing: 20,
-              children: [
-                ValueListenableBuilder<Locale>(
-                  valueListenable: LocaleController.instance,
-                  builder: (context, locale, _) {
-                    return LanguageSwitcher(
-                      selectedLocale: locale,
-                      onLanguageChanged: (newLocale) {
-                        LocaleController.instance.value = newLocale;
-                      },
-                    );
-                  },
-                ),
-                ValueListenableBuilder<ThemeMode>(
-                  valueListenable: ThemeController.instance,
-                  builder: (context, themeMode, _) {
-                    return AppModeSwitcher(
-                      selectedMode: themeMode,
-                      onModeChanged: (mode) {
-                        ThemeController.instance.value = mode;
-                      },
-                    );
-                  },
-                ),
-              ],
+            Align(
+              alignment: Alignment.centerRight,
+
+              child: Column(
+                spacing: 20,
+                children: [
+                  ValueListenableBuilder<Locale>(
+                    valueListenable: LocaleController.instance,
+                    builder: (context, locale, _) {
+                      return LanguageSwitcher(
+                        selectedLocale: locale,
+                        onLanguageChanged: (newLocale) {
+                          LocaleController.instance.value = newLocale;
+                        },
+                      );
+                    },
+                  ),
+                  ValueListenableBuilder<ThemeMode>(
+                    valueListenable: ThemeController.instance,
+                    builder: (context, themeMode, _) {
+                      return AppModeSwitcher(
+                        selectedMode: themeMode,
+                        onModeChanged: (mode) {
+                          ThemeController.instance.value = mode;
+                        },
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
             Center(
               child: GestureDetector(
@@ -251,7 +255,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             Spacer(),
             CustomElevatedButton(
               bgColor: isDark ? AppColors.redColor : AppColors.lightRedColor,
-               isLoading: isDeleteLoading,
+              isLoading: isDeleteLoading,
               onPressedButton2: _deleteAccount,
               title: l.delete_Account,
               style: AppStyles.regular20White,

@@ -92,21 +92,17 @@ class MoviesApp extends StatelessWidget {
             AppRoutes.browseScreen: (context) => BrowseTab(),
             AppRoutes.profileScreen: (context) => ProfileTab(),
           },
-          initialRoute: AppRoutes.onboardingScreen,
+      initialRoute: FirebaseAuth.instance.currentUser != null
+          ? AppRoutes.mainScreen
+          : hasCompletedOnboarding
+          ? AppRoutes.loginScreen
+          : AppRoutes.exploreScreen,
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           // themeMode: ThemeMode.system,
           themeMode: ThemeController.instance.value,
         );
       },
-      initialRoute: FirebaseAuth.instance.currentUser != null
-          ? AppRoutes.mainScreen
-          : hasCompletedOnboarding
-          ? AppRoutes.loginScreen
-          : AppRoutes.exploreScreen,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.dark,
     );
   }
 }

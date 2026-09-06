@@ -18,29 +18,33 @@ class LanguageSwitcher extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-        border: Border.all(color: AppColors.primaryColor, width: 2),
-      ),
-      child: Row(
-        textDirection: TextDirection.ltr,
-        mainAxisSize: MainAxisSize.min,
-        spacing: 8,
-        children: [
-          _LanguageCircle(
-            icon: AppAssets.enIcon,
-            isSelected: isEnglish,
-            onTap: () => onLanguageChanged(const Locale('en')),
-          ),
-          SizedBox(width: context.width * 0.03),
-          _LanguageCircle(
-            icon: AppAssets.arIcon,
-            isSelected: !isEnglish,
-            onTap: () => onLanguageChanged(const Locale('ar')),
-          ),
-        ],
+    return Directionality(
+      textDirection: TextDirection.ltr,
+
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          border: Border.all(color: AppColors.primaryColor, width: 2),
+        ),
+        child: Row(
+          textDirection: TextDirection.ltr,
+          mainAxisSize: MainAxisSize.min,
+          spacing: 8,
+          children: [
+            _LanguageCircle(
+              icon: AppAssets.enIcon,
+              isSelected: isEnglish,
+              onTap: () => onLanguageChanged(const Locale('en')),
+            ),
+            SizedBox(width: context.width * 0.03),
+            _LanguageCircle(
+              icon: AppAssets.arIcon,
+              isSelected: !isEnglish,
+              onTap: () => onLanguageChanged(const Locale('ar')),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -180,32 +180,40 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: height * 0.027),
                       GoogleSignInButton(),
                       SizedBox(height: height * 0.033),
-                      Row(
-                        spacing: 10,
-                        children: [
-                          ValueListenableBuilder<ThemeMode>(
-                            valueListenable: ThemeController.instance,
-                            builder: (context, themeMode, _) {
-                              return AppModeSwitcher(
-                                selectedMode: themeMode,
-                                onModeChanged: (mode) {
-                                  ThemeController.instance.value = mode;
+                      Align(
+                        alignment: AlignmentDirectional.center,
+                        child: Directionality(
+                          textDirection: TextDirection.rtl,
+
+                          child: Row(
+                            spacing: 10,
+                            children: [
+                              ValueListenableBuilder<ThemeMode>(
+                                valueListenable: ThemeController.instance,
+                                builder: (context, themeMode, _) {
+                                  return AppModeSwitcher(
+                                    selectedMode: themeMode,
+                                    onModeChanged: (mode) {
+                                      ThemeController.instance.value = mode;
+                                    },
+                                  );
                                 },
-                              );
-                            },
-                          ),
-                          ValueListenableBuilder<Locale>(
-                            valueListenable: LocaleController.instance,
-                            builder: (context, locale, _) {
-                              return LanguageSwitcher(
-                                selectedLocale: locale,
-                                onLanguageChanged: (newLocale) {
-                                  LocaleController.instance.value = newLocale;
+                              ),
+                              ValueListenableBuilder<Locale>(
+                                valueListenable: LocaleController.instance,
+                                builder: (context, locale, _) {
+                                  return LanguageSwitcher(
+                                    selectedLocale: locale,
+                                    onLanguageChanged: (newLocale) {
+                                      LocaleController.instance.value =
+                                          newLocale;
+                                    },
+                                  );
                                 },
-                              );
-                            },
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     ],
                   ),

@@ -128,15 +128,13 @@ class _ProfileTabState extends State<ProfileTab>
                             fit: BoxFit.cover,
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        profileName,
-                        style:
-                            // AppStyles.bold20White
-                            Theme.of(context).textTheme.headlineMedium!,
-                      ),
-                    ],
+                        const SizedBox(height: 8),
+                        Text(
+                          profileName,
+                          style: Theme.of(context).textTheme.headlineMedium!,
+                        ),
+                      ],
+                    ),
                   ),
                   FutureBuilder<List<Movie>>(
                     future: _historyFuture,

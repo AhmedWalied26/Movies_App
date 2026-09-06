@@ -8,8 +8,10 @@ import 'package:movies_app/features/main/tabs/home/cubit/home_general_cubit.dart
 import 'package:movies_app/features/main/tabs/home/cubit/home_general_state.dart';
 import 'package:movies_app/features/main/tabs/home/widgets/home_tab_widget_by_genre.dart';
 import 'package:movies_app/utils/app_routes.dart';
+import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/widgets/main_error.dart';
 import 'package:movies_app/widgets/skeleton/movie_carousel_skeleton.dart';
+import 'package:translator/translator.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../utils/app_assets.dart';
 import '../../../../utils/app_colors.dart';
@@ -26,6 +28,7 @@ class HomeTab extends StatefulWidget {
 class HomeTabState extends State<HomeTab> {
   List<String> availableGenres = [];
   String selectedGenre = '';
+  final GoogleTranslator _translator = GoogleTranslator();
 
   @override
   void initState() {
@@ -71,6 +74,21 @@ class HomeTabState extends State<HomeTab> {
   void refreshGenre() {
     if (availableGenres.isNotEmpty) {
       setState(() => selectedGenre = _randomGenre());
+    }
+  }
+
+  Future<String> _translateGenre(BuildContext context, String genre) async {
+    final currentLocale = Localizations.localeOf(context).languageCode;
+    if (currentLocale == 'en') return genre;
+    try {
+      final translation = await _translator.translate(
+        genre,
+        from: 'en',
+        to: currentLocale,
+      );
+      return translation.text;
+    } catch (_) {
+      return genre;
     }
   }
 
@@ -155,40 +173,40 @@ class HomeTabState extends State<HomeTab> {
                       },
                     )
                   else if (state is HomeGeneralSuccessState)
-                      SizedBox(
-                        height: height * 0.36,
-                        child: CarouselSlider.builder(
-                          itemCount: state.moviesList.length,
-                          itemBuilder: (context, index, realIndex) {
-                            return SizedBox(
-                              width: width * 0.5,
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    AppRoutes.movieDetailsScreen,
-                                    arguments: state.moviesList[index].id,
-                                  );
-                                },
-                                child: MovieCardItem(
-                                  movie: state.moviesList[index] as dynamic,
-                                ),
+                    SizedBox(
+                      height: height * 0.36,
+                      child: CarouselSlider.builder(
+                        itemCount: state.moviesList.length,
+                        itemBuilder: (context, index, realIndex) {
+                          return SizedBox(
+                            width: width * 0.5,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  AppRoutes.movieDetailsScreen,
+                                  arguments: state.moviesList[index].id,
+                                );
+                              },
+                              child: MovieCardItem(
+                                movie: state.moviesList[index] as dynamic,
                               ),
-                            );
+                            ),
+                          );
+                        },
+                        options: CarouselOptions(
+                          autoPlay: true,
+                          height: height * 0.36,
+                          enlargeCenterPage: true,
+                          viewportFraction: 0.5,
+                          onPageChanged: (index, reason) {
+                            context
+                                .read<HomeGeneralCubit>()
+                                .changeSelectedMovie(index);
                           },
-                          options: CarouselOptions(
-                            autoPlay: true,
-                            height: height * 0.36,
-                            enlargeCenterPage: true,
-                            viewportFraction: 0.5,
-                            onPageChanged: (index, reason) {
-                              context
-                                  .read<HomeGeneralCubit>()
-                                  .changeSelectedMovie(index);
-                            },
-                          ),
                         ),
                       ),
+                    ),
                   Image.asset(AppAssets.watchNowImage),
                   if (selectedGenre.isNotEmpty) ...[
                     Padding(
@@ -196,7 +214,15 @@ class HomeTabState extends State<HomeTab> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(selectedGenre, style: AppStyles.regular20White),
+                          FutureBuilder<String>(
+                            future: _translateGenre(context, selectedGenre),
+                            builder: (context, snapshot) {
+                              return Text(
+                                snapshot.data ?? selectedGenre,
+                                style: AppStyles.regular20White,
+                              );
+                            },
+                          ),
                           TextButton(
                             onPressed: () {
                               Navigator.pushNamed(
@@ -221,6 +247,7 @@ class HomeTabState extends State<HomeTab> {
                         ],
                       ),
                     ),
+
                     SizedBox(
                       height: height * 0.22,
                       child: HomeTabWidgetByGenre(

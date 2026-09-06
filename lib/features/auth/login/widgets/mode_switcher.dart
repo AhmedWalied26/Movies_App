@@ -18,29 +18,33 @@ class AppModeSwitcher extends StatelessWidget {
 
     final primaryColor = AppColors.primaryColor;
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-        border: Border.all(color: primaryColor, width: 2),
-      ),
-      child: Row(
-        textDirection: TextDirection.ltr,
-        mainAxisSize: MainAxisSize.min,
-        spacing: 8,
-        children: [
-          _ModeCircle(
-            icon: Icons.sunny,
-            isSelected: selectedMode == ThemeMode.light,
-            onTap: () => onModeChanged(ThemeMode.light),
-          ),
-          SizedBox(width: context.width * 0.03),
-          _ModeCircle(
-            icon: Icons.nightlight_round,
-            isSelected: selectedMode == ThemeMode.dark,
-            onTap: () => onModeChanged(ThemeMode.dark),
-          ),
-        ],
+    return Directionality(
+            textDirection: TextDirection.ltr,
+
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          border: Border.all(color: primaryColor, width: 2),
+        ),
+        child: Row(
+          textDirection: TextDirection.ltr,
+          mainAxisSize: MainAxisSize.min,
+          spacing: 8,
+          children: [
+            _ModeCircle(
+              icon: Icons.sunny,
+              isSelected: selectedMode == ThemeMode.light,
+              onTap: () => onModeChanged(ThemeMode.light),
+            ),
+            SizedBox(width: context.width * 0.03),
+            _ModeCircle(
+              icon: Icons.nightlight_round,
+              isSelected: selectedMode == ThemeMode.dark,
+              onTap: () => onModeChanged(ThemeMode.dark),
+            ),
+          ],
+        ),
       ),
     );
   }
