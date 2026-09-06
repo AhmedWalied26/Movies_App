@@ -19,7 +19,7 @@ class MovieScreenShots extends StatelessWidget {
           children: [
             Text(
               AppLocalizations.of(context)!.screenshots,
-              style: AppStyles.bold24White,
+              style: Theme.of(context).textTheme.headlineLarge,
             ),
           ],
         ),

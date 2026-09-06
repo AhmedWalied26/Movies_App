@@ -13,7 +13,6 @@ import 'package:movies_app/widgets/skeleton/movie_carousel_skeleton.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../utils/app_assets.dart';
 import '../../../../utils/app_colors.dart';
-import '../../../../utils/app_styles.dart';
 import '../../../../utils/size_utils.dart';
 import '../../../../widgets/movie_card_item.dart';
 
@@ -79,6 +78,7 @@ class HomeTabState extends State<HomeTab> {
   Widget build(BuildContext context) {
     var width = context.width;
     var height = context.height;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return BlocConsumer<HomeGeneralCubit, HomeGeneralState>(
       listener: (context, state) {
@@ -89,7 +89,6 @@ class HomeTabState extends State<HomeTab> {
       builder: (context, state) {
         var cubit = context.read<HomeGeneralCubit>();
         String? bgImage;
-
         if (state is HomeGeneralSuccessState && state.moviesList.isNotEmpty) {
           var movie = state.moviesList[cubit.selectedMovieIndex];
           bgImage = movie.largeCoverImage ?? movie.mediumCoverImage;
@@ -112,16 +111,23 @@ class HomeTabState extends State<HomeTab> {
             ),
             Positioned.fill(
               child: Container(
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.black45,
-                      Colors.black26,
-                      Color(0xFF121312),
-                      Color(0xFF121312),
-                    ],
+                    colors: isDark
+                        ? [
+                            const Color.fromARGB(115, 56, 47, 5),
+                            const Color.fromARGB(115, 54, 45, 5),
+                            const Color(0xFF121312),
+                            const Color(0xFF121312),
+                          ]
+                        : [
+                            const Color.fromARGB(115, 54, 45, 9),
+                            const Color.fromARGB(115, 43, 34, 1),
+                            const Color.fromARGB(255, 61, 60, 16),
+                            const Color.fromARGB(255, 241, 240, 240),
+                          ],
                     stops: [0.0, 0.35, 0.65, 1.0],
                   ),
                 ),

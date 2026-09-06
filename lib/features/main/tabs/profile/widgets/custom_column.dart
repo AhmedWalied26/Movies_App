@@ -28,16 +28,36 @@ class CustomColumn extends StatelessWidget {
           spacing: height * 0.012,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('$count_1', style: AppStyles.bold24White),
-            Text(label_1, style: AppStyles.bold24White),
+            Text(
+              '$count_1',
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium!.copyWith(fontSize: 24),
+            ),
+            Text(
+              label_1,
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium!.copyWith(fontSize: 24),
+            ),
           ],
         ),
         Column(
           spacing: height * 0.012,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('$count_2', style: AppStyles.bold24White),
-            Text(label_2, style: AppStyles.bold24White),
+            Text(
+              '$count_2',
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium!.copyWith(fontSize: 24),
+            ),
+            Text(
+              label_2,
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium!.copyWith(fontSize: 24),
+            ),
           ],
         ),
       ],

@@ -17,6 +17,7 @@ class GoogleSignInButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final height = context.height;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return BlocConsumer<AuthViewModel, AuthState>(
       listener: (context, state) {
@@ -41,8 +42,13 @@ class GoogleSignInButton extends StatelessWidget {
             context.read<AuthViewModel>().signInWithGoogle();
           },
           title: l10n.login_With_Google,
-          style: AppStyles.regular20Black,
-          child: SvgPicture.asset(AppAssets.googleIcon, height: height * 0.026),
+          // style: AppStyles.regular20Black,
+          style: Theme.of(context).textTheme.displayMedium!,
+
+          child: SvgPicture.asset(
+            isDark ? AppAssets.googleIcon : AppAssets.googleIconLight,
+            height: height * 0.026,
+          ),
         );
       },
     );

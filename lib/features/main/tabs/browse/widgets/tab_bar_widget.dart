@@ -3,6 +3,7 @@ import 'package:movies_app/api/model/movie_details_response/movie.dart';
 import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_styles.dart';
+import 'package:movies_app/utils/genre_localizer.dart';
 import 'package:movies_app/utils/size_utils.dart';
 import 'package:movies_app/widgets/movie_card_item.dart';
 
@@ -24,11 +25,14 @@ class TabBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var height = context.height;
     var width = context.width;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return SafeArea(
       bottom: false,
       child: Scaffold(
-        backgroundColor: AppColors.blackColor,
+        backgroundColor: isDark
+            ? AppColors.darkBlackColor
+            : AppColors.whiteColor,
         body: SingleChildScrollView(
           padding: EdgeInsets.only(bottom: height * 0.1),
           child: Column(
@@ -58,19 +62,27 @@ class TabBarWidget extends StatelessWidget {
                           ),
                           decoration: BoxDecoration(
                             color: isSelected
-                                ? AppColors.primaryColor
+                                ? (isDark
+                                      ? AppColors.primaryColor
+                                      : AppColors.lightPrimaryColor)
                                 : Colors.transparent,
                             border: Border.all(
-                              color: AppColors.primaryColor,
+                              color: isDark
+                                  ? AppColors.primaryColor
+                                  : AppColors.lightPrimaryColor,
                               width: 1,
                             ),
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          child: Text(
-                            genre,
-                            style: isSelected
-                                ? AppStyles.bold20DarkBlack
-                                : AppStyles.bold20Primary,
+                          child: Center(
+                            child: Text(
+                              GenreLocalizer.localize(context, genre),
+                              style: isSelected
+                                  ? Theme.of(context).textTheme.displayMedium!
+                                        .copyWith(fontWeight: FontWeight.bold)
+                                  : Theme.of(context).textTheme.displayLarge!
+                                        .copyWith(fontWeight: FontWeight.w600),
+                            ),
                           ),
                         ),
                       ),
@@ -92,7 +104,7 @@ class TabBarWidget extends StatelessWidget {
                   : GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      padding: EdgeInsets.symmetric(horizontal: width * 0.035),
+                      padding: EdgeInsets.symmetric(horizontal: width * 0.016),
                       itemCount: movies.length,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(

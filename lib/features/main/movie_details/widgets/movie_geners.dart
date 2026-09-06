@@ -3,6 +3,7 @@ import 'package:movies_app/api/model/movie_details_response/movie.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_styles.dart';
+import 'package:movies_app/utils/genre_localizer.dart';
 import 'package:movies_app/utils/size_utils.dart';
 
 class MovieGeners extends StatelessWidget {
@@ -13,6 +14,7 @@ class MovieGeners extends StatelessWidget {
   Widget build(BuildContext context) {
     var height = context.height;
     var width = context.width;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Column(
       children: [
         Row(
@@ -39,15 +41,24 @@ class MovieGeners extends StatelessWidget {
               alignment: .center,
               decoration: BoxDecoration(
                 borderRadius: .circular(12),
-                color: AppColors.darkGreyColor,
+                color: isDark
+                    ? AppColors.darkGreyColor
+                    : AppColors.lightRateColor,
               ),
+
               child: Text(
-                movieDetails.genres![index],
-                style: AppStyles.regular16White,
+                GenreLocalizer.localize(context, movieDetails.genres![index]),
+                // style: AppStyles.regular16White,
+                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  fontSize: 16,
+                  color: isDark ? AppColors.whiteColor : AppColors.blackColor,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             );
           },
         ),
+        SizedBox(height: height * 0.016),
       ],
     );
   }

@@ -29,6 +29,17 @@ class AppStyles {
     fontWeight: FontWeight.bold,
     color: AppColors.primaryColor,
   );
+  static TextStyle bold24Grey = GoogleFonts.inter(
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+    color: AppColors.greyTextColor,
+  );
+
+  static TextStyle bold24white = GoogleFonts.inter(
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+    color: AppColors.whiteColor,
+  );
   static TextStyle bold16Primary = GoogleFonts.inter(
     fontSize: 16,
     fontWeight: FontWeight.bold,
@@ -57,6 +68,10 @@ class AppStyles {
     fontWeight: FontWeight.bold,
     color: AppColors.whiteColor,
   );
+  static TextStyle bold24BlackInter = GoogleFonts.inter(
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+    color: AppColors.blackColor,
   static TextStyle bold22White = GoogleFonts.inter(
     fontSize: 22,
     fontWeight: FontWeight.bold,
@@ -133,11 +148,37 @@ class AppStyles {
     fontWeight: FontWeight.w400,
     color: AppColors.primaryColor,
   );
+  static TextStyle regular12Red = GoogleFonts.roboto(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: AppColors.redColor,
+  );
+  static TextStyle regular12RedLight = GoogleFonts.roboto(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: AppColors.lightRedColor,
+  );
+  static TextStyle regular12PrimaryLight = GoogleFonts.roboto(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: AppColors.lightPrimaryColor,
+  );
 
   static TextStyle regular13Black = GoogleFonts.roboto(
     fontSize: 13,
     fontWeight: FontWeight.w400,
     color: AppColors.blackColor,
+  );
+
+  static TextStyle regular16Gray = GoogleFonts.roboto(
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    color: AppColors.greyTextColor,
+  );
+  static TextStyle regular16GrayInter = GoogleFonts.inter(
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    color: AppColors.greyTextColor,
   );
 
   static TextStyle regular12Black = GoogleFonts.roboto(
@@ -181,6 +222,11 @@ class AppStyles {
     fontSize: 20,
     fontWeight: FontWeight.w400,
     color: AppColors.whiteColor,
+  );
+  static TextStyle regular20Gray = GoogleFonts.inter(
+    fontSize: 20,
+    fontWeight: FontWeight.w400,
+    color: AppColors.greyTextColor,
   );
   static TextStyle regular20Black = GoogleFonts.inter(
     fontSize: 20,

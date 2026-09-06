@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:movies_app/features/auth/login/widgets/language_switcher.dart';
+import 'package:movies_app/features/auth/login/widgets/mode_switcher.dart';
+import 'package:movies_app/main.dart';
 import 'package:movies_app/services/profile_service.dart';
 import 'package:movies_app/widgets/custom_elevated_button.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
@@ -152,9 +155,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     var l = AppLocalizations.of(context)!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: AppColors.darkBlackColor,
+      backgroundColor: isDark ? AppColors.darkBlackColor : AppColors.whiteColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -174,6 +178,33 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Column(
+              spacing: 20,
+              children: [
+                ValueListenableBuilder<Locale>(
+                  valueListenable: LocaleController.instance,
+                  builder: (context, locale, _) {
+                    return LanguageSwitcher(
+                      selectedLocale: locale,
+                      onLanguageChanged: (newLocale) {
+                        LocaleController.instance.value = newLocale;
+                      },
+                    );
+                  },
+                ),
+                ValueListenableBuilder<ThemeMode>(
+                  valueListenable: ThemeController.instance,
+                  builder: (context, themeMode, _) {
+                    return AppModeSwitcher(
+                      selectedMode: themeMode,
+                      onModeChanged: (mode) {
+                        ThemeController.instance.value = mode;
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
             Center(
               child: GestureDetector(
                 onTap: _showAvatarBottomSheet,
@@ -189,7 +220,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             CustomTextField(
               title: l.name,
               hintText: nameHint.isEmpty ? null : nameHint,
-              prefix: SvgPicture.asset(AppAssets.profileNameIcon),
+              prefix: isDark
+                  ? SvgPicture.asset(AppAssets.profileNameIcon)
+                  : SvgPicture.asset(AppAssets.profileNameIconDark),
               controller: nameController,
             ),
 
@@ -198,7 +231,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             CustomTextField(
               title: l.phone_Number,
               hintText: phoneHint.isEmpty ? null : phoneHint,
-              prefix: SvgPicture.asset(AppAssets.phoneIcon),
+              prefix: isDark
+                  ? SvgPicture.asset(AppAssets.phoneIcon)
+                  : SvgPicture.asset(AppAssets.phoneIconLight),
               controller: phoneController,
             ),
 
@@ -206,12 +241,17 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             TextButton(
               onPressed: () =>
                   Navigator.pushNamed(context, AppRoutes.resetPasswordScreen),
-              child: Text(l.reset_Password, style: AppStyles.bold16White),
+              child: Text(
+                l.reset_Password,
+                // style: AppStyles.bold16White
+                style: Theme.of(context).textTheme.titleMedium!,
+              ),
             ),
+
             Spacer(),
             CustomElevatedButton(
-              isLoading: isDeleteLoading,
-              bgColor: AppColors.redColor,
+              bgColor: isDark ? AppColors.redColor : AppColors.lightRedColor,
+               isLoading: isDeleteLoading,
               onPressedButton2: _deleteAccount,
               title: l.delete_Account,
               style: AppStyles.regular20White,
