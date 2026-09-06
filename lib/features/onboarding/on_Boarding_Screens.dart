@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:movies_app/features/onboarding/widgets/custom_container.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_assets.dart';
@@ -94,7 +95,10 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
             image: AppAssets.onBoardingImage6,
             text1: AppLocalizations.of(context)!.start_Watching_Now,
             nameButton1: AppLocalizations.of(context)!.finish,
-            onPressedButton1: () {
+            onPressedButton1: () async {
+              final preferences = await SharedPreferences.getInstance();
+              await preferences.setBool('has_completed_onboarding', true);
+              if (!context.mounted) return;
               Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
             },
             nameButton2: AppLocalizations.of(context)!.back,
