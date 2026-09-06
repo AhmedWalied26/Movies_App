@@ -93,7 +93,7 @@ class MoviesApp extends StatelessWidget {
             AppRoutes.profileScreen: (context) => ProfileTab(),
           },
       initialRoute: FirebaseAuth.instance.currentUser != null
-          ? AppRoutes.mainScreen
+          ? AppRoutes.mainScreen 
           : hasCompletedOnboarding
           ? AppRoutes.loginScreen
           : AppRoutes.exploreScreen,
