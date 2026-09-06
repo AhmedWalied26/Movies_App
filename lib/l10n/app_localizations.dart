@@ -661,6 +661,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No movies found'**
   String get no_movies_found;
+
+  /// No description provided for @removeFromWatchList.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from watch list'**
+  String get removeFromWatchList;
+
+  /// No description provided for @addToWatchList.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to watch list'**
+  String get addToWatchList;
+
+  /// No description provided for @current_Password.
+  ///
+  /// In en, this message translates to:
+  /// **'Current password'**
+  String get current_Password;
+
+  /// No description provided for @fill_All_Password_Fields.
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in all password fields.'**
+  String get fill_All_Password_Fields;
+
+  /// No description provided for @passwords_Do_Not_Match.
+  ///
+  /// In en, this message translates to:
+  /// **'New passwords do not match.'**
+  String get passwords_Do_Not_Match;
+
+  /// No description provided for @password_Updated_Successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Password updated successfully.'**
+  String get password_Updated_Successfully;
+
+  /// No description provided for @unable_To_Update_Password.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to update password.'**
+  String get unable_To_Update_Password;
+
+  /// No description provided for @unable_To_Load_Watch_List.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load watch list'**
+  String get unable_To_Load_Watch_List;
+
+  /// No description provided for @unknown_Error.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown Error'**
+  String get unknown_Error;
 }
 
 class _AppLocalizationsDelegate

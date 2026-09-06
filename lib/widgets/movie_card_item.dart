@@ -24,9 +24,14 @@ class MovieCardItem extends StatelessWidget {
   Widget build(BuildContext context) {
     var height = context.height;
     var width = context.width;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     final imageUrl = isSuggestion ? movieImage : movie?.mediumCoverImage;
     return Container(
-      padding: EdgeInsetsDirectional.only(start: width * 0.02, top: width * 0.03),
+      padding: EdgeInsetsDirectional.only(
+        start: width * 0.02,
+        top: width * 0.03,
+      ),
       alignment: AlignmentDirectional.topStart,
       decoration: BoxDecoration(
         borderRadius: .circular(20),
@@ -40,10 +45,15 @@ class MovieCardItem extends StatelessWidget {
             : null,
       ),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: width * 0.02, vertical: height * 0.005),
+        padding: EdgeInsets.symmetric(
+          horizontal: width * 0.02,
+          vertical: height * 0.005,
+        ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: AppColors.blackColor.withValues(alpha: 0.71),
+          color: isDark
+              ? AppColors.blackColor.withValues(alpha: 0.71)
+              : AppColors.whiteColor.withValues(alpha: 0.71),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -52,7 +62,8 @@ class MovieCardItem extends StatelessWidget {
               isSuggestion
                   ? movieRate.toString()
                   : (movie?.rating ?? '0.0').toString(),
-              style: AppStyles.regular16White,
+              // style: AppStyles.regular16White,
+              style: Theme.of(context).textTheme.bodyLarge!,
             ),
             SizedBox(width: width * 0.01),
             SvgPicture.asset(

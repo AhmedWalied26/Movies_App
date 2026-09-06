@@ -13,18 +13,22 @@ class MovieInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     var height = context.height;
     var width = context.width;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       padding: .symmetric(horizontal: width * 0.05, vertical: height * 0.007),
       decoration: BoxDecoration(
         borderRadius: .circular(16),
-        color: AppColors.darkGreyColor,
+        color: isDark ? AppColors.darkGreyColor : AppColors.lightRateColor,
       ),
       child: Row(
         spacing: width * 0.028,
         mainAxisSize: .min,
         children: [
           SvgPicture.asset(icon),
-          Text(text.toString(), style: AppStyles.bold24White),
+          Text(
+            text.toString(),
+            style: Theme.of(context).textTheme.headlineLarge!,
+          ), // bold24White
         ],
       ),
     );

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/features/main/tabs/browse/cubit/browse_state.dart';
 import 'package:movies_app/features/main/tabs/browse/cubit/browse_view_model.dart';
 import 'package:movies_app/features/main/tabs/browse/widgets/tab_bar_widget.dart';
+import 'package:movies_app/l10n/app_localizations.dart';
 
 class BrowseTab extends StatelessWidget {
   const BrowseTab({super.key});
@@ -18,7 +19,12 @@ class BrowseTab extends StatelessWidget {
           if (state is BrowseLoadingState) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is BrowseErrorState) {
-            return Center(child: Text(state.statusMessage ?? 'Unknown Error'));
+            return Center(
+              child: Text(
+                state.statusMessage ??
+                    AppLocalizations.of(context)!.unknown_Error,
+              ),
+            );
           }
 
           return TabBarWidget(

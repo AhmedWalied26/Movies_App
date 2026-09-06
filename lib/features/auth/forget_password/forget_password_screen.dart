@@ -75,11 +75,12 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     var height = context.height;
     var width = context.width;
     final l10n = AppLocalizations.of(context)!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: AppColors.blackColor,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: AppColors.blackColor,
+        // backgroundColor: AppColors.blackColor,
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
@@ -99,7 +100,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
               children: [
                 Image.asset(AppAssets.forgetPasswordImage),
                 CustomTextField(
-                  prefix: SvgPicture.asset(AppAssets.emailIcon),
+                  prefix: SvgPicture.asset(
+                    isDark ? AppAssets.emailIcon : AppAssets.emailIconLight,
+                  ),
                   controller: emailController,
                   title: AppLocalizations.of(context)!.email,
                 ),
@@ -109,7 +112,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 CustomElevatedButton(
                   onPressedButton2: resetPassword,
                   title: AppLocalizations.of(context)!.verify_Email,
-                  style: AppStyles.regular20Black,
+                  style: Theme.of(context).textTheme.displayMedium!,
                 ),
               ],
             ),

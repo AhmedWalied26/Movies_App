@@ -298,4 +298,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get no_movies_found => 'No movies found';
+
+  @override
+  String get removeFromWatchList => 'Remove from watch list';
+
+  @override
+  String get addToWatchList => 'Add to watch list';
+
+  @override
+  String get current_Password => 'Current password';
+
+  @override
+  String get fill_All_Password_Fields => 'Please fill in all password fields.';
+
+  @override
+  String get passwords_Do_Not_Match => 'New passwords do not match.';
+
+  @override
+  String get password_Updated_Successfully => 'Password updated successfully.';
+
+  @override
+  String get unable_To_Update_Password => 'Unable to update password.';
+
+  @override
+  String get unable_To_Load_Watch_List => 'Unable to load watch list';
+
+  @override
+  String get unknown_Error => 'Unknown Error';
 }

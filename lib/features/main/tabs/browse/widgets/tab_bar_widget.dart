@@ -25,11 +25,14 @@ class TabBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var height = context.height;
     var width = context.width;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return SafeArea(
       bottom: false,
       child: Scaffold(
-        backgroundColor: AppColors.blackColor,
+        backgroundColor: isDark
+            ? AppColors.darkBlackColor
+            : AppColors.whiteColor,
         body: SingleChildScrollView(
           padding: EdgeInsets.only(bottom: context.height * 0.1),
           child: Column(
@@ -58,26 +61,28 @@ class TabBarWidget extends StatelessWidget {
                             horizontal: width * 0.035,
                           ),
                           decoration: BoxDecoration(
-                            color: isSelected ? AppColors.primaryColor : Colors.transparent,
+                            color: isSelected
+                                ? (isDark
+                                      ? AppColors.primaryColor
+                                      : AppColors.lightPrimaryColor)
+                                : Colors.transparent,
                             border: Border.all(
-                              color: AppColors.primaryColor,
+                              color: isDark
+                                  ? AppColors.primaryColor
+                                  : AppColors.lightPrimaryColor,
                               width: 1,
                             ),
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Center(
-                            // child: Text(
-                            //   genre,
-                            //   style: isSelected
-                            //       ? AppStyles.bold20DarkBlack
-                            //       : AppStyles.bold20Primary,
-                            // ),
                             child: Text(
-  GenreLocalizer.localize(context, genre),
-  style: isSelected
-      ? AppStyles.bold20DarkBlack
-      : AppStyles.bold20Primary,
-),
+                              GenreLocalizer.localize(context, genre),
+                              style: isSelected
+                                  ? Theme.of(context).textTheme.displayMedium!
+                                        .copyWith(fontWeight: FontWeight.bold)
+                                  : Theme.of(context).textTheme.displayLarge!
+                                        .copyWith(fontWeight: FontWeight.w600),
+                            ),
                           ),
                         ),
                       ),
@@ -89,44 +94,50 @@ class TabBarWidget extends StatelessWidget {
               SizedBox(height: SizeConfig.height(context) * 0.025),
               movies.isEmpty
                   ? const Padding(
-                padding: EdgeInsets.only(top: 100),
-                child: Center(
-                  child: Text(
-                    'No movies found for this category',
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                ),
-              )
+                      padding: EdgeInsets.only(top: 100),
+                      child: Center(
+                        child: Text(
+                          'No movies found for this category',
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                      ),
+                    )
                   : GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: width * 0.016),
-                itemCount: movies.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 12,
-                  crossAxisSpacing: 12,
-                  childAspectRatio: 0.7,
-                ),
-                itemBuilder: (context, index) {
-                  var movie = movies[index];
-                  return InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(
-                        context,
-                        AppRoutes.movieDetailsScreen,
-                        arguments: movie.id,
-                      );
-                    },
-                    child: MovieCardItem(
-                      movie: movie,
-                      // تم تعديل الترتيب هنا لتبدأ بالبوستر الطولي الواضح أولاً
-                      movieImage: movie.mediumCoverImage ?? movie.largeCoverImage ?? movie.backgroundImage ?? '',
-                      movieRate: movie.rating != null ? double.parse(movie.rating.toString()) : 0.0,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.symmetric(horizontal: width * 0.016),
+                      itemCount: movies.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 12,
+                            crossAxisSpacing: 12,
+                            childAspectRatio: 0.7,
+                          ),
+                      itemBuilder: (context, index) {
+                        var movie = movies[index];
+                        return InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              AppRoutes.movieDetailsScreen,
+                              arguments: movie.id,
+                            );
+                          },
+                          child: MovieCardItem(
+                            movie: movie,
+                            movieImage:
+                                movie.mediumCoverImage ??
+                                movie.largeCoverImage ??
+                                movie.backgroundImage ??
+                                '',
+                            movieRate: movie.rating != null
+                                ? double.parse(movie.rating.toString())
+                                : 0.0,
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
             ],
           ),
         ),

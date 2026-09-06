@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/utils/app_assets.dart';
-import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/size_utils.dart';
 
 class CustomBottomNavbar extends StatelessWidget {
   final int index;
-  final Function onTap;
+  final Function(int) onTap;
+
   const CustomBottomNavbar({
     super.key,
     required this.index,
@@ -15,74 +15,90 @@ class CustomBottomNavbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var height = context.height;
-    var width = context.width;
+    final height = context.height;
+    final width = context.width;
+
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Theme(
-      data: ThemeData(
+      data: Theme.of(context).copyWith(
         splashFactory: NoSplash.splashFactory,
         highlightColor: Colors.transparent,
       ),
       child: SafeArea(
         child: Container(
           height: height * 0.066,
-          clipBehavior: .antiAlias,
-          decoration: BoxDecoration(borderRadius: .circular(16)),
-          margin: .symmetric(horizontal: width * 0.026),
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          margin: EdgeInsets.symmetric(
+            horizontal: width * 0.026,
+          ),
           child: Directionality(
             textDirection: TextDirection.ltr,
-
             child: BottomNavigationBar(
               showSelectedLabels: false,
               showUnselectedLabels: false,
-              backgroundColor: AppColors.darkGreyColor,
-              onTap: (index) {
-                onTap(index);
-              },
+
+              onTap: onTap,
               currentIndex: index,
-              type: .fixed,
+              type: BottomNavigationBarType.fixed,
+
               items: [
                 BottomNavigationBarItem(
                   activeIcon: SvgPicture.asset(
-                    AppAssets.homeIcon,
-                    colorFilter: ColorFilter.mode(
-                      AppColors.primaryColor,
-                      .srcIn,
-                    ),
+                    isDark
+                        ? AppAssets.selectedhomeDarkIcon
+                        : AppAssets.homeIcon,
                   ),
-                  icon: SvgPicture.asset(AppAssets.homeIcon),
+                  icon: SvgPicture.asset(
+                    isDark
+                        ? AppAssets.homeIcon
+                        : AppAssets.unhomeIconLight,
+                  ),
                   label: '',
                 ),
+
                 BottomNavigationBarItem(
                   activeIcon: SvgPicture.asset(
-                    AppAssets.searchIcon,
-                    colorFilter: ColorFilter.mode(
-                      AppColors.primaryColor,
-                      .srcIn,
-                    ),
+                    isDark
+                        ? AppAssets.selectedsearchDarkIcon
+                        : AppAssets.searchDark,
                   ),
-                  icon: SvgPicture.asset(AppAssets.searchIcon),
+                  icon: SvgPicture.asset(
+                    isDark
+                        ? AppAssets.searchDark
+                        : AppAssets.unsearchLight,
+                  ),
                   label: '',
                 ),
+
                 BottomNavigationBarItem(
                   activeIcon: SvgPicture.asset(
-                    AppAssets.exploreIcon,
-                    colorFilter: ColorFilter.mode(
-                      AppColors.primaryColor,
-                      .srcIn,
-                    ),
+                    isDark
+                        ? AppAssets.selectedexploreDarkIcon
+                        : AppAssets.exploreIcon,
                   ),
-                  icon: SvgPicture.asset(AppAssets.exploreIcon),
+                  icon: SvgPicture.asset(
+                    isDark
+                        ? AppAssets.exploreIcon
+                        : AppAssets.unexploreIcon,
+                  ),
                   label: '',
                 ),
+
                 BottomNavigationBarItem(
                   activeIcon: SvgPicture.asset(
-                    AppAssets.profileIcon,
-                    colorFilter: ColorFilter.mode(
-                      AppColors.primaryColor,
-                      .srcIn,
-                    ),
+                    isDark
+                        ? AppAssets.selectedprofileDarkIcon
+                        : AppAssets.profileIcon,
                   ),
-                  icon: SvgPicture.asset(AppAssets.profileIcon),
+                  icon: SvgPicture.asset(
+                    isDark
+                        ? AppAssets.profileIcon
+                        : AppAssets.unprofileIcon,
+                  ),
                   label: '',
                 ),
               ],

@@ -50,19 +50,21 @@ class _ProfileTabState extends State<ProfileTab>
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
     _historyFuture = MovieHistoryService.instance.loadHistory();
-    _watchListSubscription = WatchListService.instance.watchSavedMovies().listen(
-      (movies) {
-        if (!mounted) return;
-        setState(() {
-          _watchListMovies = movies;
-          _watchListError = null;
-        });
-      },
-      onError: (Object error) {
-        if (!mounted) return;
-        setState(() => _watchListError = error);
-      },
-    );
+    _watchListSubscription = WatchListService.instance
+        .watchSavedMovies()
+        .listen(
+          (movies) {
+            if (!mounted) return;
+            setState(() {
+              _watchListMovies = movies;
+              _watchListError = null;
+            });
+          },
+          onError: (Object error) {
+            if (!mounted) return;
+            setState(() => _watchListError = error);
+          },
+        );
     _loadProfile();
   }
 
@@ -97,10 +99,11 @@ class _ProfileTabState extends State<ProfileTab>
     var height = context.height;
     var width = context.width;
     final loc = AppLocalizations.of(context)!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: AppColors.darkBlackColor,
+      // backgroundColor: AppColors.darkBlackColor,
       body: Container(
-        color: AppColors.greyColor,
+        color: isDark ? AppColors.greyColor : AppColors.lightContainerColor,
         child: Column(
           children: [
             SizedBox(height: SizeConfig.height(context) * 0.05),
@@ -121,7 +124,12 @@ class _ProfileTabState extends State<ProfileTab>
                         ),
                       ),
                       const SizedBox(height: 8),
-                      Text(profileName, style: AppStyles.bold20White),
+                      Text(
+                        profileName,
+                        style:
+                            // AppStyles.bold20White
+                            Theme.of(context).textTheme.headlineMedium!,
+                      ),
                     ],
                   ),
                   FutureBuilder<List<Movie>>(
@@ -155,13 +163,18 @@ class _ProfileTabState extends State<ProfileTab>
                       },
                       title: loc.edit_Profile,
                       style: AppStyles.regular20White,
+                      bgColor: isDark
+                          ? AppColors.primaryColor
+                          : AppColors.lightPrimaryColor,
                     ),
                   ),
                   Expanded(
                     flex: 2,
                     child: CustomElevatedButton(
                       isExitButton: true,
-                      bgColor: AppColors.redColor,
+                      bgColor: isDark
+                          ? AppColors.redColor
+                          : AppColors.lightRedColor,
                       onPressedButton2: _signOut,
                       title: loc.exit,
                       style: AppStyles.regular20White,
@@ -176,17 +189,33 @@ class _ProfileTabState extends State<ProfileTab>
               controller: _tabController,
               labelPadding: .only(bottom: height * 0.012),
               dividerColor: Colors.transparent,
-              unselectedLabelColor: AppColors.primaryColor,
-              indicatorColor: AppColors.primaryColor,
+              unselectedLabelColor: isDark
+                  ? AppColors.primaryColor
+                  : AppColors.lightPrimaryColor,
+              indicatorColor: isDark
+                  ? AppColors.primaryColor
+                  : AppColors.lightPrimaryColor,
               indicatorSize: .tab,
               tabs: [
                 Tab(
                   icon: const Icon(Icons.list, size: 40),
-                  child: Text(loc.watch_List, style: AppStyles.bold18White),
+                  child: Text(
+                    loc.watch_List,
+                    // style: AppStyles.bold18White
+                    style: Theme.of(
+                      context,
+                    ).textTheme.titleMedium!.copyWith(fontSize: 18),
+                  ),
                 ),
                 Tab(
                   icon: const Icon(Icons.folder, size: 40),
-                  child: Text(loc.history, style: AppStyles.bold18White),
+                  child: Text(
+                    loc.history,
+                    // style: AppStyles.bold18White
+                    style: Theme.of(
+                      context,
+                    ).textTheme.titleMedium!.copyWith(fontSize: 18),
+                  ),
                 ),
               ],
             ),
@@ -199,7 +228,9 @@ class _ProfileTabState extends State<ProfileTab>
                       if (_watchListError != null) {
                         return Center(
                           child: Text(
-                            'Unable to load watch list',
+                            AppLocalizations.of(
+                              context,
+                            )!.unable_To_Load_Watch_List,
                             style: AppStyles.regular16White,
                           ),
                         );
@@ -207,7 +238,9 @@ class _ProfileTabState extends State<ProfileTab>
                       final movies = _watchListMovies;
                       return Container(
                         width: double.infinity,
-                        color: AppColors.blackColor,
+                        color: isDark
+                            ? AppColors.blackColor
+                            : AppColors.whiteColor,
                         child: movies.isEmpty
                             ? Center(
                                 child: Image.asset(AppAssets.emptyListImage),
@@ -249,7 +282,7 @@ class _ProfileTabState extends State<ProfileTab>
                   ),
                   Container(
                     width: double.infinity,
-                    color: AppColors.blackColor,
+                    color: isDark ? AppColors.blackColor : AppColors.whiteColor,
                     child: FutureBuilder<List<Movie>>(
                       future: _historyFuture,
                       builder: (context, snapshot) {

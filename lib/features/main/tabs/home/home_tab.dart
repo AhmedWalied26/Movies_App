@@ -9,7 +9,6 @@ import 'package:movies_app/widgets/main_error.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../utils/app_assets.dart';
 import '../../../../utils/app_colors.dart';
-import '../../../../utils/app_styles.dart';
 import '../../../../utils/size_utils.dart';
 import '../../../../widgets/main_loading_widget.dart';
 import '../../../../widgets/movie_card_item.dart';
@@ -26,12 +25,12 @@ class _HomeTabState extends State<HomeTab> {
   Widget build(BuildContext context) {
     var width = context.width;
     var height = context.height;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return BlocBuilder<HomeGeneralCubit, HomeGeneralState>(
       builder: (context, state) {
         var cubit = context.read<HomeGeneralCubit>();
         String? bgImage;
-
         if (state is HomeGeneralSuccessState && state.moviesList.isNotEmpty) {
           var movie = state.moviesList[cubit.selectedMovieIndex];
           bgImage = movie.largeCoverImage ?? movie.mediumCoverImage;
@@ -57,16 +56,23 @@ class _HomeTabState extends State<HomeTab> {
             ),
             Positioned.fill(
               child: Container(
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.black45,
-                      Colors.black26,
-                      Color(0xFF121312),
-                      Color(0xFF121312),
-                    ],
+                    colors: isDark
+                        ? [
+                            const Color.fromARGB(115, 56, 47, 5),
+                            const Color.fromARGB(115, 54, 45, 5),
+                            const Color(0xFF121312),
+                            const Color(0xFF121312),
+                          ]
+                        : [
+                            const Color.fromARGB(115, 54, 45, 9),
+                            const Color.fromARGB(115, 43, 34, 1),
+                            const Color.fromARGB(255, 61, 60, 16),
+                            const Color.fromARGB(255, 241, 240, 240),
+                          ],
                     stops: [0.0, 0.35, 0.65, 1.0],
                   ),
                 ),
@@ -136,7 +142,18 @@ class _HomeTabState extends State<HomeTab> {
                       children: [
                         Text(
                           AppLocalizations.of(context)!.horror,
-                          style: AppStyles.regular20White,
+                          // style: Theme.of(context).textTheme.labelMedium!,
+                          style: TextStyle(
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                ? AppColors.whiteColor
+                                : AppColors.primaryColor,
+                            fontSize: 20,
+                            fontWeight:
+                                Theme.of(context).brightness == Brightness.dark
+                                ? FontWeight.w400
+                                : FontWeight.w600,
+                          ),
                         ),
                         TextButton(
                           onPressed: () {
@@ -150,11 +167,16 @@ class _HomeTabState extends State<HomeTab> {
                             children: [
                               Text(
                                 AppLocalizations.of(context)!.see_More,
-                                style: AppStyles.regular16DarkPrimary,
+                                style: TextStyle(color: AppColors.primaryColor),
+
+                                // Theme.of(
+                                //   context,
+                                // ).textTheme.displayLarge!,
                               ),
-                              const Icon(
+                              Icon(
                                 Icons.arrow_forward,
                                 color: AppColors.primaryColor,
+                                // : AppColors.greyTextColor,
                               ),
                             ],
                           ),
@@ -166,6 +188,7 @@ class _HomeTabState extends State<HomeTab> {
                     height: height * 0.22,
                     child: const HomeTabWidgetByGenre(genre: "Horror"),
                   ),
+                  SizedBox(height: height * 0.029),
                 ],
               ),
             ),

@@ -18,16 +18,16 @@ class MovieSummary extends StatelessWidget {
           children: [
             Text(
               AppLocalizations.of(context)!.summary,
-              style: AppStyles.bold24White,
+              style: Theme.of(context).textTheme.headlineLarge,
             ),
           ],
         ),
         SizedBox(height: height * 0.016),
-        //Text(movieDetails.descriptionFull!, style: AppStyles.regular16White),
         TranslatedText(
-  text: movieDetails.descriptionFull!,
-  style: AppStyles.regular16White,
-),
+          text: movieDetails.descriptionFull!,
+          // style: AppStyles.regular16White,
+          style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 16),
+        ),
       ],
     );
   }

@@ -17,7 +17,8 @@ class MovieCast extends StatelessWidget {
     var height = context.height;
     var width = context.width;
     final cast = movieDetails.cast ?? [];
-        final loc = AppLocalizations.of(context)!;
+    final loc = AppLocalizations.of(context)!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Column(
       children: [
@@ -40,7 +41,9 @@ class MovieCast extends StatelessWidget {
             return Container(
               padding: EdgeInsets.all(width * 0.035),
               decoration: BoxDecoration(
-                color: AppColors.darkGreyColor,
+                color: isDark
+                    ? AppColors.darkGreyColor
+                    : AppColors.lightRateColor,
                 borderRadius: .circular(16),
               ),
               child: Row(
@@ -68,38 +71,23 @@ class MovieCast extends StatelessWidget {
                       },
                     ),
                   ),
-                  // Expanded(
-                  //   child: Column(
-                  //     crossAxisAlignment: .start,
-                  //     spacing: height * 0.004,
-                  //     children: [
-                  //       Text(
-                  //         'Name : ${cast[index].name}',
-                  //         style: AppStyles.regular20White,
-                  //       ),
-                  //       Text(
-                  //         'Character : ${cast[index].characterName}',
-                  //         style: AppStyles.regular20White,
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
+                 
                   Expanded(
-  child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    spacing: height * 0.004,
-    children: [
-      CastInfoRow(
-        label: loc.name,
-        value: cast[index].name ?? '',
-      ),
-      CastInfoRow(
-        label: loc.character,
-        value: cast[index].characterName ?? '',
-      ),
-    ],
-  ),
-),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: height * 0.004,
+                      children: [
+                        CastInfoRow(
+                          label: loc.name,
+                          value: cast[index].name ?? '',
+                        ),
+                        CastInfoRow(
+                          label: loc.character,
+                          value: cast[index].characterName ?? '',
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             );

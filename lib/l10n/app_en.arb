@@ -93,5 +93,14 @@
   "war": "War",
   "film_noir": "Film-Noir",
   "character": "Character",
-  "no_movies_found": "No movies found"
+  "no_movies_found": "No movies found",
+    "removeFromWatchList": "Remove from watch list",
+  "addToWatchList": "Add to watch list",
+    "current_Password": "Current password",
+  "fill_All_Password_Fields": "Please fill in all password fields.",
+  "passwords_Do_Not_Match": "New passwords do not match.",
+  "password_Updated_Successfully": "Password updated successfully.",
+  "unable_To_Update_Password": "Unable to update password.",
+  "unable_To_Load_Watch_List": "Unable to load watch list",
+  "unknown_Error": "Unknown Error"
 }

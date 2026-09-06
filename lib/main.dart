@@ -51,13 +51,16 @@ class MoviesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<Locale>(
-      valueListenable: LocaleController.instance,
-
-      builder: (context, locale, _) {
+    return AnimatedBuilder(
+      animation: Listenable.merge([
+        LocaleController.instance,
+        ThemeController.instance,
+      ]),
+      builder: (context, _) {
         return MaterialApp(
           localizationsDelegates: AppLocalizations.localizationsDelegates,
-          locale: locale,
+          // locale: locale,
+          locale: LocaleController.instance.value,
           supportedLocales: AppLocalizations.supportedLocales,
           debugShowCheckedModeBanner: false,
           routes: {
@@ -76,10 +79,11 @@ class MoviesApp extends StatelessWidget {
             AppRoutes.browseScreen: (context) => BrowseTab(),
             AppRoutes.profileScreen: (context) => ProfileTab(),
           },
-          initialRoute: AppRoutes.loginScreen,
+          initialRoute: AppRoutes.onboardingScreen,
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
-          themeMode: ThemeMode.dark,
+          // themeMode: ThemeMode.system,
+          themeMode: ThemeController.instance.value,
         );
       },
     );
@@ -90,6 +94,14 @@ class LocaleController {
   LocaleController._();
 
   static final ValueNotifier<Locale> instance = ValueNotifier<Locale>(
-    const Locale('en'),
+    const Locale('ar'),
+  );
+}
+
+class ThemeController {
+  ThemeController._();
+
+  static final ValueNotifier<ThemeMode> instance = ValueNotifier<ThemeMode>(
+    ThemeMode.dark,
   );
 }

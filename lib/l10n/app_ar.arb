@@ -93,5 +93,14 @@
   "war": "حربي",
   "film_noir": "فيلم نوار",
   "character": "الشخصية",
-  "no_movies_found": "لا توجد أفلام"
+  "no_movies_found": "لا توجد أفلام",
+    "removeFromWatchList": "إزالة من قائمة المشاهدة",
+  "addToWatchList": "إضافة إلى قائمة المشاهدة",
+    "current_Password": "كلمة المرور الحالية",
+  "fill_All_Password_Fields": "من فضلك أدخل جميع حقول كلمة المرور.",
+  "passwords_Do_Not_Match": "كلمتا المرور الجديدتان غير متطابقتين.",
+  "password_Updated_Successfully": "تم تحديث كلمة المرور بنجاح.",
+  "unable_To_Update_Password": "تعذر تحديث كلمة المرور.",
+  "unable_To_Load_Watch_List": "تعذر تحميل قائمة المشاهدة",
+  "unknown_Error": "حدث خطأ غير معروف"
 }

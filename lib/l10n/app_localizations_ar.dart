@@ -298,4 +298,31 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get no_movies_found => 'لا توجد أفلام';
+
+  @override
+  String get removeFromWatchList => 'إزالة من قائمة المشاهدة';
+
+  @override
+  String get addToWatchList => 'إضافة إلى قائمة المشاهدة';
+
+  @override
+  String get current_Password => 'كلمة المرور الحالية';
+
+  @override
+  String get fill_All_Password_Fields => 'من فضلك أدخل جميع حقول كلمة المرور.';
+
+  @override
+  String get passwords_Do_Not_Match => 'كلمتا المرور الجديدتان غير متطابقتين.';
+
+  @override
+  String get password_Updated_Successfully => 'تم تحديث كلمة المرور بنجاح.';
+
+  @override
+  String get unable_To_Update_Password => 'تعذر تحديث كلمة المرور.';
+
+  @override
+  String get unable_To_Load_Watch_List => 'تعذر تحميل قائمة المشاهدة';
+
+  @override
+  String get unknown_Error => 'حدث خطأ غير معروف';
 }

@@ -17,6 +17,7 @@ class SearchTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var width = context.width;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return BlocProvider(
       create: (context) => SearchCubit()..getInitialMovies(),
       child: Builder(
@@ -31,7 +32,9 @@ class SearchTab extends StatelessWidget {
                     title: AppLocalizations.of(context)!.search,
                     prefix: Padding(
                       padding: EdgeInsetsDirectional.only(start: width * 0.025),
-                      child: SvgPicture.asset(AppAssets.searchIcon),
+                      child: isDark
+                          ? SvgPicture.asset(AppAssets.searchDark)
+                          : SvgPicture.asset(AppAssets.searchLight),
                     ),
                     onChanged: (text) {
                       context.read<SearchCubit>().searchMovies(text);

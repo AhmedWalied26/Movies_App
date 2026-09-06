@@ -26,6 +26,7 @@ class CustomContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var height = context.height;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Stack(
       children: [
         Positioned.fill(child: Image.asset(image, fit: BoxFit.cover)),
@@ -40,7 +41,7 @@ class CustomContainer extends StatelessWidget {
               bottom: height * 0.02,
             ),
             decoration: BoxDecoration(
-              color: AppColors.blackColor,
+              color: isDark ? AppColors.blackColor : AppColors.whiteColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(41),
                 topRight: Radius.circular(41),
@@ -52,18 +53,28 @@ class CustomContainer extends StatelessWidget {
                 Text(
                   text1,
                   textAlign: TextAlign.center,
-                  style: AppStyles.bold24White,
+                  // style: AppStyles.bold24White,
+                  style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 SizedBox(height: height * 0.017),
                 if (text2 != null)
                   Text(
                     text2!,
                     textAlign: TextAlign.center,
-                    style: AppStyles.regular20White,
+                    // style: AppStyles.regular20White,
+                    style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w100,
+                    ),
                   ),
+
                 SizedBox(height: height * 0.027),
                 CustomElevatedButton(
-                  style: AppStyles.semi20Black,
+                  // style: AppStyles.semi20Black,
+                  style: Theme.of(context).textTheme.displayMedium!,
                   onPressedButton2: onPressedButton1,
                   title: nameButton1,
                 ),
@@ -72,7 +83,10 @@ class CustomContainer extends StatelessWidget {
                   CustomElevatedButton(
                     side: BorderSide(),
                     style: AppStyles.semi20Primary,
-                    bgColor: AppColors.blackColor,
+                    bgColor: isDark
+                        ? AppColors.blackColor
+                        : AppColors.whiteColor,
+                    borderColor: AppColors.primaryColor,
                     onPressedButton2: onPressedButton2!,
                     title: nameButton2!,
                   ),
