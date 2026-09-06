@@ -5,15 +5,17 @@ import '../../../../../api/api_manager.dart';
 class SearchCubit extends Cubit<SearchState> {
   SearchCubit() : super(SearchInitialState());
 
-  // void getInitialMovies() async {
-  //   emit(SearchLoadingState());
-  //   try {
-  //     var result = await ApiManager.getMoviesByGenre("");
-  //     emit(SearchSuccessState(result.data?.movies ?? []));
-  //   } catch (e) {
-  //     emit(SearchErrorState(e.toString()));
-  //   }
-  // }
+  void getInitialMovies() async {
+    emit(SearchLoadingState());
+    try {
+      var result = await ApiManager.getMoviesByGenre("");
+      if (isClosed) return;
+      emit(SearchSuccessState(result.data?.movies ?? []));
+    } catch (e) {
+      if (isClosed) return;
+      emit(SearchErrorState(e.toString()));
+    }
+  }
 
   void searchMovies(String query) async {
     if (query.trim().isEmpty) {
@@ -24,8 +26,10 @@ class SearchCubit extends Cubit<SearchState> {
     emit(SearchLoadingState());
     try {
       var result = await ApiManager.searchMovies(query);
+      if (isClosed) return;
       emit(SearchSuccessState(result.data?.movies ?? []));
     } catch (e) {
+      if (isClosed) return;
       emit(SearchErrorState(e.toString()));
     }
   }

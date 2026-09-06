@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'dart:math';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,16 +21,71 @@ class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
 
   @override
-  State<HomeTab> createState() => _HomeTabState();
+  State<HomeTab> createState() => HomeTabState();
 }
 
-class _HomeTabState extends State<HomeTab> {
+class HomeTabState extends State<HomeTab> {
+  List<String> availableGenres = [];
+  String selectedGenre = '';
+
+  @override
+  void initState() {
+    super.initState();
+    final state = context.read<HomeGeneralCubit>().state;
+    if (state is HomeGeneralSuccessState) {
+      availableGenres = _genresFromMovies(state.moviesList);
+      if (availableGenres.isNotEmpty) {
+        selectedGenre = _randomGenre();
+      }
+    }
+  }
+
+  String _randomGenre() {
+    return availableGenres[Random().nextInt(availableGenres.length)];
+  }
+
+  List<String> _genresFromMovies(List movies) {
+    final genres = <String>{};
+    for (var movie in movies) {
+      for (var genre in movie.genres ?? <String>[]) {
+        if (genre.toLowerCase() != 'horror') {
+          genres.add(genre);
+        }
+      }
+    }
+    return genres.toList()..sort();
+  }
+
+  void _updateAvailableGenres(List movies) {
+    final genres = _genresFromMovies(movies);
+    if (genres.length == availableGenres.length &&
+        genres.every(availableGenres.contains)) {
+      return;
+    }
+
+    setState(() {
+      availableGenres = genres;
+      selectedGenre = genres.isEmpty ? '' : _randomGenre();
+    });
+  }
+
+  void refreshGenre() {
+    if (availableGenres.isNotEmpty) {
+      setState(() => selectedGenre = _randomGenre());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var width = context.width;
     var height = context.height;
 
-    return BlocBuilder<HomeGeneralCubit, HomeGeneralState>(
+    return BlocConsumer<HomeGeneralCubit, HomeGeneralState>(
+      listener: (context, state) {
+        if (state is HomeGeneralSuccessState) {
+          _updateAvailableGenres(state.moviesList);
+        }
+      },
       builder: (context, state) {
         var cubit = context.read<HomeGeneralCubit>();
         String? bgImage;
@@ -124,43 +181,48 @@ class _HomeTabState extends State<HomeTab> {
                       ),
                     ),
                   Image.asset(AppAssets.watchNowImage),
-                  Padding(
-                    padding: EdgeInsetsDirectional.only(start: width * 0.035),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.horror,
-                          style: AppStyles.regular20White,
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(
-                              context,
-                              AppRoutes.browseScreen,
-                            );
-                          },
-                          child: Row(
-                            spacing: width * 0.01,
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)!.see_More,
-                                style: AppStyles.regular16DarkPrimary,
-                              ),
-                              const Icon(
-                                Icons.arrow_forward,
-                                color: AppColors.primaryColor,
-                              ),
-                            ],
+                  if (selectedGenre.isNotEmpty) ...[
+                    Padding(
+                      padding: EdgeInsetsDirectional.only(start: width * 0.035),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            selectedGenre,
+                            style: AppStyles.regular20White,
                           ),
-                        ),
-                      ],
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                context,
+                                AppRoutes.browseScreen,
+                              );
+                            },
+                            child: Row(
+                              spacing: width * 0.01,
+                              children: [
+                                Text(
+                                  AppLocalizations.of(context)!.see_More,
+                                  style: AppStyles.regular16DarkPrimary,
+                                ),
+                                const Icon(
+                                  Icons.arrow_forward,
+                                  color: AppColors.primaryColor,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: height * 0.22,
-                    child: const HomeTabWidgetByGenre(genre: "Horror"),
-                  ),
+                    SizedBox(
+                      height: height * 0.22,
+                      child: HomeTabWidgetByGenre(
+                        key: ValueKey(selectedGenre),
+                        genre: selectedGenre,
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),

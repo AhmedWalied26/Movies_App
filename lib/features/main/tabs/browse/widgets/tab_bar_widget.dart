@@ -52,7 +52,6 @@ class TabBarWidget extends StatelessWidget {
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(
-                            vertical: height * 0.008,
                             horizontal: width * 0.035,
                           ),
                           decoration: BoxDecoration(
