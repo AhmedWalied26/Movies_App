@@ -78,41 +78,7 @@ class TabBarWidget extends StatelessWidget {
                   },
                 ),
               ),
-
               SizedBox(height: SizeConfig.height(context) * 0.025),
-
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: width * 0.025, vertical: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      selectedGenre,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        // See More action
-                      },
-                      child: const Text(
-                        'See More',
-                        style: TextStyle(
-                          color: AppColors.primaryColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              SizedBox(height: SizeConfig.height(context) * 0.01),
-
               movies.isEmpty
                   ? const Padding(
                       padding: EdgeInsets.only(top: 100),
