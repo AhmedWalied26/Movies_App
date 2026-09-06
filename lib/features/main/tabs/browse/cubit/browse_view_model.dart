@@ -31,7 +31,6 @@ class BrowseViewModel extends Cubit<BrowseState> {
           }
         }
       }
-
       genresList = uniqueGenres.toList();
       filteredMovies = allMovies;
 

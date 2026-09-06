@@ -86,7 +86,6 @@ class Movie {
     rating: (json['rating'] as num?)?.toDouble(),
     runtime: json['runtime'] as int?,
 
-    // ✅ Fixed
     genres: (json['genres'] as List<dynamic>?)
         ?.map((e) => e.toString())
         .toList(),

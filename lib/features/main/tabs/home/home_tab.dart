@@ -1,3 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'dart:math';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,47 +9,70 @@ import 'package:movies_app/features/main/tabs/home/cubit/home_general_state.dart
 import 'package:movies_app/features/main/tabs/home/widgets/home_tab_widget_by_genre.dart';
 import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/widgets/main_error.dart';
+import 'package:movies_app/widgets/skeleton/movie_carousel_skeleton.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../utils/app_assets.dart';
 import '../../../../utils/app_colors.dart';
 import '../../../../utils/app_styles.dart';
 import '../../../../utils/size_utils.dart';
-import '../../../../widgets/main_loading_widget.dart';
 import '../../../../widgets/movie_card_item.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
 
   @override
-  State<HomeTab> createState() => _HomeTabState();
+  State<HomeTab> createState() => HomeTabState();
 }
 
-class _HomeTabState extends State<HomeTab> {
-  late String currentSectionGenre;
-
-  // لستة التصنيفات الكاملة كما طلبتها
-  final List<String> availableGenres = [
-    "all",
-    "crime",
-    "mystery",
-    "thriller",
-    "drama",
-    "comedy",
-    "romance",
-    "action",
-    "family",
-    "sci_fi",
-    "documentary",
-    "horror",
-    "musical"
-  ];
+class HomeTabState extends State<HomeTab> {
+  List<String> availableGenres = [];
+  String selectedGenre = '';
 
   @override
   void initState() {
     super.initState();
-    // اختيار تصنيف عشوائي عند فتح الصفحة لتتغير الاسم والأفلام تلقائياً
-    availableGenres.shuffle();
-    currentSectionGenre = availableGenres.first;
+    final state = context.read<HomeGeneralCubit>().state;
+    if (state is HomeGeneralSuccessState) {
+      availableGenres = _genresFromMovies(state.moviesList);
+      if (availableGenres.isNotEmpty) {
+        selectedGenre = _randomGenre();
+      }
+    }
+  }
+
+  String _randomGenre() {
+    return availableGenres[Random().nextInt(availableGenres.length)];
+  }
+
+  List<String> _genresFromMovies(List movies) {
+    final genres = <String>{};
+    for (var movie in movies) {
+      for (var genre in movie.genres ?? <String>[]) {
+        if (genre.toLowerCase() != 'horror') {
+          genres.add(genre);
+        }
+      }
+    }
+    return genres.toList()..sort();
+  }
+
+  void _updateAvailableGenres(List movies) {
+    final genres = _genresFromMovies(movies);
+    if (genres.length == availableGenres.length &&
+        genres.every(availableGenres.contains)) {
+      return;
+    }
+
+    setState(() {
+      availableGenres = genres;
+      selectedGenre = genres.isEmpty ? '' : _randomGenre();
+    });
+  }
+
+  void refreshGenre() {
+    if (availableGenres.isNotEmpty) {
+      setState(() => selectedGenre = _randomGenre());
+    }
   }
 
   @override
@@ -54,7 +80,12 @@ class _HomeTabState extends State<HomeTab> {
     var width = context.width;
     var height = context.height;
 
-    return BlocBuilder<HomeGeneralCubit, HomeGeneralState>(
+    return BlocConsumer<HomeGeneralCubit, HomeGeneralState>(
+      listener: (context, state) {
+        if (state is HomeGeneralSuccessState) {
+          _updateAvailableGenres(state.moviesList);
+        }
+      },
       builder: (context, state) {
         var cubit = context.read<HomeGeneralCubit>();
         String? bgImage;
@@ -70,14 +101,11 @@ class _HomeTabState extends State<HomeTab> {
               left: 0,
               right: 0,
               height: height * 0.65,
-              child: (bgImage != null && bgImage.isNotEmpty)
-                  ? Image.network(
-                bgImage,
-                fit: BoxFit.cover,
-                alignment: Alignment.topCenter,
-              )
-                  : Image.asset(
-                AppAssets.onBoardingImage6,
+              child: CachedNetworkImage(
+                imageUrl: bgImage ?? '',
+                errorWidget: (context, url, error) {
+                  return Icon(Icons.error);
+                },
                 fit: BoxFit.cover,
                 alignment: Alignment.topCenter,
               ),
@@ -109,7 +137,7 @@ class _HomeTabState extends State<HomeTab> {
                   SizedBox(height: height * 0.02),
                   if (state is HomeGeneralLoadingState ||
                       state is HomeGeneralInitialState)
-                    const MainLoadingwidget()
+                    const MovieCarouselSkeleton()
                   else if (state is HomeGeneralErrorState)
                     MainError(
                       errorMessage: state.errorMessage,
@@ -156,43 +184,45 @@ class _HomeTabState extends State<HomeTab> {
                         ),
                       ),
                   Image.asset(AppAssets.watchNowImage),
-                  Padding(
-                    padding: EdgeInsetsDirectional.only(start: width * 0.035),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          currentSectionGenre, // هنا العرض هيتغير تلقائياً حسب التصنيف العشوائي
-                          style: AppStyles.regular20White,
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(
-                              context,
-                              AppRoutes.browseScreen,
-                            );
-                          },
-                          child: Row(
-                            spacing: width * 0.01,
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)!.see_More,
-                                style: AppStyles.regular16DarkPrimary,
-                              ),
-                              const Icon(
-                                Icons.arrow_forward,
-                                color: AppColors.primaryColor,
-                              ),
-                            ],
+                  if (selectedGenre.isNotEmpty) ...[
+                    Padding(
+                      padding: EdgeInsetsDirectional.only(start: width * 0.035),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(selectedGenre, style: AppStyles.regular20White),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                context,
+                                AppRoutes.browseScreen,
+                              );
+                            },
+                            child: Row(
+                              spacing: width * 0.01,
+                              children: [
+                                Text(
+                                  AppLocalizations.of(context)!.see_More,
+                                  style: AppStyles.regular16DarkPrimary,
+                                ),
+                                const Icon(
+                                  Icons.arrow_forward,
+                                  color: AppColors.primaryColor,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: height * 0.22,
-                    child: HomeTabWidgetByGenre(genre: currentSectionGenre), // وهنا الأفلام هتيجي بناءً على نفس التصنيف
-                  ),
+                    SizedBox(
+                      height: height * 0.22,
+                      child: HomeTabWidgetByGenre(
+                        key: ValueKey(selectedGenre),
+                        genre: selectedGenre,
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),

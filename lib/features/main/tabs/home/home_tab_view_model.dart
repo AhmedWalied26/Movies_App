@@ -4,7 +4,6 @@ import 'package:movies_app/api/api_manager.dart';
 import 'package:movies_app/api/model/movie_list/movies.dart';
 
 class HomeTabViewModel extends ChangeNotifier {
-  // todo : hold data // handle logic ;
   List<Movies>? moviesList;
   String? errorMessage;
   bool? isLoading = false;

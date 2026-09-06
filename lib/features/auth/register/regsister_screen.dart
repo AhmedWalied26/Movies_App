@@ -41,15 +41,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool isPasswordVisible = false;
   bool isConfirmPasswordVisible = false;
   final List<String> avatarImages = [
+    AppAssets.profileImage1,
     AppAssets.profileImage2,
-    AppAssets.profileImage8,
     AppAssets.profileImage3,
+    AppAssets.profileImage4,
+    AppAssets.profileImage5,
+    AppAssets.profileImage6,
+    AppAssets.profileImage7,
+    AppAssets.profileImage8,
+    AppAssets.profileImage9,
   ];
 
-  int selectedAvatarIndex = 1;
+  int selectedAvatarIndex = 7;
+  late final PageController _avatarPageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _avatarPageController = PageController(
+      initialPage: selectedAvatarIndex,
+      viewportFraction: 0.3,
+    );
+  }
 
   @override
   void dispose() {
+    _avatarPageController.dispose();
     nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
@@ -88,37 +105,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
               key: formKey,
               child: Column(
                 children: [
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: List.generate(avatarImages.length, (index) {
+                  SizedBox(
+                    height: height * 0.112,
+                    child: PageView.builder(
+                      controller: _avatarPageController,
+                      itemCount: avatarImages.length,
+                      onPageChanged: (index) {
+                        setState(() => selectedAvatarIndex = index);
+                      },
+                      itemBuilder: (context, index) {
                         final bool isSelected = index == selectedAvatarIndex;
-
-                        return Padding(
-                          padding: EdgeInsetsDirectional.only(
-                            start: index == 0 ? 0 : 24,
-                          ),
-
+                        return Center(
                           child: CustomizedAvatar(
                             imagePath: avatarImages[index],
-                            size: isSelected ? 130 : 60,
+                            size: isSelected ? 100 : 72,
                             isSelected: isSelected,
                             onTap: () {
-                              setState(() {
-                                selectedAvatarIndex = index;
-                              });
+                              _avatarPageController.animateToPage(
+                                index,
+                                duration: const Duration(milliseconds: 250),
+                                curve: Curves.easeOut,
+                              );
                             },
                           ),
                         );
-                      }),
+                      },
                     ),
                   ),
                   SizedBox(height: height * 0.010),
-
                   Text(l10n.avatar, style: AppStyles.regular16White),
-
                   SizedBox(height: height * 0.010),
                   CustomTextField(
                     title: l10n.name,

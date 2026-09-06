@@ -30,17 +30,16 @@ class TabBarWidget extends StatelessWidget {
       child: Scaffold(
         backgroundColor: AppColors.blackColor,
         body: SingleChildScrollView(
-          padding: EdgeInsets.only(bottom: context.height * 0.1),
+          padding: EdgeInsets.only(bottom: height * 0.1),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: height * 0.012),
-
               SizedBox(
                 height: 55,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  padding: EdgeInsets.symmetric(horizontal: width * 0.016),
+                  padding: EdgeInsets.symmetric(horizontal: width * 0.02),
                   itemCount: genres.length,
                   itemBuilder: (context, index) {
                     var genre = genres[index];
@@ -55,10 +54,12 @@ class TabBarWidget extends StatelessWidget {
                         child: Container(
                           alignment: Alignment.center,
                           padding: EdgeInsets.symmetric(
-                            horizontal: width * 0.04,
+                            horizontal: width * 0.035,
                           ),
                           decoration: BoxDecoration(
-                            color: isSelected ? AppColors.primaryColor : Colors.transparent,
+                            color: isSelected
+                                ? AppColors.primaryColor
+                                : Colors.transparent,
                             border: Border.all(
                               color: AppColors.primaryColor,
                               width: 1,
@@ -114,43 +115,50 @@ class TabBarWidget extends StatelessWidget {
 
               movies.isEmpty
                   ? const Padding(
-                padding: EdgeInsets.only(top: 100),
-                child: Center(
-                  child: Text(
-                    'No movies found for this category',
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                ),
-              )
+                      padding: EdgeInsets.only(top: 100),
+                      child: Center(
+                        child: Text(
+                          'No movies found for this category',
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                      ),
+                    )
                   : GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: width * 0.016),
-                itemCount: movies.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 12,
-                  crossAxisSpacing: 12,
-                  childAspectRatio: 0.7,
-                ),
-                itemBuilder: (context, index) {
-                  var movie = movies[index];
-                  return InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(
-                        context,
-                        AppRoutes.movieDetailsScreen,
-                        arguments: movie.id,
-                      );
-                    },
-                    child: MovieCardItem(
-                      movie: movie,
-                      movieImage: movie.mediumCoverImage ?? movie.largeCoverImage ?? movie.backgroundImage ?? '',
-                      movieRate: movie.rating != null ? double.parse(movie.rating.toString()) : 0.0,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.symmetric(horizontal: width * 0.035),
+                      itemCount: movies.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 12,
+                            crossAxisSpacing: 12,
+                            childAspectRatio: 0.7,
+                          ),
+                      itemBuilder: (context, index) {
+                        var movie = movies[index];
+                        return InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              AppRoutes.movieDetailsScreen,
+                              arguments: movie.id,
+                            );
+                          },
+                          child: MovieCardItem(
+                            movie: movie,
+                            movieImage:
+                                movie.mediumCoverImage ??
+                                movie.largeCoverImage ??
+                                movie.backgroundImage ??
+                                '',
+                            movieRate: movie.rating != null
+                                ? double.parse(movie.rating.toString())
+                                : 0.0,
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
             ],
           ),
         ),
