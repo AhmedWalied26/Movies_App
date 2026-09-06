@@ -18,7 +18,6 @@ class SearchTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var width = context.width;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return BlocProvider(
       create: (context) => SearchCubit(),
       child: Builder(
@@ -33,9 +32,7 @@ class SearchTab extends StatelessWidget {
                     title: AppLocalizations.of(context)!.search,
                     prefix: Padding(
                       padding: EdgeInsetsDirectional.only(start: width * 0.025),
-                      child: isDark
-                          ? SvgPicture.asset(AppAssets.searchDark)
-                          : SvgPicture.asset(AppAssets.searchLight),
+                      child: SvgPicture.asset(AppAssets.searchIcon),
                     ),
                     onChanged: (text) {
                       context.read<SearchCubit>().searchMovies(text);
@@ -58,20 +55,11 @@ class SearchTab extends StatelessWidget {
                           );
                         } else if (state is SearchSuccessState) {
                           var movies = state.moviesList;
-                          // if (movies.isEmpty) {
-                          //   return const Center(
-                          // child: Text(
-                          //   'No movies found',
-                          //   style: TextStyle(color: Colors.white),
-                          // ),
-
-                          // );
-                          // }
                           if (movies.isEmpty) {
-                            return Center(
+                            return const Center(
                               child: Text(
-                                AppLocalizations.of(context)!.no_movies_found,
-                                style: const TextStyle(color: Colors.white),
+                                'No movies found',
+                                style: TextStyle(color: Colors.white),
                               ),
                             );
                           }

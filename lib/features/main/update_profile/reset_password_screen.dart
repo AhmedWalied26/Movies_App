@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
-import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/widgets/custom_elevated_button.dart';
@@ -29,11 +27,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     final user = FirebaseAuth.instance.currentUser;
 
     if (user?.email == null || currentPassword.isEmpty || newPassword.isEmpty) {
-      _showMessage(AppLocalizations.of(context)!.fill_All_Password_Fields);
+      _showMessage('Please fill in all password fields.');
       return;
     }
     if (newPassword != confirmPassword) {
-      _showMessage(AppLocalizations.of(context)!.passwords_Do_Not_Match);
+      _showMessage('New passwords do not match.');
       return;
     }
 
@@ -49,12 +47,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       await user.reauthenticateWithCredential(credential);
       await user.updatePassword(newPassword);
       if (mounted) {
-  setState(() {
+        setState(() {
           isLoading = false;
-        });     
-  _showMessage(
-          AppLocalizations.of(context)!.password_Updated_Successfully,
-        );
+        });
+        _showMessage('Password updated successfully.');
         Navigator.pop(context, true);
       }
     } on FirebaseAuthException catch (error) {
@@ -62,10 +58,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         setState(() {
           isLoading = false;
         });
-       _showMessage(
-          error.message ??
-              AppLocalizations.of(context)!.unable_To_Update_Password,
-        );
+        _showMessage(error.message ?? 'Unable to update password.');
       }
     } finally {
       if (mounted) setState(() => isSaving = false);
@@ -89,10 +82,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context)!;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDark ? AppColors.darkBlackColor : AppColors.whiteColor,
+      backgroundColor: AppColors.darkBlackColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -108,12 +100,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         child: Column(
           children: [
             CustomTextField(
-              title: l.current_Password,
+              title: 'Current password',
               controller: currentPasswordController,
               isObsecure: true,
-              // prefix: isDark
-              //     ? SvgPicture.asset(AppAssets.passwordIcon)
-              //     : SvgPicture.asset(AppAssets.passwordIconLight),
             ),
             const SizedBox(height: 16),
             CustomTextField(

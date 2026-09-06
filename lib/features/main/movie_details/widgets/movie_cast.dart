@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/api/model/movie_details_response/movie.dart';
-import 'package:movies_app/features/main/movie_details/widgets/cast_info_row.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_styles.dart';
@@ -17,9 +16,6 @@ class MovieCast extends StatelessWidget {
     var height = context.height;
     var width = context.width;
     final cast = movieDetails.cast ?? [];
-    final loc = AppLocalizations.of(context)!;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
     return Column(
       children: [
         Row(
@@ -41,9 +37,7 @@ class MovieCast extends StatelessWidget {
             return Container(
               padding: EdgeInsets.all(width * 0.035),
               decoration: BoxDecoration(
-                color: isDark
-                    ? AppColors.darkGreyColor
-                    : AppColors.lightRateColor,
+                color: AppColors.darkGreyColor,
                 borderRadius: .circular(16),
               ),
               child: Row(
@@ -71,19 +65,18 @@ class MovieCast extends StatelessWidget {
                       },
                     ),
                   ),
-                 
                   Expanded(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: .start,
                       spacing: height * 0.004,
                       children: [
-                        CastInfoRow(
-                          label: loc.name,
-                          value: cast[index].name ?? '',
+                        Text(
+                          'Name : ${cast[index].name}',
+                          style: AppStyles.regular20White,
                         ),
-                        CastInfoRow(
-                          label: loc.character,
-                          value: cast[index].characterName ?? '',
+                        Text(
+                          'Character : ${cast[index].characterName}',
+                          style: AppStyles.regular20White,
                         ),
                       ],
                     ),

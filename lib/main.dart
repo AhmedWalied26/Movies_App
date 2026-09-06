@@ -62,42 +62,26 @@ class MoviesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: Listenable.merge([
-        LocaleController.instance,
-        ThemeController.instance,
-      ]),
-      builder: (context, _) {
-        return MaterialApp(
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          // locale: locale,
-          locale: LocaleController.instance.value,
-          supportedLocales: AppLocalizations.supportedLocales,
-          debugShowCheckedModeBanner: false,
-          routes: {
-            AppRoutes.updateProfileScreen: (context) => UpdateProfileScreen(),
-            AppRoutes.resetPasswordScreen: (context) =>
-                const ResetPasswordScreen(),
-            AppRoutes.mainScreen: (context) => MainScreen(),
-            AppRoutes.exploreScreen: (context) => const ExploreScreen(),
-            AppRoutes.loginScreen: (context) => const LoginScreen(),
-            AppRoutes.registerScreen: (context) => const RegisterScreen(),
-            AppRoutes.forgotPasswordScreen: (context) =>
-                const ForgetPasswordScreen(),
-            AppRoutes.onboardingScreen: (context) => OnBoardingScreens(),
-            AppRoutes.movieDetailsScreen: (context) => BlocProvider(
+    return MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      debugShowCheckedModeBanner: false,
+      routes: {
+        AppRoutes.updateProfileScreen: (context) => UpdateProfileScreen(),
+        AppRoutes.resetPasswordScreen: (context) => const ResetPasswordScreen(),
+        AppRoutes.mainScreen: (context) => MainScreen(),
+        AppRoutes.exploreScreen: (context) => const ExploreScreen(),
+        AppRoutes.loginScreen: (context) => const LoginScreen(),
+        AppRoutes.registerScreen: (context) => const RegisterScreen(),
+        AppRoutes.forgotPasswordScreen: (context) =>
+            const ForgetPasswordScreen(),
+        AppRoutes.onboardingScreen: (context) => OnBoardingScreens(),
+        AppRoutes.movieDetailsScreen: (context) => BlocProvider(
           create: (context) => MovieDetailsViewModel(),
           child: MovieDetailsBlocBuilder(),
         ),
-            AppRoutes.browseScreen: (context) => BrowseTab(),
-            AppRoutes.profileScreen: (context) => ProfileTab(),
-          },
-          initialRoute: AppRoutes.onboardingScreen,
-          theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkTheme,
-          // themeMode: ThemeMode.system,
-          themeMode: ThemeController.instance.value,
-        );
+        AppRoutes.browseScreen: (context) => BrowseTab(),
+        AppRoutes.profileScreen: (context) => ProfileTab(),
       },
       initialRoute: FirebaseAuth.instance.currentUser != null
           ? AppRoutes.mainScreen
@@ -109,20 +93,4 @@ class MoviesApp extends StatelessWidget {
       themeMode: ThemeMode.dark,
     );
   }
-}
-
-class LocaleController {
-  LocaleController._();
-
-  static final ValueNotifier<Locale> instance = ValueNotifier<Locale>(
-    const Locale('ar'),
-  );
-}
-
-class ThemeController {
-  ThemeController._();
-
-  static final ValueNotifier<ThemeMode> instance = ValueNotifier<ThemeMode>(
-    ThemeMode.dark,
-  );
 }

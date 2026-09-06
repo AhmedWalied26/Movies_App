@@ -61,11 +61,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   Widget build(BuildContext context) {
     var height = context.height;
     var width = context.width;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: isDark
-          ? Color(0xFF121312)
-          : const Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: AppColors.blackColor,
       body: SingleChildScrollView(
         child: Stack(
           children: [
@@ -89,22 +86,11 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         gradient: LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
-
-                          colors: isDark
-                              ? [
-                                  const Color.fromARGB(82, 56, 47, 5),
-                                  const Color.fromARGB(92, 104, 97, 64),
-                                  const Color.fromARGB(153, 81, 83, 81),
-                                  const Color(0xFF121312),
-                                ]
-                              : [
-                                  const Color.fromARGB(101, 54, 45, 9),
-                                  const Color.fromARGB(94, 43, 34, 1),
-                                  const Color.fromARGB(143, 131, 129, 75),
-
-                                  const Color.fromARGB(251, 255, 255, 255),
-                                ],
-                          stops: [0.0, 0.35, 0.65, 1.0],
+                          colors: [
+                            AppColors.blackColor.withValues(alpha: 0.2),
+                            AppColors.blackColor.withValues(alpha: 0.7),
+                            AppColors.blackColor,
+                          ],
                         ),
                       ),
                     ),
@@ -140,9 +126,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                       },
                       title: AppLocalizations.of(context)!.watch,
                       style: AppStyles.bold24White,
-                      bgColor: isDark
-                          ? AppColors.redColor
-                          : AppColors.lightRedColor,
+                      bgColor: AppColors.redColor,
                     ),
                     SizedBox(height: height * 0.016),
                     Row(
@@ -169,7 +153,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                       children: [
                         Text(
                           AppLocalizations.of(context)!.similar,
-                          style: Theme.of(context).textTheme.headlineLarge,
+                          style: AppStyles.bold24White,
                         ),
                       ],
                     ),

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_assets.dart';
-import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
 
@@ -33,21 +31,15 @@ class MovieHead extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              icon: Icon(
-                Icons.arrow_back_ios_new_outlined,
-                size: 30,
-                color: AppColors.whiteColor,
-              ),
+              icon: Icon(Icons.arrow_back_ios_new_outlined, size: 30),
             ),
             IconButton(
               onPressed: onBookmarkButton,
-              tooltip: isSaved
-                  ? AppLocalizations.of(context)!.removeFromWatchList
-                  : AppLocalizations.of(context)!.addToWatchList,
+              tooltip: isSaved ? 'Remove from watch list' : 'Add to watch list',
               icon: Icon(
                 isSaved ? Icons.bookmark : Icons.bookmark_border,
                 size: 30,
-                color: isSaved ? AppColors.redColor : AppColors.whiteColor,
+                color: isSaved ? Colors.red : Colors.white,
               ),
             ),
           ],
@@ -58,16 +50,9 @@ class MovieHead extends StatelessWidget {
           child: SvgPicture.asset(AppAssets.videoIcon),
         ),
         SizedBox(height: height * 0.14),
-        Text(
-          movieName,
-          textAlign: .center,
-          style: Theme.of(context).textTheme.headlineLarge,
-        ),
+        Text(movieName, textAlign: .center, style: AppStyles.bold24White),
         SizedBox(height: height * 0.015),
-        Text(
-          movieTime.toString(),
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 22),
-        ),
+        Text(movieTime.toString(), style: AppStyles.bold20lightGrey),
       ],
     );
   }

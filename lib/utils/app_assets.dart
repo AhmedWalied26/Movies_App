@@ -31,44 +31,23 @@ class AppAssets {
   static const String arIcon = 'assets/svg/ar_icon.svg';
   static const String enIcon = 'assets/svg/en_icon.svg';
   static const String emailIcon = 'assets/svg/email_icon.svg';
-  static const String emailIconLight = 'assets/svg/email_icon_light.svg';
   static const String exitIcon = 'assets/svg/exit_icon.svg';
+  static const String exploreIcon = 'assets/svg/explore_icon.svg';
   static const String favoriteIcon = 'assets/svg/favorite_icon.svg';
   static const String googleIcon = 'assets/svg/google_icon.svg';
-  static const String googleIconLight = 'assets/svg/google_icon_light.svg';
   static const String historyIcon = 'assets/svg/history_icon.svg';
-  static const String nameIcon = 'assets/svg/name_icon.svg';
-  static const String nameIconLight = 'assets/svg/name_icon_light.svg';
-  static const String passwordIcon = 'assets/svg/password_icon.svg';
-  static const String passwordIconLight = 'assets/svg/password_icon_light.svg';
-  static const String phoneIcon = 'assets/svg/phone_icon.svg';
-  static const String phoneIconLight = 'assets/svg/phone_icon_light.svg';
-  static const String rateIcon = 'assets/svg/rate_icon.svg';
-
-//selected dark
-  static const String searchDark = 'assets/svg/search_icon.svg';
-  static const String searchLight = 'assets/svg/search_dark.svg';
   static const String homeIcon = 'assets/svg/home_icon.svg';
-  static const String exploreIcon = 'assets/svg/explore_icon.svg';
+  static const String nameIcon = 'assets/svg/name_icon.svg';
+  static const String passwordIcon = 'assets/svg/password_icon.svg';
+  static const String phoneIcon = 'assets/svg/phone_icon.svg';
   static const String profileIcon = 'assets/svg/profile_icon.svg';
-  static const String selectedprofileDarkIcon = 'assets/svg/selected_profile_icon_dark.svg';
-  static const String selectedexploreDarkIcon = 'assets/svg/selected_explore_icon_dark.svg';
-  static const String selectedsearchDarkIcon = 'assets/svg/selected_search_icon_dark.svg';
-  static const String selectedhomeDarkIcon = 'assets/svg/selected_home_icon_dark.svg';
-
-
-  static const String unsearchLight = 'assets/svg/un_light_search_icon.svg';
-  static const String unhomeIconLight = 'assets/svg/un_home_icon_light.svg';
-  static const String unexploreIcon = 'assets/svg/un_explore_light.svg';
-  static const String unprofileIcon = 'assets/svg/un_profile_light.svg';
-
-
+  static const String rateIcon = 'assets/svg/rate_icon.svg';
+  static const String searchIcon = 'assets/svg/search_icon.svg';
   static const String timeIcon = 'assets/svg/time_icon.svg';
   static const String videoIcon = 'assets/svg/video_icon.svg';
   static const String visibleOffIcon = 'assets/svg/visible_off_icon.svg';
   static const String watchListIcon = 'assets/svg/watch_list_icon.svg';
   static const String profileNameIcon = 'assets/svg/profile_name_icon.svg';
-  static const String profileNameIconDark = 'assets/svg/profile_name_icon_dark.svg';
 
   static const String blackWidowMovie = 'assets/images/blackwidow.png';
   static const String jokerMovie = 'assets/images/joker.png';
