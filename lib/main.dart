@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:movies_app/services/movie_history_service.dart';
 import 'package:movies_app/services/profile_service.dart';
 import 'package:movies_app/features/main/tabs/profile/watch/watch_list_service.dart';
@@ -32,6 +33,12 @@ void main() async {
   await MovieHistoryService.instance.initialize();
   await WatchListService.instance.initialize();
   await ProfileService.instance.initialize();
+  final preferences = await SharedPreferences.getInstance();
+  final hasCompletedOnboarding =
+      preferences.getBool('has_completed_onboarding') ?? false;
+  if (!hasCompletedOnboarding) {
+    await preferences.setBool('has_completed_onboarding', true);
+  }
   runApp(
     MultiBlocProvider(
       providers: [
@@ -43,13 +50,15 @@ void main() async {
         ),
         BlocProvider<HomeGeneralCubit>(create: (context) => HomeGeneralCubit()),
       ],
-      child: const MoviesApp(),
+      child: MoviesApp(hasCompletedOnboarding: hasCompletedOnboarding),
     ),
   );
 }
 
 class MoviesApp extends StatelessWidget {
-  const MoviesApp({super.key});
+  final bool hasCompletedOnboarding;
+
+  const MoviesApp({super.key, required this.hasCompletedOnboarding});
 
   @override
   Widget build(BuildContext context) {
@@ -90,6 +99,14 @@ class MoviesApp extends StatelessWidget {
           themeMode: ThemeController.instance.value,
         );
       },
+      initialRoute: FirebaseAuth.instance.currentUser != null
+          ? AppRoutes.mainScreen
+          : hasCompletedOnboarding
+          ? AppRoutes.loginScreen
+          : AppRoutes.exploreScreen,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.dark,
     );
   }
 }
