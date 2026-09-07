@@ -24,6 +24,16 @@ class AppStyles {
     fontWeight: FontWeight.bold,
     color: AppColors.primaryColor,
   );
+  static TextStyle bold18Primary = GoogleFonts.inter(
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+    color: AppColors.primaryColor,
+  );
+  static TextStyle bold16Primary = GoogleFonts.inter(
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    color: AppColors.primaryColor,
+  );
 
   static TextStyle bold18Black = GoogleFonts.roboto(
     fontSize: 18,
@@ -44,6 +54,11 @@ class AppStyles {
   );
   static TextStyle bold24White = GoogleFonts.inter(
     fontSize: 24,
+    fontWeight: FontWeight.bold,
+    color: AppColors.whiteColor,
+  );
+  static TextStyle bold22White = GoogleFonts.inter(
+    fontSize: 22,
     fontWeight: FontWeight.bold,
     color: AppColors.whiteColor,
   );
@@ -113,6 +128,11 @@ class AppStyles {
     fontWeight: FontWeight.w400,
     color: AppColors.blackColor,
   );
+  static TextStyle regular14Primary = GoogleFonts.roboto(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: AppColors.primaryColor,
+  );
 
   static TextStyle regular13Black = GoogleFonts.roboto(
     fontSize: 13,
@@ -122,6 +142,11 @@ class AppStyles {
 
   static TextStyle regular12Black = GoogleFonts.roboto(
     fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: AppColors.blackColor,
+  );
+  static TextStyle regular16Black = GoogleFonts.roboto(
+    fontSize: 16,
     fontWeight: FontWeight.w400,
     color: AppColors.blackColor,
   );
@@ -135,6 +160,11 @@ class AppStyles {
     fontSize: 13,
     fontWeight: FontWeight.w400,
     color: AppColors.whiteColor,
+  );
+  static TextStyle regular16Primary = GoogleFonts.roboto(
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    color: AppColors.primaryColor,
   );
 
   static TextStyle regular12White = GoogleFonts.roboto(
@@ -151,6 +181,21 @@ class AppStyles {
     fontSize: 20,
     fontWeight: FontWeight.w400,
     color: AppColors.whiteColor,
+  );
+  static TextStyle regular20Black = GoogleFonts.inter(
+    fontSize: 20,
+    fontWeight: FontWeight.w400,
+    color: AppColors.blackColor,
+  );
+  static TextStyle regular16White = GoogleFonts.inter(
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    color: AppColors.whiteColor,
+  );
+  static TextStyle regular16DarkPrimary = GoogleFonts.inter(
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    color: AppColors.primaryColor,
   );
   static TextStyle regular14Grey = GoogleFonts.roboto(
     fontSize: 14,
@@ -172,7 +217,12 @@ class AppStyles {
   static TextStyle bold14Primary = GoogleFonts.roboto(
     fontSize: 14,
     fontWeight: FontWeight.bold,
-    color: AppColors.blackColor,
+    color: AppColors.primaryColor,
+  );
+  static TextStyle bold20lightGrey = GoogleFonts.roboto(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: AppColors.lightGreyColor,
   );
   static TextStyle regular12Error = GoogleFonts.roboto(
     fontSize: 12,
