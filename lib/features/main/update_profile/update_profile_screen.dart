@@ -5,11 +5,14 @@ import 'package:movies_app/services/profile_service.dart';
 import 'package:movies_app/widgets/custom_elevated_button.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/features/main/update_profile/widgets/update_profile_avatar.dart';
+import 'package:movies_app/features/auth/login/widgets/language_switcher.dart';
+import 'package:movies_app/services/locale_controller.dart';
 import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/widgets/custom_text_field.dart';
+import 'package:provider/provider.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({super.key});
@@ -209,6 +212,41 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               onPressed: () =>
                   Navigator.pushNamed(context, AppRoutes.resetPasswordScreen),
               child: Text(l.reset_Password, style: AppStyles.bold16White),
+            ),
+            Align(
+              alignment: AlignmentDirectional.center,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(color: AppColors.primaryColor, width: 3),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: width * 0.03,
+                  children: [
+                    LanguageSwitcher(
+                      icon: AppAssets.enIcon,
+                      isSelected: context
+                          .watch<LocaleController>()
+                          .locale
+                          .languageCode == 'en',
+                      onTap: () {
+                        context.read<LocaleController>().setLanguage('en');
+                      },
+                    ),
+                    LanguageSwitcher(
+                      icon: AppAssets.arIcon,
+                      isSelected: context
+                          .watch<LocaleController>()
+                          .locale
+                          .languageCode == 'ar',
+                      onTap: () {
+                        context.read<LocaleController>().setLanguage('ar');
+                      },
+                    ),
+                  ],
+                ),
+              ),
             ),
             Spacer(),
             CustomElevatedButton(
