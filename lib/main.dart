@@ -27,7 +27,6 @@ import 'package:movies_app/features/main/update_profile/reset_password_screen.da
 import 'package:movies_app/features/onboarding/on_boarding_screens.dart';
 import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_theme.dart';
-import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,24 +42,24 @@ void main() async {
     await preferences.setBool('has_completed_onboarding', true);
   }
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => LocaleController(
-        initialLocale: Locale(languageCode),
-      ),
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider<MovieSuggestionViewModel>(
-            create: (context) => MovieSuggestionViewModel(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<LocaleCubit>(
+          create: (_) => LocaleCubit(
+            initialLocale: Locale(languageCode),
           ),
-          BlocProvider<AuthViewModel>(
-            create: (context) => AuthViewModel(AuthService()),
-          ),
-          BlocProvider<HomeGeneralCubit>(
-            create: (context) => HomeGeneralCubit(),
-          ),
-        ],
-        child: MoviesApp(hasCompletedOnboarding: hasCompletedOnboarding),
-      ),
+        ),
+        BlocProvider<MovieSuggestionViewModel>(
+          create: (context) => MovieSuggestionViewModel(),
+        ),
+        BlocProvider<AuthViewModel>(
+          create: (context) => AuthViewModel(AuthService()),
+        ),
+        BlocProvider<HomeGeneralCubit>(
+          create: (context) => HomeGeneralCubit(),
+        ),
+      ],
+      child: MoviesApp(hasCompletedOnboarding: hasCompletedOnboarding),
     ),
   );
 }
@@ -72,10 +71,10 @@ class MoviesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localeController = context.watch<LocaleController>();
+    final locale = context.watch<LocaleCubit>().state;
 
     return MaterialApp(
-      locale: localeController.locale,
+      locale: locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,

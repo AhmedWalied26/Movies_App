@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:movies_app/features/auth/register/widgets/customized_avatar.dart';
 import 'package:movies_app/services/profile_service.dart';
@@ -14,7 +15,6 @@ import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
 import 'package:movies_app/widgets/custom_text_field.dart';
 import 'package:movies_app/features/auth/login/widgets/language_switcher.dart';
-import 'package:provider/provider.dart';
 import 'package:movies_app/services/locale_controller.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -269,21 +269,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         LanguageSwitcher(
                           icon: AppAssets.enIcon,
                           isSelected: context
-                              .watch<LocaleController>()
-                              .locale
+                              .watch<LocaleCubit>()
+                              .state
                               .languageCode == 'en',
                           onTap: () {
-                            context.read<LocaleController>().setLanguage('en');
+                            context.read<LocaleCubit>().setLanguage('en');
                           },
                         ),
                         LanguageSwitcher(
                           icon: AppAssets.arIcon,
                           isSelected: context
-                              .watch<LocaleController>()
-                              .locale
+                              .watch<LocaleCubit>()
+                              .state
                               .languageCode == 'ar',
                           onTap: () {
-                            context.read<LocaleController>().setLanguage('ar');
+                            context.read<LocaleCubit>().setLanguage('ar');
                           },
                         ),
                       ],

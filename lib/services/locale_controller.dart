@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LocaleController extends ChangeNotifier {
-  LocaleController({Locale? initialLocale})
-    : _locale = initialLocale ?? const Locale('en');
-
-  Locale _locale;
-
-  Locale get locale => _locale;
+class LocaleCubit extends Cubit<Locale> {
+  LocaleCubit({Locale? initialLocale})
+    : super(initialLocale ?? const Locale('en'));
 
   Future<void> setLanguage(String languageCode) async {
-    if (_locale.languageCode == languageCode) return;
+    if (state.languageCode == languageCode) return;
 
-    _locale = Locale(languageCode);
-    notifyListeners();
+    emit(Locale(languageCode));
     final preferences = await SharedPreferences.getInstance();
     await preferences.setString('language_code', languageCode);
   }

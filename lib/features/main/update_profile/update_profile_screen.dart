@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/services/profile_service.dart';
 import 'package:movies_app/widgets/custom_elevated_button.dart';
@@ -12,7 +13,6 @@ import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/widgets/custom_text_field.dart';
-import 'package:provider/provider.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({super.key});
@@ -227,21 +227,21 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     LanguageSwitcher(
                       icon: AppAssets.enIcon,
                       isSelected: context
-                          .watch<LocaleController>()
-                          .locale
+                          .watch<LocaleCubit>()
+                          .state
                           .languageCode == 'en',
                       onTap: () {
-                        context.read<LocaleController>().setLanguage('en');
+                        context.read<LocaleCubit>().setLanguage('en');
                       },
                     ),
                     LanguageSwitcher(
                       icon: AppAssets.arIcon,
                       isSelected: context
-                          .watch<LocaleController>()
-                          .locale
+                          .watch<LocaleCubit>()
+                          .state
                           .languageCode == 'ar',
                       onTap: () {
-                        context.read<LocaleController>().setLanguage('ar');
+                        context.read<LocaleCubit>().setLanguage('ar');
                       },
                     ),
                   ],
