@@ -106,9 +106,9 @@ class AuthService {
         return null;
       }
 
-      return null;
-    } catch (e) {
-      return null;
+      rethrow;
+    } catch (_) {
+      rethrow;
     }
   }
 }
