@@ -303,6 +303,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cast => 'Cast';
 
   @override
+  String get character => 'Character';
+
+  @override
+  String get add_to_watch_list => 'Add to watch list';
+
+  @override
+  String get remove_from_watch_list => 'Remove from watch list';
+
+  @override
+  String get not_available => 'N/A';
+
+  @override
   String get enter_email_address => 'Please enter your email address';
 
   @override

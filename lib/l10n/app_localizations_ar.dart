@@ -288,19 +288,31 @@ class AppLocalizationsAr extends AppLocalizations {
   String get valid_user_name => 'من فضلك أدخل اسم مستخدم صحيح.';
 
   @override
-  String get similar => 'Similar';
+  String get similar => 'أفلام مشابهة';
 
   @override
-  String get summary => 'Summary';
+  String get summary => 'الملخص';
 
   @override
-  String get screenshots => 'Screenshots';
+  String get screenshots => 'لقطات الشاشة';
 
   @override
-  String get genres => 'Genres';
+  String get genres => 'الأنواع';
 
   @override
-  String get cast => 'Cast';
+  String get cast => 'طاقم التمثيل';
+
+  @override
+  String get character => 'الشخصية';
+
+  @override
+  String get add_to_watch_list => 'إضافة إلى قائمة المشاهدة';
+
+  @override
+  String get remove_from_watch_list => 'إزالة من قائمة المشاهدة';
+
+  @override
+  String get not_available => 'غير متاح';
 
   @override
   String get enter_email_address => 'من فضلك أدخل بريدك الإلكتروني';

@@ -152,7 +152,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           text: widget.movieDetails!.rating != null &&
                                   widget.movieDetails!.rating! > 0
                               ? widget.movieDetails!.rating!
-                              : 'N/A',
+                              : AppLocalizations.of(context)!.not_available,
                           icon: AppAssets.rateIcon,
                         ),
                       ],

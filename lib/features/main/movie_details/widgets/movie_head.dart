@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
@@ -35,7 +36,9 @@ class MovieHead extends StatelessWidget {
             ),
             IconButton(
               onPressed: onBookmarkButton,
-              tooltip: isSaved ? 'Remove from watch list' : 'Add to watch list',
+              tooltip: isSaved
+                  ? AppLocalizations.of(context)!.remove_from_watch_list
+                  : AppLocalizations.of(context)!.add_to_watch_list,
               icon: Icon(
                 isSaved ? Icons.bookmark : Icons.bookmark_border,
                 size: 30,

@@ -71,11 +71,11 @@ class MovieCast extends StatelessWidget {
                       spacing: height * 0.004,
                       children: [
                         Text(
-                          'Name : ${cast[index].name}',
+                          '${AppLocalizations.of(context)!.name} : ${cast[index].name}',
                           style: AppStyles.regular20White,
                         ),
                         Text(
-                          'Character : ${cast[index].characterName}',
+                          '${AppLocalizations.of(context)!.character} : ${cast[index].characterName}',
                           style: AppStyles.regular20White,
                         ),
                       ],

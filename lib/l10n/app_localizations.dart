@@ -668,6 +668,30 @@ abstract class AppLocalizations {
   /// **'Cast'**
   String get cast;
 
+  /// No description provided for @character.
+  ///
+  /// In en, this message translates to:
+  /// **'Character'**
+  String get character;
+
+  /// No description provided for @add_to_watch_list.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to watch list'**
+  String get add_to_watch_list;
+
+  /// No description provided for @remove_from_watch_list.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from watch list'**
+  String get remove_from_watch_list;
+
+  /// No description provided for @not_available.
+  ///
+  /// In en, this message translates to:
+  /// **'N/A'**
+  String get not_available;
+
   /// No description provided for @enter_email_address.
   ///
   /// In en, this message translates to:
