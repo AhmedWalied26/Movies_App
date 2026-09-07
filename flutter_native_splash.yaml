@@ -13,5 +13,5 @@ flutter_native_splash:
     icon_background_color: "#ffffff"
     image_dark: assets/images/splash.png
     icon_background_color_dark: "#121312"
-    branding: assets/images/baranding.png
+    branding: assets/images/baranding_light.png
 
