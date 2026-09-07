@@ -55,6 +55,11 @@ class MovieSuggestion {
     this.dateUploadedUnix,
   });
 
+  static double? _parseRating(dynamic value) {
+    final rating = (value as num?)?.toDouble();
+    return rating != null && rating > 0 ? rating : null;
+  }
+
   factory MovieSuggestion.fromJson(Map<String, dynamic> json) {
     return MovieSuggestion(
       id: json['id'] as int?,
@@ -65,7 +70,7 @@ class MovieSuggestion {
       titleLong: json['title_long'] as String?,
       slug: json['slug'] as String?,
       year: json['year'] as int?,
-      rating: (json['rating'] as num?)?.toDouble(),
+          rating: _parseRating(json['rating']),
       runtime: json['runtime'] as int?,
       genres: (json['genres'] as List<dynamic>?)
           ?.map((e) => e.toString())

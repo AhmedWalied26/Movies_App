@@ -9,7 +9,7 @@ import 'package:movies_app/utils/size_utils.dart';
 class MovieCardItem extends StatelessWidget {
   final dynamic movie;
   final String? movieImage;
-  final double? movieRate;
+  final Object? movieRate;
   final bool isSuggestion;
 
   const MovieCardItem({
@@ -26,6 +26,10 @@ class MovieCardItem extends StatelessWidget {
     var width = context.width;
     final imageUrl = isSuggestion ? movieImage : movie?.mediumCoverImage;
     final hasImage = imageUrl != null && imageUrl.isNotEmpty;
+    final rating = isSuggestion ? movieRate : movie?.rating;
+    final ratingLabel = rating is num && rating <= 0
+      ? 'N/A'
+      : rating?.toString() ?? 'N/A';
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
@@ -59,9 +63,7 @@ class MovieCardItem extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    isSuggestion
-                        ? movieRate.toString()
-                        : (movie?.rating ?? '0.0').toString(),
+                    ratingLabel,
                     style: AppStyles.regular16White,
                   ),
                   SizedBox(width: width * 0.01),

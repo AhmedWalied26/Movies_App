@@ -88,7 +88,7 @@ class SearchTab extends StatelessWidget {
                                 child: MovieCardItem(
                                   movie: movie,
                                   movieImage: movie.mediumCoverImage,
-                                  movieRate: movie.rating?.toDouble() ?? 0.0,
+                                  movieRate: movie.rating?.toDouble(),
                                 ),
                               );
                             },

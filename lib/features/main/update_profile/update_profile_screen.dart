@@ -44,7 +44,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
     final profile = await ProfileService.instance.loadProfile();
     nameHint = (profile['name'] as String?) ?? user.displayName ?? '';
-    phoneHint = (profile['phone'] as String?) ?? '';
+    phoneHint = (profile['phone'] ?? profile['phoneNumber'] ?? user.phoneNumber)
+        ?.toString() ??
+      '';
     nameController.clear();
     phoneController.clear();
     selectedAvatar = (profile['avatar'] as String?) ?? AppAssets.profileImage8;

@@ -240,7 +240,7 @@ class _ProfileTabState extends State<ProfileTab>
                                     },
                                     child: MovieCardItem(
                                       movieImage: movie.mediumCoverImage ?? '',
-                                      movieRate: movie.rating ?? 0,
+                                      movieRate: movie.rating,
                                       isSuggestion: true,
                                     ),
                                   );

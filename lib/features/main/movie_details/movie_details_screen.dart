@@ -141,7 +141,10 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           icon: AppAssets.timeIcon,
                         ),
                         MovieInfo(
-                          text: widget.movieDetails!.rating!,
+                          text: widget.movieDetails!.rating != null &&
+                                  widget.movieDetails!.rating! > 0
+                              ? widget.movieDetails!.rating!
+                              : 'N/A',
                           icon: AppAssets.rateIcon,
                         ),
                       ],

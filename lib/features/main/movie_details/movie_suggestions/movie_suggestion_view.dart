@@ -35,7 +35,7 @@ class MovieSuggestionView extends StatelessWidget {
           child: MovieCardItem(
             isSuggestion: true,
             movieImage: movie.mediumCoverImage,
-            movieRate: movie.rating!,
+            movieRate: movie.rating,
           ),
         );
       },

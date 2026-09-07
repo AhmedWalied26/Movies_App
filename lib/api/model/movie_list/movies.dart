@@ -39,7 +39,8 @@ class Movies {
     titleLong = json['title_long'];
     slug = json['slug'];
     year = json['year'];
-    rating = (json['rating'] as num?)?.toDouble();
+    final ratingValue = (json['rating'] as num?)?.toDouble();
+    rating = ratingValue != null && ratingValue > 0 ? ratingValue : null;
     runtime = json['runtime'];
     genres = json['genres'] != null ? json['genres'].cast<String>() : [];
     summary = json['summary'];

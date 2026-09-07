@@ -158,9 +158,7 @@ class _TabBarWidgetState extends State<TabBarWidget> {
                                 movie.largeCoverImage ??
                                 movie.backgroundImage ??
                                 '',
-                            movieRate: movie.rating != null
-                                ? double.parse(movie.rating.toString())
-                                : 0.0,
+                            movieRate: movie.rating,
                           ),
                         );
                       },

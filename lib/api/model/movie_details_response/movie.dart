@@ -74,6 +74,11 @@ class Movie {
     this.largeScreenshots,
   });
 
+  static double? _parseRating(dynamic value) {
+    final rating = (value as num?)?.toDouble();
+    return rating != null && rating > 0 ? rating : null;
+  }
+
   factory Movie.fromJson(Map<String, dynamic> json) => Movie(
     id: json['id'] as int?,
     url: json['url'] as String?,
@@ -83,7 +88,7 @@ class Movie {
     titleLong: json['title_long'] as String?,
     slug: json['slug'] as String?,
     year: json['year'] as int?,
-    rating: (json['rating'] as num?)?.toDouble(),
+    rating: _parseRating(json['rating']),
     runtime: json['runtime'] as int?,
 
     genres: (json['genres'] as List<dynamic>?)

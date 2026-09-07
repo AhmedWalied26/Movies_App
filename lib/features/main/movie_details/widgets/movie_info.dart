@@ -5,7 +5,7 @@ import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
 
 class MovieInfo extends StatelessWidget {
-  final num text;
+  final Object text;
   final String icon;
   const MovieInfo({super.key, required this.text, required this.icon});
 
