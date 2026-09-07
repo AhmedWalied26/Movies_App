@@ -100,7 +100,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         child: Column(
           children: [
             CustomTextField(
-              title: 'Current password',
+              title: l.current_password,
               controller: currentPasswordController,
               isObsecure: true,
             ),

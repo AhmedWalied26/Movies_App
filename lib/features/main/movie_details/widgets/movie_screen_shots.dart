@@ -4,6 +4,7 @@ import 'package:movies_app/api/model/movie_details_response/movie.dart';
 import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
+import 'package:movies_app/utils/movie_image_url.dart';
 import 'package:movies_app/widgets/skeleton/movie_screen_shots_skeleton.dart';
 
 class MovieScreenShots extends StatelessWidget {
@@ -36,7 +37,7 @@ class MovieScreenShots extends StatelessWidget {
               height: height * 0.2,
               decoration: BoxDecoration(borderRadius: .circular(16)),
               child: CachedNetworkImage(
-                imageUrl: movieDetails.mediumScreenshots![index],
+                imageUrl: movieImageUrl(movieDetails.mediumScreenshots![index]),
                 placeholder: (context, url) => MovieScreenShotsSkeleton(),
                 errorWidget: (context, url, error) =>
                     Center(child: Icon(Icons.error)),

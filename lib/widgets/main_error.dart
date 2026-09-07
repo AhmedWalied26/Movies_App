@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
@@ -16,13 +17,14 @@ class MainError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var height = context.height;
+    final l10n = AppLocalizations.of(context)!;
     return Center(
       child: Column(
         spacing: height * 0.08,
         mainAxisAlignment: .center,
         children: [
           Text(
-            errorMessage ?? 'Something went wrong',
+            errorMessage ?? l10n.something_went_wrong,
             style: AppStyles.regular20White,
           ),
           ElevatedButton(
@@ -31,7 +33,7 @@ class MainError extends StatelessWidget {
               shape: RoundedRectangleBorder(borderRadius: .circular(8)),
             ),
             onPressed: onTap,
-            child: Text('Try again', style: AppStyles.regular20White),
+            child: Text(l10n.try_again, style: AppStyles.regular20White),
           ),
         ],
       ),

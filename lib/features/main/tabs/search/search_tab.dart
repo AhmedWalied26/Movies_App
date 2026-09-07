@@ -56,9 +56,9 @@ class SearchTab extends StatelessWidget {
                         } else if (state is SearchSuccessState) {
                           var movies = state.moviesList;
                           if (movies.isEmpty) {
-                            return const Center(
+                            return Center(
                               child: Text(
-                                'No movies found',
+                                AppLocalizations.of(context)!.no_movies_found,
                                 style: TextStyle(color: Colors.white),
                               ),
                             );

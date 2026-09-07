@@ -16,6 +16,8 @@ import '../../../../utils/app_colors.dart';
 import '../../../../utils/app_styles.dart';
 import '../../../../utils/size_utils.dart';
 import '../../../../widgets/movie_card_item.dart';
+import '../../../../utils/localized_genre.dart';
+import '../../../../utils/movie_image_url.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -102,7 +104,7 @@ class HomeTabState extends State<HomeTab> {
               right: 0,
               height: height * 0.65,
               child: CachedNetworkImage(
-                imageUrl: bgImage ?? '',
+                imageUrl: movieImageUrl(bgImage),
                 errorWidget: (context, url, error) {
                   return Icon(Icons.error);
                 },
@@ -190,7 +192,10 @@ class HomeTabState extends State<HomeTab> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(selectedGenre, style: AppStyles.regular20White),
+                          Text(
+                            localizedGenre(context, selectedGenre),
+                            style: AppStyles.regular20White,
+                          ),
                           TextButton(
                             onPressed: () {
                               Navigator.pushNamed(

@@ -22,11 +22,12 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   bool isLoading = false;
 
   Future<void> resetPassword() async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       String email = emailController.text.trim().toLowerCase();
       if (email.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Please enter your email address')),
+          SnackBar(content: Text(l10n.enter_email_address)),
         );
         return;
       }
@@ -40,20 +41,20 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         isLoading = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Password reset link sent! Check your email.'),
+        SnackBar(
+          content: Text(l10n.password_reset_sent),
           backgroundColor: Colors.green,
         ),
       );
       Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
     } on FirebaseAuthException catch (e) {
-      String message = 'An error occurred';
+      String message = l10n.something_went_wrong;
       if (e.code == 'user-not-found') {
-        message = 'No user found with this email.';
+        message = l10n.user_not_found;
       } else if (e.code == 'invalid-email') {
-        message = 'The email address is badly formatted.';
+        message = l10n.invalid_email;
       } else {
-        message = e.message ?? 'An error occurred';
+        message = e.message ?? l10n.something_went_wrong;
       }
 
       if (!mounted) return;
@@ -64,7 +65,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Unable to send password reset email: $e'),
+          content: Text('${l10n.password_reset_error} $e'),
           backgroundColor: Colors.red,
         ),
       );

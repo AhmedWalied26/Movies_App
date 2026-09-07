@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:movies_app/services/movie_history_service.dart';
 import 'package:movies_app/services/profile_service.dart';
+import 'package:movies_app/services/locale_controller.dart';
 import 'package:movies_app/features/main/tabs/profile/watch/watch_list_service.dart';
 import 'package:movies_app/features/auth/login/cubit/auth_view_model.dart';
 import 'package:movies_app/services/firebase_service.dart';
@@ -26,6 +27,7 @@ import 'package:movies_app/features/main/update_profile/reset_password_screen.da
 import 'package:movies_app/features/onboarding/on_boarding_screens.dart';
 import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_theme.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,23 +36,31 @@ void main() async {
   await WatchListService.instance.initialize();
   await ProfileService.instance.initialize();
   final preferences = await SharedPreferences.getInstance();
+  final languageCode = preferences.getString('language_code') ?? 'en';
   final hasCompletedOnboarding =
       preferences.getBool('has_completed_onboarding') ?? false;
   if (!hasCompletedOnboarding) {
     await preferences.setBool('has_completed_onboarding', true);
   }
   runApp(
-    MultiBlocProvider(
-      providers: [
-        BlocProvider<MovieSuggestionViewModel>(
-          create: (context) => MovieSuggestionViewModel(),
-        ),
-        BlocProvider<AuthViewModel>(
-          create: (context) => AuthViewModel(AuthService()),
-        ),
-        BlocProvider<HomeGeneralCubit>(create: (context) => HomeGeneralCubit()),
-      ],
-      child: MoviesApp(hasCompletedOnboarding: hasCompletedOnboarding),
+    ChangeNotifierProvider(
+      create: (_) => LocaleController(
+        initialLocale: Locale(languageCode),
+      ),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<MovieSuggestionViewModel>(
+            create: (context) => MovieSuggestionViewModel(),
+          ),
+          BlocProvider<AuthViewModel>(
+            create: (context) => AuthViewModel(AuthService()),
+          ),
+          BlocProvider<HomeGeneralCubit>(
+            create: (context) => HomeGeneralCubit(),
+          ),
+        ],
+        child: MoviesApp(hasCompletedOnboarding: hasCompletedOnboarding),
+      ),
     ),
   );
 }
@@ -62,7 +72,10 @@ class MoviesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localeController = context.watch<LocaleController>();
+
     return MaterialApp(
+      locale: localeController.locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,

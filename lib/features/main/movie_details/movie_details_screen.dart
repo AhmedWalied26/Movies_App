@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:movies_app/api/model/movie_details_response/movie.dart';
 import 'package:movies_app/api/model/movie_suggestions_response/movie_suggestion.dart';
 import 'package:movies_app/features/main/movie_details/movie_suggestions/widgets/movie_suggestion_bloc_builder.dart';
@@ -15,6 +16,7 @@ import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
+import 'package:movies_app/utils/movie_image_url.dart';
 import 'package:movies_app/widgets/custom_elevated_button.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -73,10 +75,16 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     SizedBox(
                       width: double.infinity,
                       height: height * 0.55,
-                      child: Image.network(
-                        widget.movieDetails!.mediumCoverImage!,
+                      child: CachedNetworkImage(
+                        imageUrl: movieImageUrl(
+                          widget.movieDetails!.mediumCoverImage,
+                        ),
                         fit: BoxFit.cover,
                         alignment: Alignment.topCenter,
+                        errorWidget: (context, url, error) => Image.asset(
+                          AppAssets.movieDetailsImage,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                     Container(

@@ -168,7 +168,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get update_Data => 'Update Data';
 
   @override
+  String get all_genres => 'All';
+
+  @override
   String get horror => 'Horror';
+
+  @override
+  String get animation => 'Animation';
 
   @override
   String get comedy => 'Comedy';
@@ -190,6 +196,45 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adventure => 'Adventure';
+
+  @override
+  String get biography => 'Biography';
+
+  @override
+  String get documentary => 'Documentary';
+
+  @override
+  String get family => 'Family';
+
+  @override
+  String get history_genre => 'History';
+
+  @override
+  String get music => 'Music';
+
+  @override
+  String get musical => 'Musical';
+
+  @override
+  String get mystery => 'Mystery';
+
+  @override
+  String get film_noir => 'Film-Noir';
+
+  @override
+  String get sport => 'Sport';
+
+  @override
+  String get thriller => 'Thriller';
+
+  @override
+  String get talk_show => 'Talk-Show';
+
+  @override
+  String get war => 'War';
+
+  @override
+  String get western => 'Western';
 
   @override
   String get wish_list => 'wish List';
@@ -256,4 +301,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cast => 'Cast';
+
+  @override
+  String get enter_email_address => 'Please enter your email address';
+
+  @override
+  String get password_reset_sent =>
+      'Password reset link sent! Check your email.';
+
+  @override
+  String get password_reset_error => 'Unable to send password reset email.';
+
+  @override
+  String get no_movies_found => 'No movies found';
+
+  @override
+  String get current_password => 'Current password';
+
+  @override
+  String get try_again => 'Try again';
 }

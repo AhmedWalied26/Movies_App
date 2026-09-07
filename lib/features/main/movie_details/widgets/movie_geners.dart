@@ -4,6 +4,7 @@ import 'package:movies_app/l10n/app_localizations.dart';
 import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
+import 'package:movies_app/utils/localized_genre.dart';
 
 class MovieGeners extends StatelessWidget {
   final Movie movieDetails;
@@ -42,7 +43,7 @@ class MovieGeners extends StatelessWidget {
                 color: AppColors.darkGreyColor,
               ),
               child: Text(
-                movieDetails.genres![index],
+                localizedGenre(context, movieDetails.genres![index]),
                 style: AppStyles.regular16White,
               ),
             );

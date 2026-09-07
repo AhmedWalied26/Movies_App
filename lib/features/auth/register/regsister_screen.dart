@@ -13,6 +13,9 @@ import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
 import 'package:movies_app/widgets/custom_text_field.dart';
+import 'package:movies_app/features/auth/login/widgets/language_switcher.dart';
+import 'package:provider/provider.dart';
+import 'package:movies_app/services/locale_controller.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -263,8 +266,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       spacing: width * 0.03,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SvgPicture.asset(AppAssets.enIcon),
-                        SvgPicture.asset(AppAssets.arIcon),
+                        LanguageSwitcher(
+                          icon: AppAssets.enIcon,
+                          isSelected: context
+                              .watch<LocaleController>()
+                              .locale
+                              .languageCode == 'en',
+                          onTap: () {
+                            context.read<LocaleController>().setLanguage('en');
+                          },
+                        ),
+                        LanguageSwitcher(
+                          icon: AppAssets.arIcon,
+                          isSelected: context
+                              .watch<LocaleController>()
+                              .locale
+                              .languageCode == 'ar',
+                          onTap: () {
+                            context.read<LocaleController>().setLanguage('ar');
+                          },
+                        ),
                       ],
                     ),
                   ),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/features/auth/login/widgets/google_sign_in_button.dart';
+import 'package:movies_app/features/auth/login/widgets/language_switcher.dart';
+import 'package:provider/provider.dart';
+import 'package:movies_app/services/locale_controller.dart';
 import 'package:movies_app/services/firebase_service.dart';
 import 'package:movies_app/utils/app_validation.dart';
 import 'package:movies_app/widgets/app_overlay.dart';
@@ -176,8 +179,30 @@ class _LoginScreenState extends State<LoginScreen> {
                           spacing: width * 0.03,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SvgPicture.asset(AppAssets.enIcon),
-                            SvgPicture.asset(AppAssets.arIcon),
+                            LanguageSwitcher(
+                              icon: AppAssets.enIcon,
+                              isSelected: context
+                                  .watch<LocaleController>()
+                                  .locale
+                                  .languageCode == 'en',
+                              onTap: () {
+                                context.read<LocaleController>().setLanguage(
+                                  'en',
+                                );
+                              },
+                            ),
+                            LanguageSwitcher(
+                              icon: AppAssets.arIcon,
+                              isSelected: context
+                                  .watch<LocaleController>()
+                                  .locale
+                                  .languageCode == 'ar',
+                              onTap: () {
+                                context.read<LocaleController>().setLanguage(
+                                  'ar',
+                                );
+                              },
+                            ),
                           ],
                         ),
                       ),

@@ -168,7 +168,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get update_Data => 'تحديث البيانات';
 
   @override
+  String get all_genres => 'الكل';
+
+  @override
   String get horror => 'رعب';
+
+  @override
+  String get animation => 'رسوم متحركة';
 
   @override
   String get comedy => 'كوميديا';
@@ -190,6 +196,45 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get adventure => 'مغامرة';
+
+  @override
+  String get biography => 'سيرة ذاتية';
+
+  @override
+  String get documentary => 'وثائقي';
+
+  @override
+  String get family => 'عائلي';
+
+  @override
+  String get history_genre => 'تاريخي';
+
+  @override
+  String get music => 'موسيقى';
+
+  @override
+  String get musical => 'موسيقي';
+
+  @override
+  String get mystery => 'غموض';
+
+  @override
+  String get film_noir => 'فيلم نوار';
+
+  @override
+  String get sport => 'رياضي';
+
+  @override
+  String get thriller => 'إثارة';
+
+  @override
+  String get talk_show => 'برنامج حواري';
+
+  @override
+  String get war => 'حرب';
+
+  @override
+  String get western => 'غربي';
 
   @override
   String get wish_list => 'قائمة الرغبات';
@@ -256,4 +301,23 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get cast => 'Cast';
+
+  @override
+  String get enter_email_address => 'من فضلك أدخل بريدك الإلكتروني';
+
+  @override
+  String get password_reset_sent =>
+      'تم إرسال رابط إعادة تعيين كلمة المرور! تحقق من بريدك الإلكتروني.';
+
+  @override
+  String get password_reset_error => 'تعذر إرسال بريد إعادة تعيين كلمة المرور.';
+
+  @override
+  String get no_movies_found => 'لم يتم العثور على أفلام';
+
+  @override
+  String get current_password => 'كلمة المرور الحالية';
+
+  @override
+  String get try_again => 'حاول مرة أخرى';
 }

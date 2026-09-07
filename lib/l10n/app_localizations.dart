@@ -404,11 +404,23 @@ abstract class AppLocalizations {
   /// **'Update Data'**
   String get update_Data;
 
+  /// No description provided for @all_genres.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get all_genres;
+
   /// No description provided for @horror.
   ///
   /// In en, this message translates to:
   /// **'Horror'**
   String get horror;
+
+  /// No description provided for @animation.
+  ///
+  /// In en, this message translates to:
+  /// **'Animation'**
+  String get animation;
 
   /// No description provided for @comedy.
   ///
@@ -451,6 +463,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Adventure'**
   String get adventure;
+
+  /// No description provided for @biography.
+  ///
+  /// In en, this message translates to:
+  /// **'Biography'**
+  String get biography;
+
+  /// No description provided for @documentary.
+  ///
+  /// In en, this message translates to:
+  /// **'Documentary'**
+  String get documentary;
+
+  /// No description provided for @family.
+  ///
+  /// In en, this message translates to:
+  /// **'Family'**
+  String get family;
+
+  /// No description provided for @history_genre.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get history_genre;
+
+  /// No description provided for @music.
+  ///
+  /// In en, this message translates to:
+  /// **'Music'**
+  String get music;
+
+  /// No description provided for @musical.
+  ///
+  /// In en, this message translates to:
+  /// **'Musical'**
+  String get musical;
+
+  /// No description provided for @mystery.
+  ///
+  /// In en, this message translates to:
+  /// **'Mystery'**
+  String get mystery;
+
+  /// No description provided for @film_noir.
+  ///
+  /// In en, this message translates to:
+  /// **'Film-Noir'**
+  String get film_noir;
+
+  /// No description provided for @sport.
+  ///
+  /// In en, this message translates to:
+  /// **'Sport'**
+  String get sport;
+
+  /// No description provided for @thriller.
+  ///
+  /// In en, this message translates to:
+  /// **'Thriller'**
+  String get thriller;
+
+  /// No description provided for @talk_show.
+  ///
+  /// In en, this message translates to:
+  /// **'Talk-Show'**
+  String get talk_show;
+
+  /// No description provided for @war.
+  ///
+  /// In en, this message translates to:
+  /// **'War'**
+  String get war;
+
+  /// No description provided for @western.
+  ///
+  /// In en, this message translates to:
+  /// **'Western'**
+  String get western;
 
   /// No description provided for @wish_list.
   ///
@@ -577,6 +667,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cast'**
   String get cast;
+
+  /// No description provided for @enter_email_address.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your email address'**
+  String get enter_email_address;
+
+  /// No description provided for @password_reset_sent.
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset link sent! Check your email.'**
+  String get password_reset_sent;
+
+  /// No description provided for @password_reset_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to send password reset email.'**
+  String get password_reset_error;
+
+  /// No description provided for @no_movies_found.
+  ///
+  /// In en, this message translates to:
+  /// **'No movies found'**
+  String get no_movies_found;
+
+  /// No description provided for @current_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Current password'**
+  String get current_password;
+
+  /// No description provided for @try_again.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get try_again;
 }
 
 class _AppLocalizationsDelegate

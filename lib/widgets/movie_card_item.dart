@@ -5,6 +5,7 @@ import 'package:movies_app/utils/app_assets.dart';
 import 'package:movies_app/utils/app_colors.dart';
 import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
+import 'package:movies_app/utils/movie_image_url.dart';
 
 class MovieCardItem extends StatelessWidget {
   final dynamic movie;
@@ -24,8 +25,10 @@ class MovieCardItem extends StatelessWidget {
   Widget build(BuildContext context) {
     var height = context.height;
     var width = context.width;
-    final imageUrl = isSuggestion ? movieImage : movie?.mediumCoverImage;
-    final hasImage = imageUrl != null && imageUrl.isNotEmpty;
+    final imageUrl = movieImageUrl(
+      isSuggestion ? movieImage : movie?.mediumCoverImage,
+    );
+    final hasImage = imageUrl.isNotEmpty;
     final rating = isSuggestion ? movieRate : movie?.rating;
     final ratingLabel = rating is num && rating <= 0
       ? 'N/A'

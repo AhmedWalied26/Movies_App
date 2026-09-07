@@ -6,6 +6,7 @@ import 'package:movies_app/utils/app_styles.dart';
 import 'package:movies_app/utils/size_utils.dart';
 import 'package:movies_app/widgets/movie_card_item.dart';
 import 'package:movies_app/widgets/skeleton/movie_grid_skeleton.dart';
+import 'package:movies_app/utils/localized_genre.dart';
 
 class TabBarWidget extends StatefulWidget {
   final List<String> genres;
@@ -105,7 +106,7 @@ class _TabBarWidgetState extends State<TabBarWidget> {
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Text(
-                            genre,
+                            localizedGenre(context, genre),
                             style: isSelected
                                 ? AppStyles.bold20DarkBlack
                                 : AppStyles.bold20Primary,
