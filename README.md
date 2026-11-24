@@ -1,6 +1,38 @@
-# movies_app
+# Movies App
 
-A new Flutter project.
+A Flutter movie browsing app with real data from a YTS-compatible movies API, Firebase authentication, and per-user watch history synced across devices.
+
+## Screenshots
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/AhmedWalied26/My_Portfolio/main/images/10-movies-1.webp" width="170" alt="Movies app screenshot 1">
+  <img src="https://raw.githubusercontent.com/AhmedWalied26/My_Portfolio/main/images/11-movies-2.webp" width="170" alt="Movies app screenshot 2">
+  <img src="https://raw.githubusercontent.com/AhmedWalied26/My_Portfolio/main/images/12-movies-3.webp" width="170" alt="Movies app screenshot 3">
+  <img src="https://raw.githubusercontent.com/AhmedWalied26/My_Portfolio/main/images/13-movies-4.webp" width="170" alt="Movies app screenshot 4">
+</p>
+
+## Features
+
+- Email/password and Google sign-in with Firebase Authentication, plus password reset
+- Onboarding flow with theme and language personalization
+- Home tab with featured movie carousel and genre sections
+- Browse movies by genre and search the full catalog
+- Movie details screen with cast, genres, rating, summary and screenshots
+- Smart movie suggestions on every details screen
+- Watch trailers in-app (YouTube player / web view)
+- Profile tab with personal watch history and an update-profile screen with avatars
+- English and Arabic localization
+- Offline-friendly history: local Hive cache with Firestore sync for signed-in users
+
+## Tech Stack
+
+- **Flutter** / Dart
+- **State management:** BLoC / Cubit (flutter_bloc)
+- **Networking:** Dio (REST API)
+- **Backend:** Firebase Authentication, Cloud Firestore, Google Sign-In
+- **Local storage:** Hive, SharedPreferences
+- **UI:** carousel_slider, cached_network_image, shimmer, google_fonts, flutter_svg
+- **Media:** youtube_player_flutter, webview_flutter
 
 ## Movie history
 
@@ -20,14 +52,19 @@ unavailable.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/AhmedWalied26/Movies_App.git
+   cd Movies_App
+   ```
+2. Install dependencies:
+   ```bash
+   flutter pub get
+   ```
+3. Add your own Firebase configuration (`firebase_options.dart` / `google-services.json`) via FlutterFire CLI.
+4. Run the app:
+   ```bash
+   flutter run
+   ```
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Movie data comes from a YTS-compatible API (`movies-api.accel.li/api/v2`).
